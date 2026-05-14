@@ -275,8 +275,10 @@ export default function Home() {
     return () => obs.disconnect();
   }, []);
 
-  const scrollProgress = Math.min(scrollY / (document.body?.scrollHeight - window.innerHeight || 1000), 1);
-
+// ✅ With this
+const scrollProgress = typeof window !== "undefined"
+  ? Math.min(scrollY / Math.max(document.body.scrollHeight - window.innerHeight, 1), 1)
+  : 0;
   return (
     <>
       {/* ─── Global styles ────────────────────────────────────────────────── */}
