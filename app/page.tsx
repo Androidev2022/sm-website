@@ -117,7 +117,7 @@ export default function Home() {
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
     { label: "Services", href: "#" },
-    { label: "Case Studies", href: "#" },
+    { label: "Case Studies", href: "/casedetails" },
     { label: "Contact", href: "#" },
   ];
 
@@ -275,10 +275,10 @@ export default function Home() {
     return () => obs.disconnect();
   }, []);
 
-// ✅ With this
-const scrollProgress = typeof window !== "undefined"
-  ? Math.min(scrollY / Math.max(document.body.scrollHeight - window.innerHeight, 1), 1)
-  : 0;
+  // ✅ With this
+  const scrollProgress = typeof window !== "undefined"
+    ? Math.min(scrollY / Math.max(document.body.scrollHeight - window.innerHeight, 1), 1)
+    : 0;
   return (
     <>
       {/* ─── Global styles ────────────────────────────────────────────────── */}
@@ -559,7 +559,7 @@ const scrollProgress = typeof window !== "undefined"
           className="w-full"
           style={{
             backgroundImage: "url('/header_background.png')",
-            backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center",
+            backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "fit",
           }}
         >
           <div className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-5 items-center">
