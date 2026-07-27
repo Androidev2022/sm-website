@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import type { JSX } from "react";
 
 const navLinks = [
     { label: "Home", href: "/" },
@@ -16,185 +20,172 @@ const stats = [
     { value: "4.9/5", label: "Client Happiness", sub: "Feedback Rating" },
 ];
 
-const scope = [
-    {
-        icon: "🎯",
-        title: "Strategy",
-        items: ["UX Audit", "Competitor Research", "Information Architecture"],
-    },
-    {
-        icon: "✏️",
-        title: "Design",
-        items: ["Wireframes", "UI/UX Design", "Design System", "Prototypes"],
-    },
-    {
-        icon: "</>",
-        title: "Development",
-        items: [
-            "Frontend Development",
-            "Backend Development",
-            "API Integrations",
-        ],
-    },
-    {
-        icon: "📈",
-        title: "Growth",
-        items: [
-            "SEO Optimization",
-            "Analytics Setup (GA4, GTM)",
-            "Performance Marketing",
-        ],
-    },
+/* ---- 01 Executive Summary ---- */
+const execSummary = {
+    heading: "Elevating Tefal's Indian Presence Through User-Centric UX",
+    body: "Tefal, a household global brand under Groupe SEB, faced major discovery and conversion bottlenecks on their Indian direct-to-consumer store. Although they possess class-leading cooking appliances like Tefal Easy Fryers and premium cookware, local audiences had difficulty navigating catalog layers and understanding product versatility.",
+    body2:
+        "Our mandate was to execute a deep UX diagnostic and rewrite the product interaction flow, bringing clean premium aesthetics, seamless recipe integrations, and frictionless conversion pathways designed for the Indian consumer.",
+    meta: [
+        { label: "Timeline", value: "6 Months" },
+        { label: "Deliverables", value: "Audit, UI System, Prototypes" },
+        { label: "Team", value: "3 Designers, 1 Researcher" },
+        { label: "Success Metric", value: "D2C Revenue Boost", accent: true },
+    ],
+};
+
+/* ---- 02 About Tefal / product ecosystem ---- */
+const productEcosystem = [
+    { title: "Air Fryers", desc: "Premium oil-free hot air fryers and grills", image: "/images/products/air-fryers.png" },
+    { title: "Cookware", desc: "Patented Thermo-Spot cookware ranges", image: "/images/products/cookware.png" },
+    { title: "Pressure Cookers", desc: "Ultra-safe smart pressure cookers", image: "/images/products/pressure-cookers.png" },
+    { title: "Linen Care Irons", desc: "High precision vertical & steam irons", image: "/images/products/linen-irons.png" },
+    { title: "Kitchen Appliances", desc: "Express blenders & food processors", image: "/images/products/kitchen-appliances.png" },
 ];
 
-const techArchitecture = [
-    { title: "Frontend", items: ["Next.js", "React", "TypeScript"], icon: "/images/tech-icons/frontend.png", iconBg: "#DCE7FE", boxBg: "#F4F8FF" },
-    { title: "Backend", items: ["Laravel", "Node.js", "REST APIs"], icon: "/images/tech-icons/backend.png", iconBg: "#FBDEE3", boxBg: "#FEF5F7" },
-    { title: "Infrastructure", items: ["AWS", "Cloudflare", "CDN"], icon: "/images/tech-icons/infrastructure.png", iconBg: "#DCE7FE", boxBg: "#F4F8FF" },
-    { title: "Security", items: ["SSL Encryption", "WAF", "Monitoring"], icon: "/images/tech-icons/security.png", iconBg: "#FBDEE3", boxBg: "#FEF5F7" },
+const brandStats = [
+    { value: "120+", label: "Countries Reached" },
+    { value: "150M+", label: "Products Sold Annually" },
+    { value: "70 Years", label: "Of Innovation" },
+    { value: "Trusted", label: "By Millions of Families" },
 ];
 
-const aboutStats = [
-    { label: "Countries Reached", value: "120+", icon: "globe" },
-    { label: "Products Sold Annually", value: "150M+", icon: "basket" },
-    { label: "Years of Innovation", value: "70+", icon: "clock" },
-    { label: "Trusted By Millions of Families", value: "", icon: "star" },
-];
-
-const challenges = [
+/* ---- 03 Problem Statement ---- */
+const problemStatement = [
     {
         title: "Product Discovery Friction",
-        desc: "Users struggled to find the right products across complex catalog layers.",
-        icon: "search",
+        desc: "Users had trouble isolating categories of cookware vs premium high-ticket electric appliances on homepages.",
     },
     {
-        title: "Recipe to Product Journey Gaps",
-        desc: "No seamless connection between recipe content and relevant product discovery.",
-        icon: "book",
+        title: "Recipe-to-Product Journey Gaps",
+        desc: "Indian consumers lookup airfryer recipes online first. The site failed to link tasty local recipes to corresponding cooker purchases.",
     },
     {
         title: "Mobile Experience Inefficiencies",
-        desc: "Slow load times, small CTAs and poor navigation resulted in high bounce rates.",
-        icon: "mobile",
+        desc: "Over 82% of current traffic originated from smartphones, yet slow image carousels and tiny buy buttons resulted in high drop-offs.",
     },
 ];
 
-const engineeringChallenges = [
-    { n: "01", text: "Managing 10,000+ SKUs without affecting performance" },
-    { n: "02", text: "Delivering lightning-fast experience for 80%+ mobile users" },
-    { n: "03", text: "Building recipe to product integration with smooth checkout flow" },
-];
-
-const roadmap = [
-    {
-        n: "01",
-        title: "Discover",
-        desc: "Deep audit & stakeholder alignment",
-        bg: "bg-rose-50",
-        text: "text-rose-500",
-    },
-    {
-        n: "02",
-        title: "Research",
-        desc: "Heatmap audit, analytics & competitor analysis",
-        bg: "bg-violet-50",
-        text: "text-violet-500",
-    },
-    {
-        n: "03",
-        title: "Architecture",
-        desc: "Restructured navigation, search & categories",
-        bg: "bg-blue-50",
-        text: "text-blue-500",
-    },
-    {
-        n: "04",
-        title: "Wireframing",
-        desc: "Interactive prototypes for key journeys",
-        bg: "bg-orange-50",
-        text: "text-orange-500",
-    },
-    {
-        n: "05",
-        title: "UI Exploration",
-        desc: "Premium UI system with Tefal brand language",
-        bg: "bg-emerald-50",
-        text: "text-emerald-500",
-    },
-    {
-        n: "06",
-        title: "Optimization",
-        desc: "Post-launch checks & continuous optimize",
-        bg: "bg-sky-50",
-        text: "text-sky-500",
-    },
-];
-
-const techStack = [
-    "Next.js",
-    "React",
-    "TypeScript",
-    "Laravel",
-    "Node.js",
-    "MySQL",
-    "AWS",
-    "Cloudflare",
-    "Redis",
-    "GitHub",
-    "GA4",
-    "GTM",
-    "Hotjar",
-    "Looker Studio",
-    "Vercel",
-];
-
-const infraSecurity = [
-    "AWS Cloud Hosting",
-    "Cloudflare CDN & DDoS Protection",
-    "SSL Certificate & HTTPS Enforcement",
-    "Automated Daily Backups",
-    "24/7 Monitoring & Alerts",
-    "Performance Optimization",
-    "Disaster Recovery Plan",
-];
-
-const beforeAfter = {
-    before: ["Cluttered Layout", "Poor Navigation", "Low Conversions", "No Recipe Integration"],
-    after: ["Clean & Modern UI", "Easy Navigation", "Higher Conversions", "Recipe to Product Flow"],
+/* ---- 04 Research & Audit ---- */
+const heatmapInsight = {
+    tag: "High Attention Loss",
+    stat: "85% Missed Product Sub-menus",
+    note: "Our visual heatmaps identified that users looking for specific cookware size options repeatedly abandoned because filters were hidden inside heavy sidebars.",
 };
 
-const resultsDashboard = [
-    { label: "Organic Traffic", value: "+156%", beforePct: 14, afterPct: 62 },
-    { label: "E-commerce Revenue", value: "+142%", beforePct: 10, afterPct: 52 },
-    { label: "Transaction Count", value: "+87%", beforePct: 10, afterPct: 38 },
-    { label: "Keyword Rankings", value: "+65%", beforePct: 8, afterPct: 24 },
-    { label: "Mobile Bounce Rate", value: "-42%", beforePct: 46, afterPct: 16 },
+/* ---- Strategy & Roadmap ---- */
+const roadmap = [
+    { n: "01", title: "Discover", desc: "Deep audit & stakeholder alignment" },
+    { n: "02", title: "Research", desc: "Heatmap audit, analytics & competitor analysis" },
+    { n: "03", title: "Architecture", desc: "Restructured navigation, search & categories" },
+    { n: "04", title: "Wireframing", desc: "Interactive mockups testing key flows" },
+    { n: "05", title: "UI Exploration", desc: "Drafting premium cards, modern text and highlights & clean grids" },
+    { n: "06", title: "Optimization", desc: "Post-launch checks and direct interface review" },
 ];
 
-const businessImpact = [
-    { before: "Fragmented Navigation", after: "Category-driven discovery" },
-    { before: "Recipe Traffic Siloed", after: "Recipe-to-purchase funnel" },
-    { before: "Low engagement", after: "Higher user engagement" },
-    { before: "High bounce rate", after: "Optimized mobile UX" },
-    { before: "Manual marketing tracking", after: "Data-driven growth engine" },
+/* ---- 06 Solution Showcase ---- */
+const redesignCards = [
+    {
+        title: "Homepage Redesign",
+        desc: "We reorganized the homepage layout from a cluttered promo block to an editorial experience. Visitors now meet premium appliance categories first with clean white space & high-fidelity renders.",
+        badge: "+32% CTR on Categories",
+        badgeColor: "text-emerald-600 bg-emerald-50",
+    },
+    {
+        title: "Integrated Recipe Ecosystem",
+        desc: "Users reading delicious recipes like the Air Fryer Samosas can now purchase the exact appliance model instantly using standard quick checkout widgets nested on the recipe card.",
+        badge: "Frictionless Add-To-Cart",
+        badgeColor: "text-rose-600 bg-rose-50",
+    },
 ];
 
-const projectTeam = [
-    { role: "UX Lead", subtitle: "User Journey Mapping", photo: "/images/team/ux-lead.png" },
-    { role: "UI Designer", subtitle: "Interface Design", photo: "/images/team/ui-designer.png" },
-    { role: "Frontend Engineer", subtitle: "React Development", photo: "https://i.pravatar.cc/72?img=13" },
-    { role: "Backend Developer", subtitle: "API & Integrations", photo: "https://i.pravatar.cc/72?img=14" },
-    { role: "DevOps Engineer", subtitle: "Cloud & Infrastructure", photo: "https://i.pravatar.cc/72?img=15" },
-    { role: "SEO Specialist", subtitle: "Search Optimization", photo: "https://i.pravatar.cc/72?img=17" },
+const recipeCard = {
+    title: "Crispy Tandoori Paneer",
+    time: "15 Mins",
+    kicker: "HEALTHY MEALS MADE SIMPLE",
+    urlPath: "tefal.in/recipes/airfryer-paneer",
+    applianceLabel: "RECOMMENDED APPLIANCE",
+    product: "Tefal Easy Fry & Grill",
+    price: "₹11,999",
+    originalPrice: "₹14,999",
+    cta: "BUY NOW & COOK THIS",
+};
+
+function IconLock() {
+    return (
+        <svg className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="5" y="11" width="14" height="9" rx="2" />
+            <path d="M8 11V7a4 4 0 018 0v4" />
+        </svg>
+    );
+}
+
+function IconClock() {
+    return (
+        <svg className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 7v5l3 2" />
+        </svg>
+    );
+}
+/* ---- 07 Before vs After ---- */
+const visualCompare = {
+    before: {
+        label: "BEFORE (OLD DESIGN)",
+        items: ["Iron", "Grill", "Pot", "Mixer"],
+        note: "No contextual recipes or visual product categorization. Users were instantly confused.",
+    },
+    after: {
+        label: "AFTER (NEW DESIGN)",
+        heading: "Browse Cookware Ecosystem",
+        tag: "SMART FILTERS ACTIVE",
+        items: [
+            { name: "Non-Stick Pans", sub: "Thermo-Spot Tech", image: "/images/products/non-stick-pan.png" },
+            { name: "Smart Cookers", sub: "Ultra Safety Lock", image: "/images/products/smart-cooker.png" },
+        ],
+        note: "Clear categories, instant tags, and gorgeous appliance-first photography.",
+    },
+};
+
+/* ---- 08 Results Dashboard ---- */
+const resultsMetrics = [
+    { label: "Direct Transaction Lift", value: "+87% Transactions", positive: true },
+    { label: "Mobile Bounce Rate", value: "-42% Drop", positive: true },
+    { label: "Average Order Value", value: "+18% Increase", positive: true },
 ];
+
+const trafficChart = [
+    { label: "MON 1", before: 22, after: 40 },
+    { label: "MON 2", before: 26, after: 58 },
+    { label: "MON 3", before: 24, after: 74 },
+    { label: "MON 4", before: 28, after: 92 },
+];
+
+/* ---- Design System ---- */
+const colorPalette = [
+    { hex: "#E21124", name: "Tefal Red" },
+    { hex: "#0F172A", name: "Rich Slate" },
+    { hex: "#FFFFFF", name: "Clean White", bordered: true },
+];
+
+const componentChips = [
+    { label: "TEFAL RED", color: "text-rose-600 bg-rose-50" },
+    { label: "+87% CONVERSION", color: "text-emerald-600 bg-emerald-50" },
+    { label: "PREMIUM SPEC", color: "text-[#4C4F5B] bg-gray-100" },
+];
+
+/* ---- Testimonial ---- */
+const testimonial = {
+    quote:
+        "SM Solutions completely turned around our e-commerce performance. They bridged the gap between our high-quality kitchen products and Indian consumers looking for easy-to-learn cooking recipes. An absolute pleasure to work with!",
+    name: "Sandeep Sharma",
+    role: "Digital Head, Tefal India",
+    photo: "/images/testimonial/sandeep-sharma.png",
+};
 
 function Check() {
     return (
-        <svg
-            className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-500"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-        >
+        <svg className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-500" viewBox="0 0 20 20" fill="currentColor">
             <path
                 fillRule="evenodd"
                 d="M16.704 5.29a1 1 0 010 1.415l-7.25 7.25a1 1 0 01-1.415 0l-3.25-3.25a1 1 0 111.415-1.414l2.543 2.543 6.543-6.543a1 1 0 011.414 0z"
@@ -204,37 +195,40 @@ function Check() {
     );
 }
 
-function Cross() {
+function IconTargetDot() {
     return (
-        <svg className="mt-0.5 h-3.5 w-3.5 shrink-0 text-rose-400" viewBox="0 0 20 20" fill="currentColor">
+        <svg className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <circle cx="10" cy="10" r="7" />
+            <circle cx="10" cy="10" r="2.2" fill="currentColor" stroke="none" />
+        </svg>
+    );
+}
+
+function IconCrossCircle() {
+    return (
+        <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
             <path
                 fillRule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm-2.03-11.03a.75.75 0 00-1.06 1.06L8.94 10l-2.03 2.03a.75.75 0 101.06 1.06L10 11.06l2.03 2.03a.75.75 0 101.06-1.06L11.06 10l2.03-2.03a.75.75 0 10-1.06-1.06L10 8.94 7.97 6.97z"
                 clipRule="evenodd"
             />
         </svg>
     );
 }
 
-function RoseCheck() {
+function NumberedEyebrow({ n, children }: { n: string; children: React.ReactNode }) {
     return (
-        <svg
-            className="mt-0.5 h-3.5 w-3.5 shrink-0 text-rose-500"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-        >
-            <path
-                fillRule="evenodd"
-                d="M16.704 5.29a1 1 0 010 1.415l-7.25 7.25a1 1 0 01-1.415 0l-3.25-3.25a1 1 0 111.415-1.414l2.543 2.543 6.543-6.543a1 1 0 011.414 0z"
-                clipRule="evenodd"
-            />
-        </svg>
+        <p className="flex items-center gap-2">
+            <span className="rounded-md bg-rose-100 px-1.5 py-0.5 text-[11px] font-extrabold text-rose-600">{n}</span>
+            <span className="text-[11px] font-bold tracking-wide text-[#9297A3]">{children}</span>
+        </p>
     );
 }
 
-function SectionLabel({ children, large }: { children: React.ReactNode; large?: boolean }) {
+function SectionEyebrow({ n, children }: { n?: string; children: React.ReactNode }) {
     return (
-        <p className={`eyebrow-dark mb-4 ${large ? "!text-base tracking-normal" : ""}`}>
+        <p className="mb-3 flex items-center gap-2 text-[11px] font-bold tracking-widest text-[#E11D48]">
+            {n && <span className="text-[#9297A3]">{n}</span>}
             {children}
         </p>
     );
@@ -254,40 +248,9 @@ function TrendUp() {
     );
 }
 
-/* ---- About Tefal stat icons (line style, sit in a soft lavender square) ---- */
-function IconGlobe() {
+function IconStar({ filled = true }: { filled?: boolean }) {
     return (
-        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="12" r="9" />
-            <path d="M3 12h18" />
-            <path d="M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9s1.3-6.4 3.8-9z" />
-        </svg>
-    );
-}
-
-function IconBasket() {
-    return (
-        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M4 10h16l-1.4 8.4a2 2 0 01-2 1.6H7.4a2 2 0 01-2-1.6L4 10z" />
-            <path d="M8 10V8a4 4 0 018 0v2" />
-            <path d="M9.5 13.5v3" />
-            <path d="M14.5 13.5v3" />
-        </svg>
-    );
-}
-
-function IconClock() {
-    return (
-        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="12" r="9" />
-            <path d="M12 7v5l3.5 2" />
-        </svg>
-    );
-}
-
-function IconStar() {
-    return (
-        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+        <svg className={`h-3.5 w-3.5 ${filled ? "text-amber-400" : "text-gray-300"}`} viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2.5l2.9 6 6.6.6-5 4.4 1.5 6.5-6-3.5-6 3.5 1.5-6.5-5-4.4 6.6-.6z" />
         </svg>
     );
@@ -310,6 +273,15 @@ function IconBagOutline() {
     );
 }
 
+function IconSearch() {
+    return (
+        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="7" />
+            <path d="M21 21l-4.35-4.35" />
+        </svg>
+    );
+}
+
 function IconHomeOutline() {
     return (
         <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -327,47 +299,6 @@ function IconUserOutline() {
         </svg>
     );
 }
-
-const aboutIconMap: Record<string, () => JSX.Element> = {
-    globe: IconGlobe,
-    basket: IconBasket,
-    clock: IconClock,
-    star: IconStar,
-};
-
-/* ---- Challenge icons (line style, sit in a soft rose circle) ---- */
-function IconSearch() {
-    return (
-        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="11" cy="11" r="7" />
-            <path d="M21 21l-4.35-4.35" />
-        </svg>
-    );
-}
-
-function IconBook() {
-    return (
-        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M4 5.5A2.5 2.5 0 016.5 3H12v18H6.5A2.5 2.5 0 014 18.5v-13z" />
-            <path d="M20 5.5A2.5 2.5 0 0017.5 3H12v18h5.5a2.5 2.5 0 002.5-2.5v-13z" />
-        </svg>
-    );
-}
-
-function IconMobile() {
-    return (
-        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="7" y="2.5" width="10" height="19" rx="2" />
-            <path d="M11 18.5h2" />
-        </svg>
-    );
-}
-
-const challengeIconMap: Record<string, () => JSX.Element> = {
-    search: IconSearch,
-    book: IconBook,
-    mobile: IconMobile,
-};
 
 function IconLinkedIn() {
     return (
@@ -427,12 +358,275 @@ function IconSkype() {
     );
 }
 
+/* ---------------------------------------------------------------------- */
+/* Scroll-reveal: a single shared IntersectionObserver drives every       */
+/* `.reveal` element instead of spinning one up per card, so a page with  */
+/* dozens of reveals still costs one observer.                           */
+/* ---------------------------------------------------------------------- */
+function Reveal({
+    children,
+    className = "",
+    delay = 0,
+    as: Tag = "div",
+}: {
+    children: React.ReactNode;
+    className?: string;
+    delay?: number;
+    as?: keyof JSX.IntrinsicElements;
+}) {
+    const ref = useRef<HTMLDivElement>(null);
+    const [inView, setInView] = useState(false);
+
+    useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+
+        if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            setInView(true);
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setInView(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.18, rootMargin: "0px 0px -8% 0px" }
+        );
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, []);
+
+    const Comp = Tag as any;
+    return (
+        <Comp
+            ref={ref}
+            className={`reveal ${inView ? "reveal-in" : ""} ${className}`}
+            style={{ transitionDelay: inView ? `${delay}ms` : "0ms" }}
+        >
+            {children}
+        </Comp>
+    );
+}
+
 export default function Page() {
+    const maxBar = Math.max(...trafficChart.map((m) => Math.max(m.before, m.after)));
+
+    const chartRef = useRef<HTMLDivElement>(null);
+    const [chartInView, setChartInView] = useState(false);
+
+    useEffect(() => {
+        const el = chartRef.current;
+        if (!el) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setChartInView(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.35 }
+        );
+
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, []);
+
+    /* Cursor-reactive tilt + spotlight glow on every .section-card.
+       Delegated via one listener per card instead of React state so the
+       page stays smooth even with many cards on screen at once. */
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (window.matchMedia("(hover: none)").matches) return; // skip touch devices
+
+        const cards = Array.from(document.querySelectorAll<HTMLElement>(".section-card"));
+
+        const handleMove = (e: MouseEvent) => {
+            const card = e.currentTarget as HTMLElement;
+            const rect = card.getBoundingClientRect();
+            const px = (e.clientX - rect.left) / rect.width;
+            const py = (e.clientY - rect.top) / rect.height;
+            card.style.setProperty("--mx", `${px * 100}%`);
+            card.style.setProperty("--my", `${py * 100}%`);
+            card.style.setProperty("--rx", `${(0.5 - py) * 5}deg`);
+            card.style.setProperty("--ry", `${(px - 0.5) * 5}deg`);
+        };
+        const handleEnter = (e: MouseEvent) => {
+            (e.currentTarget as HTMLElement).style.setProperty("--glow-opacity", "1");
+        };
+        const handleLeave = (e: MouseEvent) => {
+            const card = e.currentTarget as HTMLElement;
+            card.style.setProperty("--rx", `0deg`);
+            card.style.setProperty("--ry", `0deg`);
+            card.style.setProperty("--glow-opacity", "0");
+        };
+
+        cards.forEach((c) => {
+            c.addEventListener("mousemove", handleMove);
+            c.addEventListener("mouseenter", handleEnter);
+            c.addEventListener("mouseleave", handleLeave);
+        });
+
+        return () => {
+            cards.forEach((c) => {
+                c.removeEventListener("mousemove", handleMove);
+                c.removeEventListener("mouseenter", handleEnter);
+                c.removeEventListener("mouseleave", handleLeave);
+            });
+        };
+    }, []);
+
+    /* Ambient cursor glow that trails the pointer across the whole page. */
+    const glowRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (window.matchMedia("(hover: none)").matches) return;
+
+        let targetX = window.innerWidth / 2;
+        let targetY = window.innerHeight / 3;
+        let currentX = targetX;
+        let currentY = targetY;
+        let raf = 0;
+
+        const onMove = (e: MouseEvent) => {
+            targetX = e.clientX;
+            targetY = e.clientY;
+        };
+
+        const tick = () => {
+            currentX += (targetX - currentX) * 0.12;
+            currentY += (targetY - currentY) * 0.12;
+            if (glowRef.current) {
+                glowRef.current.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+            }
+            raf = requestAnimationFrame(tick);
+        };
+
+        window.addEventListener("mousemove", onMove);
+        raf = requestAnimationFrame(tick);
+
+        return () => {
+            window.removeEventListener("mousemove", onMove);
+            cancelAnimationFrame(raf);
+        };
+    }, []);
+
     return (
         <main
             className="min-h-screen bg-[#F7F6FD] bg-top bg-no-repeat"
             style={{ backgroundImage: "url('/bg.png')", backgroundSize: "100% auto" }}
         >
+            {/* Ambient cursor glow — sits behind everything, ignores pointer events */}
+            <div ref={glowRef} className="cursor-glow" aria-hidden="true" />
+
+            <style>{`
+                @keyframes barGrow {
+                    from { transform: scaleY(0); }
+                    to { transform: scaleY(1); }
+                }
+                .chart-bar {
+                    transform-origin: bottom;
+                    transform: scaleY(0);
+                }
+                .chart-bar.in-view {
+                    animation: barGrow 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+                }
+                .chart-bar-label {
+                    opacity: 0;
+                    transform: translateY(4px);
+                    transition: opacity 0.4s ease, transform 0.4s ease;
+                }
+                .chart-bar-label.in-view {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+
+                /* ---- Scroll reveal ---- */
+                .reveal {
+                    opacity: 0;
+                    transform: translateY(28px);
+                    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                                transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+                    will-change: opacity, transform;
+                }
+                .reveal-in {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+
+                /* ---- Hero entrance (plays once on load, no scroll needed) ---- */
+                @keyframes heroFadeUp {
+                    from { opacity: 0; transform: translateY(18px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                .hero-in {
+                    animation: heroFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+                }
+
+                /* ---- Cursor tilt + spotlight on cards ---- */
+                .section-card {
+                    --rx: 0deg;
+                    --ry: 0deg;
+                    --mx: 50%;
+                    --my: 50%;
+                    --glow-opacity: 0;
+                    position: relative;
+                    transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry));
+                    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+                }
+                .section-card::after {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    border-radius: inherit;
+                    background: radial-gradient(360px circle at var(--mx) var(--my), rgba(225, 29, 72, 0.10), transparent 62%);
+                    opacity: var(--glow-opacity);
+                    transition: opacity 0.3s ease;
+                    pointer-events: none;
+                    z-index: 1;
+                }
+
+                /* ---- Ambient cursor-follow glow ---- */
+                .cursor-glow {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 480px;
+                    height: 480px;
+                    margin-left: -240px;
+                    margin-top: -240px;
+                    border-radius: 9999px;
+                    background: radial-gradient(circle, rgba(76, 95, 234, 0.10) 0%, rgba(225, 29, 72, 0.06) 45%, transparent 72%);
+                    pointer-events: none;
+                    z-index: 0;
+                    will-change: transform;
+                }
+
+                @media (prefers-reduced-motion: reduce) {
+                    .reveal, .hero-in {
+                        opacity: 1 !important;
+                        transform: none !important;
+                        animation: none !important;
+                        transition: none !important;
+                    }
+                    .section-card {
+                        transform: none !important;
+                    }
+                    .chart-bar {
+                        transform: scaleY(1) !important;
+                        animation: none !important;
+                    }
+                    .cursor-glow {
+                        display: none;
+                    }
+                }
+            `}</style>
+
             {/* NAV */}
             <header
                 className="h-25 w-full backdrop-blur-md border-b border-blue-100/50 sticky top-0 z-50"
@@ -471,7 +665,7 @@ export default function Page() {
                     </nav>
 
                     <button
-                        className="text-white px-6 py-2 rounded-lg font-semibold shadow relative overflow-hidden tracking-wide"
+                        className="text-white px-6 py-2 rounded-lg font-semibold shadow relative overflow-hidden tracking-wide transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98]"
                         style={{
                             backgroundImage: "url('/btn_bg.png')",
                             backgroundSize: "cover",
@@ -489,12 +683,10 @@ export default function Page() {
             </header>
 
             {/* HERO */}
-            <section className="mx-auto max-w-[1800px] px-1 pt-10">
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-10">
                 <div className="grid gap-10 md:grid-cols-2 md:items-center">
-                    <div>
-                        <p className="text-xs font-bold tracking-widest text-[#E11D48]">
-                            E-COMMERCE CASE STUDY
-                        </p>
+                    <div className="hero-in">
+                        <p className="text-xs font-bold tracking-widest text-[#E11D48]">E-COMMERCE CASE STUDY</p>
                         <h1 className="text-[#16151A] mt-3 text-4xl font-extrabold leading-[1.1] tracking-tight md:text-5xl">
                             Tefal India
                             <br />
@@ -503,9 +695,8 @@ export default function Page() {
                             <span className="text-[#E11D48]">Optimization</span>
                         </h1>
                         <p className="mt-5 max-w-md text-[15px] leading-relaxed text-[#6E7180]">
-                            How SM Solutions enhanced the digital commerce experience for
-                            Tefal India by improving user journeys, product discoverability,
-                            and driving double-digit conversion growth.
+                            How SM Solutions enhanced the digital commerce experience for Tefal India by improving
+                            user journeys, product discoverability, and driving double-digit conversion growth.
                         </p>
 
                         <div className="mt-8 flex gap-10 text-sm">
@@ -519,25 +710,25 @@ export default function Page() {
                             </div>
                             <div>
                                 <p className="eyebrow mb-1">Duration</p>
-                                <p className="font-semibold text-[#16151A]">6 Months</p>
+                                <p className="font-semibold text-[#16151A]">6 Months Audit &amp; Redesign</p>
                             </div>
                         </div>
 
                         <div className="mt-8 flex items-center gap-4">
-                            <button className="rounded-full bg-[#E11D48] px-6 py-3 text-sm font-semibold text-white shadow-md hover:bg-[#c81b40]">
+                            <button className="rounded-full bg-[#E11D48] px-6 py-3 text-sm font-semibold text-white shadow-md transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#c81b40] active:translate-y-0">
                                 View Live Site ↗
                             </button>
-                            <button className="rounded-full border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-[#33353F] hover:bg-gray-50">
+                            <button className="rounded-full border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-[#33353F] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-gray-50 active:translate-y-0">
                                 Read Methodology ⧉
                             </button>
                         </div>
                     </div>
 
                     {/* Browser mockup */}
-                    <div className="section-card overflow-hidden">
-                        <div className="relative w-full" style={{ aspectRatio: "659 / 512" }}>
+                    <div className="hero-in overflow-hidden" style={{ animationDelay: "0.12s" }}>
+                        <div className="relative w-full" style={{ aspectRatio: "2488 / 1500" }}>
                             <Image
-                                src="/images/tefal-hero-mockup.png"
+                                src="/tefal-hero-mockup.png"
                                 alt="Tefal India website showing the airfryer hero banner, product showcase and recipe discovery cards"
                                 fill
                                 className="object-contain"
@@ -550,10 +741,10 @@ export default function Page() {
             </section>
 
             {/* STATS */}
-            <section className="mx-auto max-w-[1800px] px-1 pt-14">
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-                    {stats.map((s) => (
-                        <div key={s.label} className="section-card p-5">
+                    {stats.map((s, i) => (
+                        <Reveal key={s.label} delay={i * 70} className="section-card p-5">
                             <p className="eyebrow mb-3">{s.label}</p>
                             <div className="flex items-center justify-between">
                                 <p className="text-2xl font-extrabold text-[#16151A]">{s.value}</p>
@@ -562,466 +753,571 @@ export default function Page() {
                                 </span>
                             </div>
                             <p className="mt-1 text-xs text-[#9297A3]">{s.sub}</p>
-                        </div>
+                        </Reveal>
                     ))}
                 </div>
             </section>
 
-            {/* SCOPE + TECH ARCHITECTURE */}
-            <section className="mx-auto max-w-[1800px] px-1 pt-8">
-                <div className="grid gap-6 lg:grid-cols-2">
-                    <div className="section-card p-7">
-                        <SectionLabel>Scope of Engagement</SectionLabel>
-                        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-                            {scope.map((s) => {
-                                const iconBg: Record<string, string> = {
-                                    Strategy: "bg-rose-50",
-                                    Design: "bg-blue-50",
-                                    Development: "bg-emerald-50",
-                                    Growth: "bg-orange-50",
-                                };
-                                return (
-                                    <div key={s.title}>
-                                        <div
-                                            className={`mb-3 flex h-9 w-9 items-center justify-center rounded-full text-base ${iconBg[s.title] ?? "bg-gray-50"
-                                                }`}
-                                        >
-                                            {s.icon}
-                                        </div>
-                                        <p className="mb-2 text-sm font-bold text-[#16151A]">{s.title}</p>
-                                        <ul className="space-y-1.5 text-[12px] text-[#6E7180]">
-                                            {s.items.map((i) => (
-                                                <li key={i} className="flex gap-1.5">
-                                                    <span className="text-emerald-500">✓</span>
-                                                    <span>{i}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
+            {/* 01 EXECUTIVE SUMMARY */}
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+                <div className="grid gap-6 lg:grid-cols-[0.8fr_1.4fr] lg:items-start">
+                    <Reveal>
+                        <SectionEyebrow n="01">PROJECT OVERVIEW</SectionEyebrow>
+                        <h2 className="text-2xl font-extrabold text-[#16151A]">Executive Summary</h2>
+                        <p className="mt-3 max-w-xs text-[13px] leading-relaxed text-[#6E7180]">
+                            An overview of the digital landscape for home appliances and the strategic design steps
+                            we followed.
+                        </p>
+                    </Reveal>
 
-                    <div className="section-card p-7">
-                        <SectionLabel large>Technical Architecture</SectionLabel>
-                        <div className="grid grid-cols-2 gap-4">
-                            {techArchitecture.map((t) => (
-                                <div
-                                    key={t.title}
-                                    className="rounded-xl border border-gray-100 p-4"
-                                    style={{ backgroundColor: t.boxBg }}
-                                >
-                                    <p className="mb-3 flex items-center gap-2 text-xs font-bold text-[#33353F]">
-                                        <img src={t.icon} alt={`${t.title} icon`} className="h-10 w-10 object-contain" />
-                                        {t.title.toUpperCase()}
+                    <Reveal delay={100} className="section-card p-8">
+                        <h3 className="text-lg font-bold text-[#16151A]">{execSummary.heading}</h3>
+                        <p className="mt-3 text-[13px] leading-relaxed text-[#6E7180]">{execSummary.body}</p>
+                        <p className="mt-3 text-[13px] leading-relaxed text-[#6E7180]">{execSummary.body2}</p>
+
+                        <div className="mt-7 grid grid-cols-2 gap-6 border-t border-gray-100 pt-6 sm:grid-cols-4">
+                            {execSummary.meta.map((m) => (
+                                <div key={m.label}>
+                                    <p className="eyebrow mb-1">{m.label}</p>
+                                    <p className={`text-sm font-bold ${m.accent ? "text-[#E11D48]" : "text-[#16151A]"}`}>
+                                        {m.value}
                                     </p>
-                                    <ul className="space-y-1.5 text-[12px] text-[#6E7180]">
-                                        {t.items.map((i) => (
-                                            <li key={i} className="flex gap-1.5">
-                                                <span className="text-[#D3D4DA]">□</span>
-                                                <span>{i}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
                                 </div>
                             ))}
                         </div>
-                    </div>
+                    </Reveal>
                 </div>
             </section>
 
-            {/* ABOUT / CHALLENGE / ENGINEERING */}
-            <section className="mx-auto max-w-[1800px] px-1 pt-8">
-                <div className="grid gap-6 lg:grid-cols-3">
-                    <div className="section-card p-7">
-                        <SectionLabel>About Tefal</SectionLabel>
-                        <p className="mb-6 text-[13px] leading-relaxed text-[#6E7180]">
-                            Global leader in cookware and small appliances with a legacy of
-                            innovation spanning 70+ years and presence in 120+ countries.
-                        </p>
-                        <div className="grid grid-cols-2 gap-4">
-                            {aboutStats.map((a) => {
-                                const AboutIcon = aboutIconMap[a.icon];
-                                return (
-                                    <div key={a.label} className="flex items-start gap-3">
-                                        <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#ECEAFB] text-[#33353F]">
-                                            <AboutIcon />
-                                        </span>
-                                        <div>
-                                            {a.value && <p className="text-sm font-extrabold text-[#16151A]">{a.value}</p>}
-                                            <p className="text-[11px] text-[#9297A3]">{a.label}</p>
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
+            {/* 02 ABOUT TEFAL / PRODUCT ECOSYSTEM */}
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+                <Reveal>
+                    <SectionEyebrow n="02">ABOUT TEFAL</SectionEyebrow>
+                    <h2 className="text-2xl font-extrabold text-[#16151A]">The Brand &amp; Product Ecosystem</h2>
+                    <p className="mt-3 max-w-lg text-[13px] leading-relaxed text-[#6E7180]">
+                        Highlighting high-quality appliance categories that form Tefal&rsquo;s outstanding kitchen
+                        ecosystem.
+                    </p>
+                </Reveal>
 
-                    <div className="section-card p-7">
-                        <SectionLabel>The Challenge</SectionLabel>
-                        <div className="space-y-5">
-                            {challenges.map((c) => {
-                                const ChallengeIcon = challengeIconMap[c.icon];
-                                return (
+                <div className="mt-7 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+                    {productEcosystem.map((p, i) => (
+                        <Reveal key={p.title} delay={i * 60} className="section-card overflow-hidden">
+                            <div className="relative aspect-square w-full bg-[#F4F4F8] transition-transform duration-500 ease-out hover:scale-[1.04]">
+                                <Image src={p.image} alt={p.title} fill className="object-cover" sizes="200px" />
+                            </div>
+                            <div className="p-4">
+                                <p className="text-sm font-bold text-[#16151A]">{p.title}</p>
+                                <p className="mt-1 text-[11px] leading-relaxed text-[#9297A3]">{p.desc}</p>
+                            </div>
+                        </Reveal>
+                    ))}
+                </div>
+
+                <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+                    {brandStats.map((b, i) => (
+                        <Reveal
+                            key={b.label}
+                            delay={i * 60}
+                            className="rounded-2xl bg-[#EEEDF6] px-6 py-6 text-center transition-colors duration-300 hover:bg-[#E4E2F5]"
+                        >
+                            <p className="text-xl font-extrabold text-[#16151A]">{b.value}</p>
+                            <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-[#9297A3]">
+                                {b.label}
+                            </p>
+                        </Reveal>
+                    ))}
+                </div>
+            </section>
+
+            {/* 03 CHALLENGE / 04 RESEARCH */}
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+                <div className="grid gap-6 lg:grid-cols-2">
+                    <div>
+                        <Reveal>
+                            <NumberedEyebrow n="03">THE CHALLENGE</NumberedEyebrow>
+                            <h2 className="mt-3 text-2xl font-extrabold text-[#16151A]">The Problem Statement</h2>
+                            <p className="mt-2 mb-6 max-w-md text-[13px] leading-relaxed text-[#6E7180]">
+                                Despite a strong brand presence, Tefal India&rsquo;s digital experience had several
+                                critical gaps.
+                            </p>
+                        </Reveal>
+
+                        <Reveal delay={100} className="section-card p-7">
+                            <div className="space-y-6">
+                                {problemStatement.map((c) => (
                                     <div key={c.title} className="flex gap-3">
-                                        <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-rose-50 text-rose-400">
-                                            <ChallengeIcon />
+                                        <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-rose-50 text-rose-500">
+                                            <IconCrossCircle />
                                         </span>
                                         <div>
-                                            <p className="text-sm font-bold text-[#16151A]">{c.title}</p>
-                                            <p className="mt-0.5 text-[12px] leading-relaxed text-[#6E7180]">
+                                            <p className="text-[15px] font-bold text-[#16151A]">{c.title}</p>
+                                            <p className="mt-0.5 max-w-sm text-[13px] leading-relaxed text-[#6E7180]">
                                                 {c.desc}
                                             </p>
                                         </div>
                                     </div>
-                                );
-                            })}
-                        </div>
+                                ))}
+                            </div>
+                        </Reveal>
                     </div>
 
-                    <div className="section-card p-7">
-                        <SectionLabel>Engineering Challenges</SectionLabel>
-                        <div className="space-y-3">
-                            {engineeringChallenges.map((e) => (
-                                <div
-                                    key={e.n}
-                                    className="flex items-center gap-4 rounded-xl border border-gray-100 px-4 py-3"
-                                >
-                                    <span className="text-lg font-extrabold text-rose-200">{e.n}</span>
-                                    <p className="text-[12px] font-medium text-[#4C4F5B]">{e.text}</p>
+                    <div>
+                        <Reveal delay={80}>
+                            <NumberedEyebrow n="04">RESEARCH &amp; AUDIT</NumberedEyebrow>
+                            <h2 className="mt-3 text-2xl font-extrabold text-[#16151A]">Data-Driven Insights</h2>
+                            <p className="mt-2 mb-6 max-w-md text-[13px] leading-relaxed text-[#6E7180]">
+                                We performed live user testing, navigation audits, and visual heatmap analyses.
+                            </p>
+                        </Reveal>
+
+                        <Reveal delay={180} className="section-card p-7">
+                            <div className="mb-4 flex items-center justify-between">
+                                <p className="flex items-center gap-2 text-[11px] font-bold tracking-wide text-[#16151A]">
+                                    <span className="h-1.5 w-1.5 rounded-full bg-[#E11D48]" />
+                                    HOME HEATMAP ANALYSIS
+                                </p>
+                                <span className="text-[11px] font-bold text-amber-500">{heatmapInsight.tag}</span>
+                            </div>
+                            <div
+                                className="relative mb-4 w-full overflow-hidden rounded-xl"
+                                style={{ aspectRatio: "1596 / 390" }}
+                            >
+                                <Image
+                                    src="/heatmap.png"
+                                    alt="Heatmap overlay on the Tefal India storefront showing where user attention concentrated"
+                                    fill
+                                    className="object-cover"
+                                    sizes="(min-width: 1024px) 33vw, 100vw"
+                                />
+                                <div className="absolute inset-x-0 bottom-3 flex justify-center">
+                                    <div className="rounded-full bg-black/70 px-4 py-1.5">
+                                        <p className="text-xs font-bold text-white">{heatmapInsight.stat}</p>
+                                    </div>
                                 </div>
-                            ))}
-                        </div>
+                            </div>
+                            <p className="text-[12px] leading-relaxed text-[#6E7180]">{heatmapInsight.note}</p>
+                        </Reveal>
                     </div>
                 </div>
             </section>
 
-            {/* RESEARCH / ROADMAP / SHOWCASE */}
-            <section className="mx-auto max-w-[1800px] px-1 pt-8">
-                <div className="grid items-stretch gap-6 lg:grid-cols-3">
-                    <div className="section-card flex h-full flex-col p-7">
-                        <SectionLabel>Research &amp; Audit</SectionLabel>
-                        <p className="mb-5 text-[12px] leading-relaxed text-[#6E7180]">
-                            We conducted heatmap analysis, user testing and competitor
-                            benchmarking.
-                        </p>
-                        <div className="relative mb-5 aspect-square w-full shrink-0 overflow-hidden rounded-xl bg-black p-6">
-                            <Image
-                                src="/images/heatmap.png"
-                                alt="Mobile screen heatmap showing where users tapped most"
-                                fill
-                                className="object-contain"
-                                sizes="(min-width: 1024px) 33vw, 100vw"
-                            />
-                        </div>
-                        <ul className="mt-auto space-y-2 text-[12px] text-[#6E7180]">
-                            <li className="flex gap-2">
-                                <RoseCheck />
-                                85% of users missed important menus
-                            </li>
-                            <li className="flex gap-2">
-                                <RoseCheck />
-                                Filters hidden behind multiple clicks
-                            </li>
-                            <li className="flex gap-2">
-                                <RoseCheck />
-                                High drop-offs on mobile checkout
-                            </li>
-                        </ul>
+            {/* STRATEGY & ROADMAP (dark banner) */}
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+                <Reveal className="rounded-2xl bg-[#0A0E1A] px-8 py-10 sm:px-12">
+                    <p className="mb-3 text-[11px] font-bold tracking-widest text-[#E11D48]">
+                        OUR STRATEGY &amp; ROADMAP
+                    </p>
+                    <h2 className="text-2xl font-extrabold text-white sm:text-3xl">
+                        The 6-Step Implementation Cycle
+                    </h2>
+                    <p className="mt-3 max-w-lg text-[13px] leading-relaxed text-white/50">
+                        How SM Solutions streamlined Tefal&rsquo;s design transition from basic e-commerce to highly
+                        customized user journeys.
+                    </p>
+
+                    <div className="mt-10 grid grid-cols-2 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
+                        {roadmap.map((r, i) => (
+                            <Reveal key={r.n} delay={i * 80} className="pr-4">
+                                <p className="text-2xl font-extrabold text-[#E11D48]">{r.n}</p>
+                                <p className="mt-3 text-sm font-bold text-white">{r.title}</p>
+                                <p className="mt-1 text-[11px] leading-relaxed text-white/45">{r.desc}</p>
+                            </Reveal>
+                        ))}
+                    </div>
+                </Reveal>
+            </section>
+
+            {/* 06 SOLUTION SHOWCASE */}
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+                <Reveal>
+                    <SectionEyebrow n="06">SOLUTION SHOWCASE</SectionEyebrow>
+                    <h2 className="text-2xl font-extrabold text-[#16151A]">The Redesigned Experience</h2>
+                    <p className="mt-3 max-w-lg text-[13px] leading-relaxed text-[#6E7180]">
+                        We rebuilt essential touchpoints to present beautiful product renders and smooth e-commerce
+                        steps.
+                    </p>
+                </Reveal>
+
+                <div className="mt-7 grid gap-6 items-stretch lg:grid-cols-[1.2fr_1fr]">
+                    <div className="flex flex-col gap-6">
+                        {redesignCards.map((c, i) => (
+                            <Reveal key={c.title} delay={i * 100} className="section-card p-6">
+                                <p className="text-xl font-bold text-[#16151A]">{c.title}</p>
+                                <p className="mt-2 text-[15px] leading-relaxed text-[#6E7180]">{c.desc}</p>
+                                <span
+                                    className={`mt-4 inline-block rounded-full px-3 py-1 text-[11px] font-bold ${c.badgeColor}`}
+                                >
+                                    {c.badge}
+                                </span>
+                            </Reveal>
+                        ))}
                     </div>
 
-                    <div className="section-card flex h-full flex-col p-7">
-                        <SectionLabel>Our Strategy &amp; Roadmap</SectionLabel>
-                        <p className="mb-6 text-[12px] leading-relaxed text-[#6E7180]">
-                            Deep audit &amp; stakeholder alignment, followed by structured
-                            navigation, search &amp; categories.
-                        </p>
-                        <div className="mx-auto grid max-w-[340px] grid-cols-3 place-items-center gap-x-4 gap-y-6">
-                            {roadmap.map((r) => (
-                                <div key={r.n} className="flex flex-col items-center text-center">
-                                    <div
-                                        className={`mx-auto mb-2 flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold ${r.bg} ${r.text}`}
-                                    >
-                                        {r.n}
+                    {/* Right card: stretches to match the combined height of the two left cards */}
+                    <Reveal delay={120} className="section-card overflow-hidden flex h-full flex-col">
+                        <div className="flex items-center gap-1.5 border-b border-gray-100 px-4 py-3">
+                            <span className="h-2.5 w-2.5 rounded-full bg-rose-400" />
+                            <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
+                            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
+                            <div className="mx-auto flex items-center gap-1.5 rounded-md bg-[#F1F1F5] px-4 py-1 text-[10px] text-[#9297A3]">
+                                <IconLock />
+                                {recipeCard.urlPath}
+                            </div>
+                        </div>
+
+                        <div className="flex flex-1 flex-col p-5">
+                            <div className="mb-1 flex items-center justify-between">
+                                <p className="text-[10px] font-bold tracking-widest text-[#E11D48]">
+                                    {recipeCard.kicker}
+                                </p>
+                                <span className="flex items-center gap-1 rounded-full bg-[#F1F1F5] px-3 py-1 text-[11px] font-medium text-[#6E7180]">
+                                    <IconClock /> {recipeCard.time}
+                                </span>
+                            </div>
+
+                            <p className="mb-0 text-lg font-extrabold text-[#16151A]">{recipeCard.title}</p>
+
+                            <div className="grid flex-1 grid-cols-[1.3fr_1fr] items-stretch gap-4">
+                                <div
+                                    className="relative w-full overflow-hidden rounded-xl"
+                                    style={{
+                                        backgroundImage:
+                                            "linear-gradient(45deg, #eee 25%, transparent 25%), linear-gradient(-45deg, #eee 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #eee 75%), linear-gradient(-45deg, transparent 75%, #eee 75%)",
+                                        backgroundSize: "20px 20px",
+                                        backgroundPosition: "0 0, 0 10px, 10px -10px, -10px 0px",
+                                        backgroundColor: "#fafafa",
+                                    }}
+                                >
+                                    <Image
+                                        src="/images/recipes/tandoori-paneer.png"
+                                        alt="Crispy Tandoori Paneer recipe with linked Tefal Easy Fry & Grill product"
+                                        fill
+                                        className="object-contain p-4"
+                                        sizes="300px"
+                                    />
+                                </div>
+
+                                <div className="overflow-y-auto rounded-xl bg-[#F7F7FA] p-4">
+                                    <p className="mb-2 text-[9px] font-bold tracking-widest text-[#9297A3]">
+                                        {recipeCard.applianceLabel}
+                                    </p>
+                                    <p className="mb-3 text-[13px] font-bold leading-tight text-[#16151A]">
+                                        {recipeCard.product}
+                                    </p>
+                                    <div className="relative mb-3 h-16 w-full overflow-hidden rounded-md bg-white">
+                                        <Image
+                                            src="/images/products/easy-fry-grill.png"
+                                            alt={recipeCard.product}
+                                            fill
+                                            className="object-contain p-2"
+                                            sizes="150px"
+                                        />
                                     </div>
-                                    <div className="flex min-h-[76px] flex-col items-center">
-                                        <p className="text-xs font-semibold text-[#16151A]">{r.title}</p>
-                                        <p className="mt-1 text-[10px] leading-relaxed text-[#9297A3]">
-                                            {r.desc}
+                                    <div className="flex items-baseline gap-2">
+                                        <p className="text-[13px] font-extrabold text-[#16151A]">{recipeCard.price}</p>
+                                        <p className="text-[11px] text-[#9297A3] line-through">
+                                            {recipeCard.originalPrice}
                                         </p>
                                     </div>
                                 </div>
-                            ))}
-                        </div>
-                    </div>
+                            </div>
 
-                    <div className="section-card flex h-full flex-col p-7">
-                        <SectionLabel>Solution Showcase</SectionLabel>
-                        <p className="mb-5 text-[12px] leading-relaxed text-[#6E7180]">
-                            Rebuilt key touchpoints for a delightful and conversion-friendly
-                            experience.
+                            <button className="mt-4 w-full rounded-lg bg-[#E11D48] py-2.5 text-[11px] font-bold tracking-wide text-white transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0">
+                                {recipeCard.cta}
+                            </button>
+                        </div>
+                    </Reveal>
+                </div>
+            </section>
+
+            {/* 07 BEFORE VS AFTER */}
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+                <Reveal>
+                    <SectionEyebrow n="07">BEFORE VS AFTER</SectionEyebrow>
+                    <h2 className="text-2xl font-extrabold text-[#16151A]">Visual Improvement Analysis</h2>
+                    <p className="mt-3 max-w-lg text-[13px] leading-relaxed text-[#6E7180]">
+                        Direct comparison of the older interface patterns vs the newly designed experiences.
+                    </p>
+                </Reveal>
+
+                <div className="mt-7 grid gap-6 lg:grid-cols-2">
+                    {/* BEFORE */}
+                    <Reveal className="section-card p-6">
+                        <p className="mb-4 text-[11px] font-bold tracking-widest text-[#9297A3]">
+                            {visualCompare.before.label}
                         </p>
-                        <div className="relative mb-5 aspect-square w-full shrink-0 overflow-hidden rounded-xl bg-slate-900 p-6">
-                            <Image
-                                src="/images/interface-showcase.png"
-                                alt="Redesigned desktop and mobile interface showcase"
-                                fill
-                                className="object-contain"
-                                sizes="(min-width: 1024px) 33vw, 100vw"
-                            />
-                        </div>
-                        <div className="mt-auto">
-                            <p className="text-3xl font-extrabold text-[#16151A]">+32%</p>
-                            <p className="eyebrow">Increase in Category CTR</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* TECH STACK / INFRA / BEFORE-AFTER */}
-            <section className="mx-auto max-w-[1800px] px-1 pt-8">
-                <div className="grid gap-6 lg:grid-cols-3">
-                    <div className="section-card p-7">
-                        <SectionLabel>Technology Stack</SectionLabel>
-                        <div className="flex flex-wrap gap-2">
-                            {techStack.map((t) => {
-                                const styleMap: Record<string, string> = {
-                                    React: "border border-blue-300 bg-white text-blue-600",
-                                    AWS: "border border-orange-300 bg-white text-orange-500",
-                                    Cloudflare: "border border-rose-300 bg-white text-rose-500",
-                                    Redis: "border border-rose-300 bg-white text-rose-500",
-                                    Hotjar: "border border-orange-300 bg-white text-orange-500",
-                                };
-                                const style =
-                                    styleMap[t] ?? "border border-gray-200 bg-white text-[#33353F]";
-                                return (
-                                    <span
-                                        key={t}
-                                        className={`rounded-md px-3 py-1.5 text-[11px] font-medium ${style}`}
+                        <div className="mb-4 space-y-2 rounded-xl border border-gray-100 bg-white p-5">
+                            <div className="h-3 w-2/3 rounded bg-gray-200" />
+                            <div className="h-3 w-1/2 rounded bg-gray-200" />
+                            <div className="mt-3 grid grid-cols-4 gap-2">
+                                {visualCompare.before.items.map((item) => (
+                                    <div
+                                        key={item}
+                                        className="flex h-14 items-center justify-center rounded-lg bg-gray-100"
                                     >
-                                        {t}
-                                    </span>
-                                );
-                            })}
+                                        <span className="text-[11px] font-medium text-gray-400">{item}</span>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                        <div className="flex items-start gap-2 rounded-xl border border-rose-100 bg-rose-50 px-4 py-3 text-[12px] leading-relaxed text-rose-500">
+                            <span>⚠️</span>
+                            {visualCompare.before.note}
+                        </div>
+                    </Reveal>
 
-                    <div className="section-card p-7">
-                        <SectionLabel>Infrastructure &amp; Security</SectionLabel>
-                        <ul className="space-y-2.5 text-[12px] text-[#6E7180]">
-                            {infraSecurity.map((i) => (
-                                <li key={i} className="flex items-center gap-2">
-                                    <Check />
-                                    {i}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    <div className="section-card p-7">
+                    {/* AFTER */}
+                    <Reveal delay={120} className="section-card p-6">
                         <div className="mb-4 flex items-center justify-between">
-                            <SectionLabel>Before vs After</SectionLabel>
+                            <p className="text-[11px] font-bold tracking-widest text-[#9297A3]">
+                                {visualCompare.after.label}
+                            </p>
+                            <span className="text-[11px] font-bold tracking-wide text-[#E11D48]">
+                                {visualCompare.after.tag}
+                            </span>
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <div className="relative mb-3 h-20 w-full overflow-hidden rounded-lg bg-gray-500">
-                                    <Image
-                                        src="/images/before-thumb.png"
-                                        alt="Before: cluttered dashboard layout"
-                                        fill
-                                        className="object-cover"
-                                        sizes="200px"
-                                    />
-                                </div>
-                                <p className="mb-2 text-[11px] font-bold text-[#9297A3]">BEFORE</p>
-                                <ul className="space-y-1 text-[11px] text-[#6E7180]">
-                                    {beforeAfter.before.map((b) => (
-                                        <li key={b} className="flex gap-1">
-                                            <Cross />
-                                            {b}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                            <div>
-                                <div className="relative mb-3 h-20 w-full overflow-hidden rounded-lg bg-slate-900">
-                                    <Image
-                                        src="/images/after-thumb.png"
-                                        alt="After: clean modern UI with teal accent"
-                                        fill
-                                        className="object-cover"
-                                        sizes="200px"
-                                    />
-                                </div>
-                                <p className="mb-2 text-[11px] font-bold text-[#9297A3]">AFTER</p>
-                                <ul className="space-y-1 text-[11px] text-[#6E7180]">
-                                    {beforeAfter.after.map((a) => (
-                                        <li key={a} className="flex gap-1">
-                                            <Check />
-                                            {a}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* RESULTS DASHBOARD / BUSINESS IMPACT / DESIGN SYSTEM / TEAM */}
-            <section className="mx-auto max-w-[1800px] px-1 pt-8">
-                <div className="grid gap-6 lg:grid-cols-4">
-                    <div className="section-card p-6">
-                        <div className="mb-5 flex items-center justify-between">
-                            <SectionLabel>Results Dashboard</SectionLabel>
-                            <div className="flex items-center gap-3 text-[10px] font-medium text-[#6E7180]">
-                                <span className="flex items-center gap-1">
-                                    <span className="h-2.5 w-2.5 rounded-sm bg-gray-300" />
-                                    Before
-                                </span>
-                                <span className="flex items-center gap-1">
-                                    <span className="h-2.5 w-2.5 rounded-sm bg-[#E11D48]" />
-                                    After
-                                </span>
-                            </div>
-                        </div>
-                        <div className="space-y-4">
-                            {resultsDashboard.map((r) => {
-                                const isNegative = r.value.startsWith("-");
-                                return (
-                                    <div key={r.label}>
-                                        <p className="mb-1.5 text-[11px] text-[#6E7180]">{r.label}</p>
-                                        <div className="flex items-center gap-2">
-                                            <div className="flex h-1.5 flex-1 overflow-hidden rounded-full bg-gray-100">
-                                                {isNegative ? (
-                                                    <>
-                                                        <div
-                                                            className="h-full rounded-l-full bg-[#E11D48]"
-                                                            style={{ width: `${r.afterPct}%` }}
-                                                        />
-                                                        <div
-                                                            className="h-full bg-gray-300"
-                                                            style={{ width: `${r.beforePct}%` }}
-                                                        />
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <div
-                                                            className="h-full rounded-l-full bg-gray-300"
-                                                            style={{ width: `${r.beforePct}%` }}
-                                                        />
-                                                        <div
-                                                            className="h-full bg-[#E11D48]"
-                                                            style={{ width: `${r.afterPct}%` }}
-                                                        />
-                                                    </>
-                                                )}
-                                            </div>
-                                            <span className="w-12 text-right text-[11px] font-bold text-[#16151A]">
-                                                {r.value}
-                                            </span>
+                        <div className="mb-4 rounded-xl border border-gray-100 p-5">
+                            <p className="mb-3 text-sm font-bold text-[#16151A]">{visualCompare.after.heading}</p>
+                            <div className="grid grid-cols-2 gap-3">
+                                {visualCompare.after.items.map((item) => (
+                                    <div
+                                        key={item.name}
+                                        className="flex items-center gap-2.5 rounded-lg bg-[#F7F7FA] p-2.5 transition-colors duration-300 hover:bg-[#EFEFF7]"
+                                    >
+                                        <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-md bg-[#EFEFF4]">
+                                            <Image
+                                                src={item.image}
+                                                alt={item.name}
+                                                fill
+                                                className="object-cover"
+                                                sizes="40px"
+                                            />
+                                        </div>
+                                        <div>
+                                            <p className="text-[11px] font-bold leading-tight text-[#16151A]">
+                                                {item.name}
+                                            </p>
+                                            <p className="text-[10px] text-[#9297A3]">{item.sub}</p>
                                         </div>
                                     </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    <div className="section-card p-6">
-                        <SectionLabel>Business Impact</SectionLabel>
-                        <div className="overflow-hidden rounded-lg border border-gray-100 text-[11px]">
-                            <div className="grid grid-cols-2">
-                                <span className="bg-rose-50 py-2 text-center font-bold text-rose-500">
-                                    BEFORE
-                                </span>
-                                <span className="bg-emerald-50 py-2 text-center font-bold text-emerald-500">
-                                    AFTER
-                                </span>
-                            </div>
-                            {businessImpact.map((b, idx) => (
-                                <div
-                                    key={b.before}
-                                    className={`grid grid-cols-2 ${idx !== businessImpact.length - 1 ? "border-b border-gray-100" : ""
-                                        }`}
-                                >
-                                    <span className="px-2 py-3 text-center text-[#33353F]">{b.before}</span>
-                                    <span className="px-2 py-3 text-center text-[#33353F]">{b.after}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="section-card p-6">
-                        <SectionLabel>Design System</SectionLabel>
-                        <p className="mb-2 text-[10px] font-bold text-[#9297A3]">COLOR PALETTE</p>
-                        <div className="mb-4 flex gap-2">
-                            <span className="h-6 w-6 rounded-full bg-[#E11D48]" />
-                            <span className="h-6 w-6 rounded-full bg-gray-900" />
-                            <span className="h-6 w-6 rounded-full bg-gray-300" />
-                            <span className="h-6 w-6 rounded-full border border-gray-200 bg-white" />
-                        </div>
-                        <p className="mb-2 text-[10px] font-bold text-[#9297A3]">TYPOGRAPHY</p>
-                        <div className="mb-4 flex items-center gap-3">
-                            <p className="text-3xl font-extrabold text-[#16151A]">Aa</p>
-                            <div>
-                                <p className="text-xs font-bold text-[#16151A]">Din Pro</p>
-                                <p className="text-[10px] leading-relaxed text-[#9297A3]">
-                                    Clean, modern &amp; highly legible type system.
-                                </p>
+                                ))}
                             </div>
                         </div>
-                        <p className="mb-2 text-[10px] font-bold text-[#9297A3]">COMPONENTS</p>
-                        <div className="flex flex-col gap-2">
-                            <button className="rounded-md bg-[#E11D48] py-1.5 text-center text-[11px] font-semibold text-white">
-                                Primary Button
-                            </button>
-                            <button className="rounded-md border border-gray-200 py-1.5 text-center text-[11px] font-semibold text-[#4C4F5B]">
-                                Secondary Button
-                            </button>
-                            <div className="mt-1 flex gap-3 text-[#9297A3]">
-                                <IconHeartOutline />
-                                <IconBagOutline />
-                                <IconSearch />
-                                <IconHomeOutline />
-                                <IconUserOutline />
-                            </div>
+                        <div className="flex items-start gap-2 rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-[12px] leading-relaxed text-emerald-600">
+                            <span>✅</span>
+                            {visualCompare.after.note}
                         </div>
-                    </div>
-
-                    <div className="section-card p-6">
-                        <SectionLabel>Project Team</SectionLabel>
-                        <ul className="space-y-3">
-                            {projectTeam.map((member) => (
-                                <li key={member.role} className="flex items-center gap-3">
-                                    <img
-                                        src={member.photo}
-                                        alt={member.role}
-                                        className="h-9 w-9 shrink-0 rounded-full object-cover"
-                                    />
-                                    <div>
-                                        <p className="text-[12px] font-bold text-[#16151A]">{member.role}</p>
-                                        <p className="text-[10px] text-[#9297A3]">{member.subtitle}</p>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                    </Reveal>
                 </div>
             </section>
 
-            {/* TESTIMONIAL + CTA */}
-            {/* TESTIMONIAL + CTA */}
-            <section className="mx-auto max-w-[1800px] px-1 pt-8">
-                <div className="grid items-stretch gap-6 lg:grid-cols-[1fr_1.6fr]">
-                    <div className="section-card flex h-full flex-col justify-between bg-white p-7">
+            {/* 08 RESULTS DASHBOARD */}
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+                <Reveal className="section-card p-8">
+                    <SectionEyebrow n="08">RESULTS DASHBOARD</SectionEyebrow>
+                    <div className="grid gap-8 lg:grid-cols-[0.9fr_1.4fr]">
                         <div>
-                            <SectionLabel>Client Testimonial</SectionLabel>
+                            <h2 className="text-2xl font-extrabold leading-tight text-[#16151A]">
+                                Unprecedented
+                                <br />
+                                Commercial Growth
+                            </h2>
+                            <p className="mt-3 max-w-xs text-[13px] leading-relaxed text-[#6E7180]">
+                                In the 6 months following deployment, digital store transactions and engagement
+                                metrics reached record highs.
+                            </p>
+
+                            <div className="mt-7 space-y-4">
+                                {resultsMetrics.map((m, i) => (
+                                    <div
+                                        key={m.label}
+                                        className="flex items-center justify-between rounded-xl border border-gray-100 px-4 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-sm"
+                                        style={{ transitionDelay: `${i * 40}ms` }}
+                                    >
+                                        <p className="text-[12px] font-medium text-[#4C4F5B]">{m.label}</p>
+                                        <p className="text-[12px] font-extrabold text-emerald-600">{m.value}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div>
+                            <div className="mb-5 flex items-center justify-between">
+                                <p className="text-[12px] font-bold text-[#16151A]">
+                                    Monthly Organic Traffic (Before vs After)
+                                </p>
+                                <div className="flex items-center gap-4 text-[11px] font-semibold">
+                                    <span className="flex items-center gap-1.5 text-[#6E7180]">
+                                        <span className="h-2 w-2 rounded-full bg-gray-300" />
+                                        Before
+                                    </span>
+                                    <span className="flex items-center gap-1.5 text-[#E11D48]">
+                                        <span className="h-2 w-2 rounded-full bg-[#E11D48]" />
+                                        After
+                                    </span>
+                                </div>
+                            </div>
+                            <div ref={chartRef} className="rounded-2xl bg-[#F7F7FA] px-6 pb-4 pt-6">
+                                <div className="flex h-40 items-end justify-between gap-6">
+                                    {trafficChart.map((m, idx) => (
+                                        <div key={m.label} className="flex flex-1 flex-col items-center gap-2">
+                                            <div className="flex h-40 items-end gap-1.5">
+                                                <div
+                                                    className={`chart-bar w-4 rounded-t-sm bg-gray-300 ${chartInView ? "in-view" : ""}`}
+                                                    style={{
+                                                        height: `${(m.before / maxBar) * 100}%`,
+                                                        animationDelay: `${idx * 0.12}s`,
+                                                    }}
+                                                />
+                                                <div
+                                                    className={`chart-bar w-4 rounded-t-sm bg-[#E11D48] ${chartInView ? "in-view" : ""}`}
+                                                    style={{
+                                                        height: `${(m.after / maxBar) * 100}%`,
+                                                        animationDelay: `${idx * 0.12 + 0.08}s`,
+                                                    }}
+                                                />
+                                            </div>
+                                            <p
+                                                className={`chart-bar-label text-[10px] font-bold text-[#9297A3] ${chartInView ? "in-view" : ""}`}
+                                                style={{ transitionDelay: `${idx * 0.12 + 0.5}s` }}
+                                            >
+                                                {m.label}
+                                            </p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Reveal>
+            </section>
+
+            {/* DESIGN SYSTEM */}
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+                <Reveal>
+                    <p className="mb-3 text-[11px] font-bold tracking-widest text-[#E11D48]">DESIGN SYSTEM</p>
+                    <h2 className="text-2xl font-extrabold text-[#16151A]">Components &amp; Guidelines</h2>
+                    <p className="mt-3 max-w-lg text-[13px] leading-relaxed text-[#6E7180]">
+                        We developed a cohesive UI toolkit to allow Tefal India&rsquo;s local marketing teams to launch
+                        new sub-pages effortlessly.
+                    </p>
+                </Reveal>
+
+                <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                    <Reveal delay={0} className="section-card p-6">
+                        <p className="mb-4 border-b border-gray-100 pb-3 text-sm font-bold tracking-wide text-[#16151A]">
+                            COLOR PALETTE
+                        </p>
+                        <div className="space-y-3">
+                            {colorPalette.map((c) => (
+                                <div key={c.name} className="flex items-center gap-2.5">
+                                    <span
+                                        className={`h-5 w-5 rounded-md transition-transform duration-200 hover:scale-125 ${c.bordered ? "border border-gray-200" : ""}`}
+                                        style={{ backgroundColor: c.hex }}
+                                    />
+                                    <p className="text-[12px] font-semibold text-[#16151A]">
+                                        {c.hex}{" "}
+                                        <span className="font-normal text-[#9297A3]">({c.name})</span>
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </Reveal>
+
+                    <Reveal delay={70} className="section-card p-6">
+                        <p className="mb-4 border-b border-gray-100 pb-3 text-sm font-bold tracking-wide text-[#16151A]">
+                            TYPOGRAPHY
+                        </p>
+                        <p className="text-4xl font-extrabold text-[#16151A]">Aa</p>
+                        <p className="mt-2 text-xs font-bold text-[#16151A]">Inter Font Family</p>
+                        <p className="mt-1 text-[10px] leading-relaxed text-[#9297A3]">
+                            Highly legible workhorse font optimized for screens.
+                        </p>
+                    </Reveal>
+
+                    <Reveal delay={140} className="section-card p-6">
+                        <p className="mb-4 border-b border-gray-100 pb-3 text-sm font-bold tracking-wide text-[#16151A]">
+                            BUTTONS
+                        </p>
+                        <div className="flex flex-col gap-2">
+                            <button className="rounded-md bg-[#E11D48] py-2 text-center text-[11px] font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5">
+                                Primary CTA
+                            </button>
+                            <button className="rounded-md border border-gray-200 py-2 text-center text-[11px] font-semibold text-[#4C4F5B] transition-transform duration-200 hover:-translate-y-0.5">
+                                Secondary Button
+                            </button>
+                        </div>
+                    </Reveal>
+
+                    <Reveal delay={210} className="section-card p-6">
+                        <p className="mb-4 border-b border-gray-100 pb-3 text-sm font-bold tracking-wide text-[#16151A]">
+                            COMPONENTS
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                            {componentChips.map((chip) => (
+                                <span
+                                    key={chip.label}
+                                    className={`rounded-full px-3 py-1.5 text-[10px] font-bold transition-transform duration-200 hover:scale-105 ${chip.color}`}
+                                >
+                                    {chip.label}
+                                </span>
+                            ))}
+                        </div>
+                        <div className="mt-3 flex gap-3 text-[#9297A3]">
+                            <IconHeartOutline />
+                            <IconBagOutline />
+                            <IconSearch />
+                            <IconHomeOutline />
+                            <IconUserOutline />
+                        </div>
+                    </Reveal>
+                </div>
+            </section>
+
+            {/* TESTIMONIAL + RATING */}
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+                <div className="grid items-stretch gap-6 lg:grid-cols-[1.6fr_1fr]">
+                    <Reveal className="relative flex h-full flex-col justify-between overflow-hidden rounded-2xl bg-[#0A0E1A] px-8 py-8 sm:px-10">
+                        <p className="text-3xl font-serif leading-none text-[#E11D48]">&ldquo;</p>
+                        <p className="text-[15px] leading-relaxed text-white/80">{testimonial.quote}</p>
+                        <div className="mt-6 flex items-center gap-3">
+                            <img
+                                src={testimonial.photo}
+                                alt={testimonial.name}
+                                className="h-9 w-9 shrink-0 rounded-full object-cover"
+                            />
+                            <div>
+                                <p className="text-sm font-bold text-white">{testimonial.name}</p>
+                                <p className="text-xs text-white/50">{testimonial.role}</p>
+                            </div>
+                        </div>
+                    </Reveal>
+
+                    <Reveal delay={120} className="section-card flex h-full flex-col items-center justify-center bg-[#0A0E1A] p-8 text-center">
+                        <p className="text-4xl font-extrabold text-white">4.9/5</p>
+                        <p className="mt-2 text-[11px] font-bold tracking-widest text-white/50">CLIENT RATING</p>
+                        <div className="mt-3 flex gap-1">
+                            {[1, 2, 3, 4, 5].map((i) => (
+                                <IconStar key={i} />
+                            ))}
+                        </div>
+                    </Reveal>
+                </div>
+            </section>
+
+            {/* TESTIMONIAL CARD (secondary) + CTA */}
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-8">
+                <div className="grid items-stretch gap-6 lg:grid-cols-[1fr_1.6fr]">
+                    <Reveal className="section-card flex h-full flex-col justify-between bg-white p-7">
+                        <div>
+                            <p className="mb-4 text-[11px] font-bold tracking-widest text-[#E11D48]">
+                                CLIENT TESTIMONIAL
+                            </p>
                             <p className="mb-2 text-3xl font-serif leading-none text-rose-500">&ldquo;</p>
                             <p className="text-[15px] leading-relaxed text-[#4C4F5B]">
-                                SM Solutions truly understood our brand and our customers. The
-                                new experience is beautiful, fast, and delivering outstanding
-                                business results.
+                                SM Solutions truly understood our brand and our customers. The new experience is
+                                beautiful, fast, and delivering outstanding business results.
                             </p>
                         </div>
                         <div className="mt-6 flex items-center gap-3">
@@ -1035,9 +1331,9 @@ export default function Page() {
                                 <p className="text-xs text-[#9297A3]">Head of Digital, Tefal India</p>
                             </div>
                         </div>
-                    </div>
+                    </Reveal>
 
-                    <div className="relative flex h-full min-h-[280px] items-center justify-between gap-6 overflow-hidden rounded-2xl bg-[#0A0E1A] px-8 py-10 sm:px-12">
+                    <Reveal delay={120} className="relative flex h-full min-h-[280px] items-center justify-between gap-6 overflow-hidden rounded-2xl bg-[#0A0E1A] px-8 py-10 sm:px-12">
                         <div className="max-w-sm">
                             <h3 className="text-2xl font-extrabold uppercase leading-tight text-white sm:text-3xl">
                                 Ready to achieve similar results?
@@ -1045,7 +1341,7 @@ export default function Page() {
                             <p className="mt-3 text-sm leading-relaxed text-white/60 sm:text-[15px]">
                                 Let&apos;s build a digital experience that drives growth.
                             </p>
-                            <button className="mt-6 flex items-center gap-2 rounded-full bg-[#E11D48] px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#c81b40]">
+                            <button className="mt-6 flex items-center gap-2 rounded-full bg-[#E11D48] px-6 py-3 text-sm font-semibold text-white shadow-md transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#c81b40] active:translate-y-0">
                                 Book a Strategy Call
                                 <span aria-hidden="true">→</span>
                             </button>
@@ -1060,12 +1356,13 @@ export default function Page() {
                                 sizes="192px"
                             />
                         </div>
-                    </div>
+                    </Reveal>
                 </div>
             </section>
+
             {/* SUCCESS STORY BANNER */}
-            <section className="mx-auto max-w-[1800px] px-1 pt-6">
-                <div className="flex flex-col items-start justify-between gap-6 rounded-2xl bg-[#4C5FEA] px-8 py-8 sm:flex-row sm:items-center">
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-6">
+                <Reveal className="flex flex-col items-start justify-between gap-6 rounded-2xl bg-[#4C5FEA] px-8 py-8 sm:flex-row sm:items-center">
                     <div className="flex items-center gap-4">
                         <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white">
                             <img src="/images/icons/rocket.png" alt="" className="h-7 w-7" />
@@ -1079,25 +1376,21 @@ export default function Page() {
                             </p>
                         </div>
                     </div>
-                    <button className="shrink-0 whitespace-nowrap rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#4C5FEA] hover:bg-gray-50">
+                    <button className="shrink-0 whitespace-nowrap rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#4C5FEA] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-gray-50 active:translate-y-0">
                         Book a Free Strategy Call →
                     </button>
-                </div>
+                </Reveal>
             </section>
 
             {/* FOOTER */}
-            <footer className="mx-auto max-w-[1800px] px-1 pb-10 pt-16">
-                <div className="rounded-3xl border border-white/60 bg-white/20 px-10 pt-10 backdrop-blur-sm">
+            <footer className="relative z-[1] mx-auto max-w-[1800px] px-1 pb-10 pt-16">
+                <Reveal as="div" className="rounded-3xl border border-white/60 bg-white/20 px-10 pt-10 backdrop-blur-sm">
                     <div className="grid divide-y divide-gray-200/70 pb-8 md:grid-cols-4 md:divide-x md:divide-y-0">
                         <div className="pb-6 md:pb-0 md:pr-8">
-                            <img
-                                src="/logo.svg"
-                                alt="SM Solutions Logo"
-                                className="mb-3 h-10 w-auto object-contain"
-                            />
+                            <img src="/logo.svg" alt="SM Solutions Logo" className="mb-3 h-10 w-auto object-contain" />
                             <p className="max-w-xs text-[12px] leading-relaxed text-[#4C4F5B]">
-                                We build high-performance digital ecosystems that drive
-                                measurable growth for global brands.
+                                We build high-performance digital ecosystems that drive measurable growth for global
+                                brands.
                             </p>
                         </div>
                         <div className="py-6 md:py-0 md:px-8">
@@ -1153,7 +1446,7 @@ export default function Page() {
                                 placeholder="Enter Your Email"
                                 className="w-full bg-transparent text-[12px] outline-none placeholder:text-[#9297A3]"
                             />
-                            <button className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#5593FF] text-white">
+                            <button className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#5593FF] text-white transition-transform duration-200 hover:scale-110">
                                 →
                             </button>
                         </div>
@@ -1161,9 +1454,7 @@ export default function Page() {
 
                     <div className="flex flex-col items-start justify-between gap-3 border-t border-gray-200/70 py-6 text-[11px] md:flex-row md:items-center">
                         <div className="space-y-1">
-                            <p className="font-bold text-[#2E5C8A]">
-                                © 2026 SMSolutions. Copyright and rights reserved
-                            </p>
+                            <p className="font-bold text-[#2E5C8A]">© 2026 SMSolutions. Copyright and rights reserved</p>
                             <div className="flex flex-wrap gap-x-2 text-[#6E7180]">
                                 <span>Terms and Condtions</span>
                                 <span>•</span>
@@ -1173,21 +1464,21 @@ export default function Page() {
                             </div>
                         </div>
                         <div className="flex gap-3">
-                            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#7C8194] text-white">
+                            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#7C8194] text-white transition-transform duration-200 hover:-translate-y-1 hover:bg-[#E11D48]">
                                 <IconLinkedIn />
                             </span>
-                            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#7C8194] text-white">
+                            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#7C8194] text-white transition-transform duration-200 hover:-translate-y-1 hover:bg-[#E11D48]">
                                 <IconTwitter />
                             </span>
-                            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#7C8194] text-white">
+                            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#7C8194] text-white transition-transform duration-200 hover:-translate-y-1 hover:bg-[#E11D48]">
                                 <IconInstagram />
                             </span>
-                            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#7C8194] text-white">
+                            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#7C8194] text-white transition-transform duration-200 hover:-translate-y-1 hover:bg-[#E11D48]">
                                 <IconSkype />
                             </span>
                         </div>
                     </div>
-                </div>
+                </Reveal>
             </footer>
         </main>
     );

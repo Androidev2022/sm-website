@@ -2,17 +2,12 @@
 import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
-  const cursorRef = useRef<HTMLDivElement>(null);
-  const cursorDotRef = useRef<HTMLDivElement>(null);
-  const cursorTrailsRef = useRef<HTMLDivElement[]>([]);
+  const arrowRef = useRef<HTMLDivElement>(null);
+  const mousePos = useRef({ x: -200, y: -200 });
   const [scrollY, setScrollY] = useState(0);
   const [cursorHovering, setCursorHovering] = useState(false);
   const [cursorClicking, setCursorClicking] = useState(false);
-  const mousePos = useRef({ x: 0, y: 0 });
-  const cursorPos = useRef({ x: 0, y: 0 });
-  const trailPositions = useRef<{ x: number; y: number }[]>(
-    Array(8).fill({ x: 0, y: 0 })
-  );
+
   // ─── Number counter animation ─────────────────────────────────────────────
   useEffect(() => {
     const parseValue = (raw: string) => {
@@ -121,95 +116,96 @@ export default function Home() {
     { label: "Contact", href: "#" },
   ];
 
-  // ─── Cursor animation RAF loop ───────────────────────────────────────────────
+  // ─── Arrow cursor + sparkle trail ────────────────────────────────────────
   useEffect(() => {
-    let rafId: number;
+    let lastSpawn = 0;
+    const COLORS = ["#a78bfa", "#60a5fa", "#f472b6", "#fbbf24", "#6777AD", "#34d399"];
 
-    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+    const spawnSparkle = (x: number, y: number) => {
+      const el = document.createElement("div");
+      const size = 6 + Math.random() * 8;
+      const angle = Math.random() * Math.PI * 2;
+      const dist = 18 + Math.random() * 28;
+      const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+      const rot = Math.random() * 360;
+      const dur = 500 + Math.random() * 400;
+
+      // star shape via clip-path
+      el.style.cssText = `
+        position:fixed;pointer-events:none;z-index:9997;
+        width:${size}px;height:${size}px;
+        left:${x - size / 2}px;top:${y - size / 2}px;
+        background:${color};
+        clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+        transform:rotate(${rot}deg) scale(1);
+        opacity:1;
+        transition:transform ${dur}ms cubic-bezier(.22,1,.36,1), opacity ${dur}ms ease, left ${dur}ms ease, top ${dur}ms ease;
+        box-shadow:0 0 6px ${color}88;
+      `;
+      document.body.appendChild(el);
+
+      requestAnimationFrame(() => {
+        el.style.left = `${x + Math.cos(angle) * dist - size / 2}px`;
+        el.style.top = `${y + Math.sin(angle) * dist - size / 2}px`;
+        el.style.transform = `rotate(${rot + 180}deg) scale(0)`;
+        el.style.opacity = "0";
+      });
+      setTimeout(() => el.remove(), dur + 50);
+    };
 
     const onMove = (e: MouseEvent) => {
       mousePos.current = { x: e.clientX, y: e.clientY };
+
+      // Position arrow
+      if (arrowRef.current) {
+        arrowRef.current.style.left = `${e.clientX}px`;
+        arrowRef.current.style.top = `${e.clientY}px`;
+      }
+
+      // Throttle sparkle spawning
+      const now = Date.now();
+      if (now - lastSpawn > 40) {
+        lastSpawn = now;
+        spawnSparkle(e.clientX, e.clientY);
+      }
     };
 
-    const onDown = () => setCursorClicking(true);
+    const onDown = () => {
+      setCursorClicking(true);
+      // Burst of sparkles on click
+      for (let i = 0; i < 8; i++) {
+        setTimeout(() => spawnSparkle(mousePos.current.x, mousePos.current.y), i * 30);
+      }
+    };
     const onUp = () => setCursorClicking(false);
-
-    const animate = () => {
-      cursorPos.current.x = lerp(cursorPos.current.x, mousePos.current.x, 0.1);
-      cursorPos.current.y = lerp(cursorPos.current.y, mousePos.current.y, 0.1);
-
-      if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate(${cursorPos.current.x - 20}px, ${cursorPos.current.y - 20}px)`;
-      }
-      if (cursorDotRef.current) {
-        cursorDotRef.current.style.transform = `translate(${mousePos.current.x - 4}px, ${mousePos.current.y - 4}px)`;
-      }
-
-      trailPositions.current = trailPositions.current.map((pos, i) => {
-        const target = i === 0 ? mousePos.current : trailPositions.current[i - 1];
-        const speed = 0.35 - i * 0.03;
-        const newPos = { x: lerp(pos.x, target.x, speed), y: lerp(pos.y, target.y, speed) };
-        const el = cursorTrailsRef.current[i];
-        if (el) {
-          const size = 6 - i * 0.5;
-          const opacity = 0.5 - i * 0.055;
-          el.style.transform = `translate(${newPos.x - size / 2}px, ${newPos.y - size / 2}px)`;
-          el.style.opacity = String(Math.max(0, opacity));
-        }
-        return newPos;
-      });
-
-      rafId = requestAnimationFrame(animate);
-    };
 
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mousedown", onDown);
     window.addEventListener("mouseup", onUp);
-    rafId = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mousedown", onDown);
       window.removeEventListener("mouseup", onUp);
-      cancelAnimationFrame(rafId);
     };
   }, []);
 
-  // ─── Hover + Magnetic cursor detection ───────────────────────────────────────
+  // ─── Hover detection ──────────────────────────────────────────────────────
   useEffect(() => {
     const interactables = document.querySelectorAll("a, button, input, [data-hover]");
-    const magneticBtns = document.querySelectorAll(".magnetic");
 
     const enter = () => setCursorHovering(true);
     const leave = () => setCursorHovering(false);
-
-    const enterMagnetic = () => {
-      setCursorHovering(true);
-      cursorRef.current?.classList.add("near-magnetic");
-    };
-    const leaveMagnetic = () => {
-      setCursorHovering(false);
-      cursorRef.current?.classList.remove("near-magnetic");
-    };
 
     interactables.forEach((el) => {
       el.addEventListener("mouseenter", enter);
       el.addEventListener("mouseleave", leave);
     });
 
-    magneticBtns.forEach((el) => {
-      el.addEventListener("mouseenter", enterMagnetic);
-      el.addEventListener("mouseleave", leaveMagnetic);
-    });
-
     return () => {
       interactables.forEach((el) => {
         el.removeEventListener("mouseenter", enter);
         el.removeEventListener("mouseleave", leave);
-      });
-      magneticBtns.forEach((el) => {
-        el.removeEventListener("mouseenter", enterMagnetic);
-        el.removeEventListener("mouseleave", leaveMagnetic);
       });
     };
   }, []);
@@ -292,46 +288,27 @@ export default function Home() {
           box-shadow: 0 0 10px rgba(103,119,173,0.7);
         }
 
-        #cursor-blob {
-          position: fixed; top: 0; left: 0; width: 40px; height: 40px;
-          border-radius: 50%; pointer-events: none; z-index: 9998;
-          background: rgba(103, 119, 173, 0.18);
-          border: 1.5px solid rgba(103, 119, 173, 0.5);
-          transition: width 0.25s, height 0.25s, background 0.25s, border-color 0.25s;
-          will-change: transform;
-          backdrop-filter: blur(2px);
+        /* ── Arrow cursor ── */
+        #ab-arrow {
+          position: fixed;
+          top: 0; left: 0;
+          pointer-events: none;
+          z-index: 9999;
+          transform: translate(0,0);
+          transition: filter 0.2s;
+          will-change: left, top;
         }
-        #cursor-blob.hovering {
-          width: 60px; height: 60px;
-          background: rgba(103, 119, 173, 0.28);
-          border-color: rgba(103, 119, 173, 0.8);
-          mix-blend-mode: multiply;
+        #ab-arrow svg {
+          filter: drop-shadow(0 0 6px rgba(103,119,173,0.7));
+          transition: transform 0.15s cubic-bezier(.22,1,.36,1), filter 0.2s;
         }
-        #cursor-blob.clicking {
-          width: 28px; height: 28px;
-          background: rgba(103, 119, 173, 0.45);
+        #ab-arrow.hovering svg {
+          transform: scale(1.25);
+          filter: drop-shadow(0 0 12px rgba(103,119,173,1)) drop-shadow(0 0 20px rgba(167,139,250,0.7));
         }
-        #cursor-blob.near-magnetic {
-          width: 70px; height: 70px;
-          background: rgba(103, 119, 173, 0.12);
-          border-color: rgba(103, 119, 173, 0.6);
-          mix-blend-mode: multiply;
-          transition: width 0.2s, height 0.2s;
-        }
-
-        #cursor-dot {
-          position: fixed; top: 0; left: 0; width: 8px; height: 8px;
-          border-radius: 50%; pointer-events: none; z-index: 9999;
-          background: #6777AD;
-          box-shadow: 0 0 8px rgba(103,119,173,0.9);
-          will-change: transform;
-        }
-
-        .cursor-trail {
-          position: fixed; top: 0; left: 0; border-radius: 50%;
-          pointer-events: none; z-index: 9997;
-          background: rgba(103, 119, 173, 0.55);
-          will-change: transform, opacity;
+        #ab-arrow.clicking svg {
+          transform: scale(0.85) rotate(-12deg);
+          filter: drop-shadow(0 0 16px rgba(244,114,182,0.9));
         }
 
         .ripple {
@@ -489,21 +466,24 @@ export default function Home() {
       {/* ─── Scroll progress bar ──────────────────────────────────────── */}
       <div id="scroll-bar" style={{ width: `${scrollProgress * 100}%` }} />
 
-      {/* ─── Custom cursor ────────────────────────────────────────────── */}
+      {/* ─── Custom cursor (arrow + sparkle trail) ───────────────────── */}
       <div
-        id="cursor-blob"
-        ref={cursorRef}
+        id="ab-arrow"
+        ref={arrowRef}
         className={`${cursorHovering ? "hovering" : ""} ${cursorClicking ? "clicking" : ""}`}
-      />
-      <div id="cursor-dot" ref={cursorDotRef} />
-      {Array.from({ length: 8 }).map((_, i) => (
-        <div
-          key={i}
-          className="cursor-trail"
-          ref={(el) => { if (el) cursorTrailsRef.current[i] = el; }}
-          style={{ width: `${6 - i * 0.5}px`, height: `${6 - i * 0.5}px` }}
-        />
-      ))}
+        style={{ position: "fixed", top: 0, left: 0, pointerEvents: "none", zIndex: 9999 }}
+      >
+        <svg width="26" height="32" viewBox="0 0 26 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M2 2L2 24L8.5 18L13.5 29L16.5 27.5L11.5 16.5L20 16.5L2 2Z"
+            fill="white"
+            stroke="#6777AD"
+            strokeWidth="2"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+          />
+        </svg>
+      </div>
 
       <div
         className="min-h-screen"
