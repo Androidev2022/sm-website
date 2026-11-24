@@ -1,5 +1,65 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import {
+  ArrowRight,
+  Search,
+  Compass,
+  Hammer,
+  Rocket,
+  LineChart,
+  Palette,
+  Code2,
+  Cloud,
+  Megaphone,
+  BarChart3,
+  ShoppingCart,
+  Utensils,
+  Building2,
+  Factory,
+  Layers,
+  HeartPulse,
+  Star,
+  Phone,
+  Mail,
+  MapPin,
+  ChevronDown,
+} from "lucide-react";
+
+// ─── Social icons (brand icons were removed from lucide-react) ──────────────
+type IconProps = { size?: number };
+
+const LinkedinIcon = ({ size = 14 }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
+  </svg>
+);
+
+const InstagramIcon = ({ size = 14 }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+  </svg>
+);
+
+const FacebookIcon = ({ size = 14 }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+);
+
+const TwitterIcon = ({ size = 14 }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64z" />
+  </svg>
+);
+
+const YoutubeIcon = ({ size = 14 }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+  </svg>
+);
 
 export default function Home() {
   const arrowRef = useRef<HTMLDivElement>(null);
@@ -7,6 +67,7 @@ export default function Home() {
   const [scrollY, setScrollY] = useState(0);
   const [cursorHovering, setCursorHovering] = useState(false);
   const [cursorClicking, setCursorClicking] = useState(false);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   // ─── Number counter animation ─────────────────────────────────────────────
   useEffect(() => {
@@ -20,9 +81,8 @@ export default function Home() {
       const raw = el.getAttribute("data-target") || "";
       const parsed = parseValue(raw);
       if (!parsed) return;
-
       const { prefix, number, suffix } = parsed;
-      const duration = 1800;
+      const duration = 1600;
       const startTime = performance.now();
       const isDecimal = number % 1 !== 0;
 
@@ -35,7 +95,6 @@ export default function Home() {
         if (progress < 1) requestAnimationFrame(tick);
         else el.textContent = raw;
       };
-
       requestAnimationFrame(tick);
     };
 
@@ -54,72 +113,141 @@ export default function Home() {
       },
       { threshold: 0.3 }
     );
-
     document.querySelectorAll("[data-target]").forEach((el) => obs.observe(el));
-
     return () => obs.disconnect();
   }, []);
 
-  const brands: string[] = ["HCL", "Panasonic", "Hindware", "Scania", "Hafele", "Google", "Partner"];
-
-  const stats = [
-    { value: "$75M+", label: "Revenue Generated", stars: "★★★★★☆" },
-    { value: "350+", label: "Successful Projects", stars: "★★★★★☆" },
-    { value: "100+", label: "Clients Worldwide", stars: "★☆☆☆☆☆" },
-    { value: "4.9/5", label: "Client Satisfaction", stars: "★★★★★☆" },
-  ];
-
-  const caseStudies = [
-    { title: "E-Commerce Growth Boost", desc: "350% growth in online revenue with performance marketing strategy." },
-    { title: "E-Commerce Growth Boost", desc: "Boosted conversions with CRO + funnel optimization." },
-    { title: "E-Commerce Growth Boost", desc: "Improved paid ads ROI with advanced targeting strategies." },
-  ];
-
-  const industryBgs = ["/bg_1.png", "/bg_2.png", "/bg_3.png", "/bg_4.png"];
-
-  const industries = [
-    {
-      icon: "/image_5__1_.png", title: "D2C Brands", subtitle: "Sorarthune Ceonfamed",
-      desc: "Exre eerura woft the Si, Gomma atndh pered cops Tras conc unn gtiult aterty proar ot corocturs.",
-      points: ["Potsmuned coenctues, ond", "Roerradtugiulerms cef coarn shien", "Somutve of Domserccd T0", "Roerradtugiulerms cef coarn shien", "Encamwted rercsiter cetzaek", "Somutve of Domserccd T0", "Grarcliletd presIher"],
-    },
-    {
-      icon: "/image_4.png", title: "Manufacturing", subtitle: "Carrier",
-      desc: "Gtin cemc wourao ia Ctrtb goe aeno strestips Arireamet and igrstBothacconhaeceges.",
-      points: ["Potsmuned coenctues, ond", "Roerradtugiulerms cef coarn shien", "Somutve of Domserccd T0", "Roerradtugiulerms cef coarn shien", "Encamwted rercsiter cetzaek", "Somutve of Domserccd T0", "Grarcliletd presIher"],
-    },
-    {
-      icon: "/image_3__1_.png", title: "SaaS", subtitle: "Eeculn Dartan",
-      desc: "ODR behe coesortzort lin Side With heamene pthts,Ood remabitn amas",
-      points: ["Potsmuned coenctues, ond", "Roerradtugiulerms cef coarn shien", "Somutve of Domserccd T0", "Roerradtugiulerms cef coarn shien", "Encamwted rercsiter cetzaek", "Somutve of Domserccd T0", "Grarcliletd presIher"],
-    },
-    {
-      icon: "/image_5.png", title: "D2C Brands", subtitle: "Sorarthune Ceonfamed",
-      desc: "Exre eerura woft the Si, Gomma atndh pered cops Tras conc unn gtiult aterty proar ot corocturs.",
-      points: ["Potsmuned coenctues, ond", "Roerradtugiulerms cef coarn shien", "Somutve of Domserccd T0", "Roerradtugiulerms cef coarn shien", "Encamwted rercsiter cetzaek", "Somutve of Domserccd T0", "Grarcliletd presIher"],
-    },
-  ];
-
-  const testimonials = [
-    { name: "Aakash Gupta", role: "CER Retail Brand", image: "/akash.png", text: "Scn Cacbuihuem Deliogint at crcally our mom te otelen chvon omeesramy" },
-    { name: "Priya Sharma", role: "Borfanrss Drentor", image: "/priya.png", text: 'Thor Cepfrcer nersen froeg Oeshowted amoetaffter gratenh tor and conohetts."' },
-    { name: "John Matthews", role: "COO, Sestuon Partner", image: "/john.png", text: "Rsezatrurimypten ateots and a hearn theft molly caten ehomet:numments." },
-    { name: "John Matthews", role: "COO, Sestuon Partner", image: "/john_2.png", text: "Rsezatrurimypten ateots and a hearn theft molly caten ehomet:numments." },
-  ];
-
-  // ─── Nav links config — only About has a real href ───────────────────────
+  // ─── Content ───────────────────────────────────────────────────────────────
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
-    { label: "Services", href: "#" },
+    { label: "Services", href: "#services", hasDropdown: true },
     { label: "Case Studies", href: "/casedetails" },
+    { label: "Insights", href: "#" },
     { label: "Contact", href: "#" },
+  ];
+
+  const stats = [
+    { icon: LineChart, value: "$75M+", label: "Revenue Influenced" },
+    { icon: BarChart3, value: "350+", label: "Successful Projects" },
+    { icon: Layers, value: "100+", label: "Clients Worldwide" },
+    { icon: Star, value: "4.9/5", label: "Client Satisfaction" },
+    { icon: Rocket, value: "10+", label: "Years of Experience" },
+  ];
+
+  const brands = [
+    { name: "Tefal", logo: "/logos/tefal.png" },
+    { name: "Del Monte", logo: "/logos/delmonte.png" },
+    { name: "Maharaja Whiteline", logo: "/logos/maharaja.png" },
+    { name: "Ayana Properties", logo: "/logos/ayana.png" },
+    { name: "LMHI", logo: "/logos/lmhi.webp" },
+    { name: "CRB", logo: "/logos/crb.png" },
+    { name: "Tata Innoverse", logo: "/logos/tata-innoverse.png" },
+    { name: "Indo-German Chamber of Commerce", logo: "/logos/igcc.png" },
+  ];
+
+  const caseStudies = [
+    {
+      tag: "E-COMMERCE",
+      tagColor: "#1E293B",
+      name: "Tefal India",
+      desc: "Reimagining the digital commerce experience with seamless journeys and double-digit conversion growth.",
+      gradient: "linear-gradient(135deg,#1f2937,#0f172a)",
+    },
+    {
+      tag: "FMCG",
+      tagColor: "#166534",
+      name: "Del Monte Foods",
+      desc: "Unified digital platform improving engagement and driving consistent business growth.",
+      gradient: "linear-gradient(135deg,#166534,#14532d)",
+    },
+    {
+      tag: "REAL ESTATE",
+      tagColor: "#1D4ED8",
+      name: "Ayana Properties",
+      desc: "High-performance website that generates quality leads and strengthens brand presence.",
+      gradient: "linear-gradient(135deg,#1e3a8a,#0c4a6e)",
+    },
+  ];
+
+  const services = [
+    { icon: Compass, title: "Digital Strategy", desc: "Market intelligence and roadmaps that align with business goals." },
+    { icon: Palette, title: "Experience Design", desc: "User-centric design that creates meaningful and engaging experiences." },
+    { icon: Code2, title: "Web & App Development", desc: "Scalable, secure and performance-driven digital platforms." },
+    { icon: Cloud, title: "Cloud & Infrastructure", desc: "Reliable cloud solutions that scale with your business." },
+    { icon: Megaphone, title: "Digital Marketing", desc: "Data-driven marketing that drives traffic, leads and revenue." },
+    { icon: BarChart3, title: "Analytics & Growth", desc: "Insights and optimization to continuously improve performance." },
+  ];
+
+  const techStack = [
+    { title: "Experience", items: ["React", "Next.js", "WordPress", "Shopify", "WooCommerce"] },
+    { title: "Engineering", items: ["Node.js", "Laravel", "APIs & Integrations", "Mobile Development", "Headless CMS"] },
+    { title: "Cloud & Infrastructure", items: ["AWS", "Linode", "Cloudflare", "DevOps", "Security & Backup"] },
+    { title: "Data & Growth", items: ["GA4", "GTM", "SEO", "CRO", "Analytics"] },
+  ];
+
+  const processSteps = [
+    { num: "01", icon: Search, title: "Diagnose", desc: "We study your business, audience and market to find growth gaps." },
+    { num: "02", icon: Compass, title: "Architect", desc: "We design the right strategy, user experience and technology stack." },
+    { num: "03", icon: Hammer, title: "Build", desc: "We develop, test and launch high-performance digital solutions." },
+    { num: "04", icon: Rocket, title: "Scale", desc: "We optimize, automate and scale for continuous growth." },
+  ];
+
+  const industries = [
+    { icon: ShoppingCart, title: "E-Commerce", desc: "Digital commerce platforms that convert and scale." },
+    { icon: Utensils, title: "FMCG & Consumer", desc: "Building strong brands with digital experiences." },
+    { icon: Building2, title: "Real Estate", desc: "Lead generation platforms that drive sales." },
+    { icon: Factory, title: "Manufacturing", desc: "Industrial solutions with IoT & process integration." },
+    { icon: Layers, title: "SaaS & Technology", desc: "Scalable platforms for modern SaaS businesses." },
+    { icon: HeartPulse, title: "Healthcare", desc: "Secure, compliant and patient-centric digital solutions." },
+  ];
+
+  const testimonials = [
+    {
+      name: "Pierre Da Silva",
+      role: "Digital Director, Tefal",
+      company: "Tefal",
+      avatar: "/avatars/pierre.jpg",
+      logo: "/logos/tefal.png",
+      text: "SM Solutions transformed our digital ecosystem completely. Their strategic approach and execution excellence helped us scale our business globally.",
+    },
+    {
+      name: "Vikram K.",
+      role: "Head of Marketing, Maharaja Whiteline",
+      company: "Maharaja Whiteline",
+      avatar: "/avatars/vikram.jpg",
+      logo: "/logos/maharaja.png",
+      text: "Their team is proactive, reliable and results-driven. They truly care about our growth as much as we do.",
+    },
+    {
+      name: "Anita R.",
+      role: "Marketing Head, Del Monte",
+      company: "Del Monte",
+      avatar: "/avatars/anita.jpg",
+      logo: "/logos/delmonte.png",
+      text: "A dependable partner that delivered a unified platform on time and kept improving engagement quarter after quarter.",
+    },
+  ];
+
+  const footerCols = [
+    { title: "Services", items: ["Digital Strategy", "Web Development", "Mobile App Development", "Cloud & DevOps", "UI/UX Design", "Digital Marketing"] },
+    { title: "Industries", items: ["E-Commerce", "FMCG & Consumer", "Real Estate", "Manufacturing", "SaaS & Technology", "Healthcare"] },
+    { title: "Company", items: ["About Us", "Our Team", "Careers", "Partners", "Blog", "Contact Us"] },
+    { title: "Resources", items: ["Case Studies", "Insights", "Whitepapers", "FAQs"] },
+  ];
+
+  const socials = [LinkedinIcon, InstagramIcon, FacebookIcon, TwitterIcon, YoutubeIcon];
+
+  const contacts = [
+    { icon: Phone, text: "+91 98765 43210" },
+    { icon: Mail, text: "hello@smsolutions.in" },
+    { icon: MapPin, text: "Gurugram, India" },
   ];
 
   // ─── Arrow cursor + sparkle trail ────────────────────────────────────────
   useEffect(() => {
     let lastSpawn = 0;
-    const COLORS = ["#a78bfa", "#60a5fa", "#f472b6", "#fbbf24", "#6777AD", "#34d399"];
+    const COLORS = ["#2563EB", "#6777AD", "#60a5fa", "#a78bfa", "#34d399"];
 
     const spawnSparkle = (x: number, y: number) => {
       const el = document.createElement("div");
@@ -129,8 +257,6 @@ export default function Home() {
       const color = COLORS[Math.floor(Math.random() * COLORS.length)];
       const rot = Math.random() * 360;
       const dur = 500 + Math.random() * 400;
-
-      // star shape via clip-path
       el.style.cssText = `
         position:fixed;pointer-events:none;z-index:9997;
         width:${size}px;height:${size}px;
@@ -143,7 +269,6 @@ export default function Home() {
         box-shadow:0 0 6px ${color}88;
       `;
       document.body.appendChild(el);
-
       requestAnimationFrame(() => {
         el.style.left = `${x + Math.cos(angle) * dist - size / 2}px`;
         el.style.top = `${y + Math.sin(angle) * dist - size / 2}px`;
@@ -155,24 +280,18 @@ export default function Home() {
 
     const onMove = (e: MouseEvent) => {
       mousePos.current = { x: e.clientX, y: e.clientY };
-
-      // Position arrow
       if (arrowRef.current) {
         arrowRef.current.style.left = `${e.clientX}px`;
         arrowRef.current.style.top = `${e.clientY}px`;
       }
-
-      // Throttle sparkle spawning
       const now = Date.now();
       if (now - lastSpawn > 40) {
         lastSpawn = now;
         spawnSparkle(e.clientX, e.clientY);
       }
     };
-
     const onDown = () => {
       setCursorClicking(true);
-      // Burst of sparkles on click
       for (let i = 0; i < 8; i++) {
         setTimeout(() => spawnSparkle(mousePos.current.x, mousePos.current.y), i * 30);
       }
@@ -182,7 +301,6 @@ export default function Home() {
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mousedown", onDown);
     window.addEventListener("mouseup", onUp);
-
     return () => {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mousedown", onDown);
@@ -190,18 +308,14 @@ export default function Home() {
     };
   }, []);
 
-  // ─── Hover detection ──────────────────────────────────────────────────────
   useEffect(() => {
     const interactables = document.querySelectorAll("a, button, input, [data-hover]");
-
     const enter = () => setCursorHovering(true);
     const leave = () => setCursorHovering(false);
-
     interactables.forEach((el) => {
       el.addEventListener("mouseenter", enter);
       el.addEventListener("mouseleave", leave);
     });
-
     return () => {
       interactables.forEach((el) => {
         el.removeEventListener("mouseenter", enter);
@@ -210,10 +324,8 @@ export default function Home() {
     };
   }, []);
 
-  // ─── Magnetic button pull effect ─────────────────────────────────────────────
   useEffect(() => {
     const magneticEls = document.querySelectorAll(".magnetic");
-
     const handleMouseMove = (e: Event) => {
       const mouseEvent = e as MouseEvent;
       const btn = mouseEvent.currentTarget as HTMLElement;
@@ -222,22 +334,19 @@ export default function Home() {
       const btnCenterY = rect.top + rect.height / 2;
       const distX = mouseEvent.clientX - btnCenterX;
       const distY = mouseEvent.clientY - btnCenterY;
-      const strength = 0.35;
-      btn.style.transform = `translate(${distX * strength}px, ${distY * strength}px) scale(1.06)`;
+      const strength = 0.3;
+      btn.style.transform = `translate(${distX * strength}px, ${distY * strength}px) scale(1.04)`;
       btn.style.transition = "transform 0.15s cubic-bezier(.22,1,.36,1)";
     };
-
     const handleMouseLeave = (e: Event) => {
       const btn = e.currentTarget as HTMLElement;
       btn.style.transform = "translate(0px, 0px) scale(1)";
       btn.style.transition = "transform 0.45s cubic-bezier(.22,1,.36,1)";
     };
-
     magneticEls.forEach((el) => {
       el.addEventListener("mousemove", handleMouseMove);
       el.addEventListener("mouseleave", handleMouseLeave);
     });
-
     return () => {
       magneticEls.forEach((el) => {
         el.removeEventListener("mousemove", handleMouseMove);
@@ -246,14 +355,12 @@ export default function Home() {
     };
   }, []);
 
-  // ─── Scroll progress ──────────────────────────────────────────────────────────
   useEffect(() => {
     const onScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // ─── IntersectionObserver for scroll-reveal ───────────────────────────────────
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
     const obs = new IntersectionObserver(
@@ -271,222 +378,99 @@ export default function Home() {
     return () => obs.disconnect();
   }, []);
 
-  // ✅ With this
-  const scrollProgress = typeof window !== "undefined"
-    ? Math.min(scrollY / Math.max(document.body.scrollHeight - window.innerHeight, 1), 1)
-    : 0;
+  useEffect(() => {
+    const t = setInterval(() => {
+      setActiveTestimonial((p) => (p + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(t);
+  }, [testimonials.length]);
+
+  const scrollProgress =
+    typeof window !== "undefined"
+      ? Math.min(scrollY / Math.max(document.body.scrollHeight - window.innerHeight, 1), 1)
+      : 0;
+
   return (
     <>
-      {/* ─── Global styles ────────────────────────────────────────────────── */}
       <style>{`
         * { cursor: none !important; }
+        body { background: #F7F9FC; }
 
         #scroll-bar {
           position: fixed; top: 0; left: 0; height: 3px; z-index: 9999;
-          background: linear-gradient(90deg, #6777AD, #a78bfa, #60a5fa);
+          background: linear-gradient(90deg, #2563EB, #6777AD, #60a5fa);
           transition: width 0.05s linear;
-          box-shadow: 0 0 10px rgba(103,119,173,0.7);
         }
-
-        /* ── Arrow cursor ── */
-        #ab-arrow {
-          position: fixed;
-          top: 0; left: 0;
-          pointer-events: none;
-          z-index: 9999;
-          transform: translate(0,0);
-          transition: filter 0.2s;
-          will-change: left, top;
-        }
-        #ab-arrow svg {
-          filter: drop-shadow(0 0 6px rgba(103,119,173,0.7));
-          transition: transform 0.15s cubic-bezier(.22,1,.36,1), filter 0.2s;
-        }
-        #ab-arrow.hovering svg {
-          transform: scale(1.25);
-          filter: drop-shadow(0 0 12px rgba(103,119,173,1)) drop-shadow(0 0 20px rgba(167,139,250,0.7));
-        }
-        #ab-arrow.clicking svg {
-          transform: scale(0.85) rotate(-12deg);
-          filter: drop-shadow(0 0 16px rgba(244,114,182,0.9));
-        }
+        #ab-arrow { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; will-change: left, top; }
+        #ab-arrow svg { filter: drop-shadow(0 0 6px rgba(37,99,235,0.6)); transition: transform 0.15s cubic-bezier(.22,1,.36,1); }
+        #ab-arrow.hovering svg { transform: scale(1.25); filter: drop-shadow(0 0 14px rgba(37,99,235,0.9)); }
+        #ab-arrow.clicking svg { transform: scale(0.85) rotate(-12deg); }
 
         .ripple {
-          position: fixed; border-radius: 50%;
-          pointer-events: none; z-index: 9996;
-          background: transparent;
-          border: 2px solid rgba(103,119,173,0.6);
-          animation: ripple-out 0.6s ease-out forwards;
+          position: fixed; border-radius: 50%; pointer-events: none; z-index: 9996;
+          border: 2px solid rgba(37,99,235,0.5); animation: ripple-out 0.6s ease-out forwards;
         }
-        @keyframes ripple-out {
-          0%   { width: 8px; height: 8px; opacity: 1; margin: -4px; }
-          100% { width: 60px; height: 60px; opacity: 0; margin: -30px; }
-        }
+        @keyframes ripple-out { 0% { width:8px;height:8px;opacity:1;margin:-4px;} 100% { width:60px;height:60px;opacity:0;margin:-30px;} }
 
-        .reveal {
-          opacity: 0;
-          transform: translateY(36px);
-          transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1);
-        }
-        .reveal.delay-1 { transition-delay: 0.1s; }
-        .reveal.delay-2 { transition-delay: 0.2s; }
-        .reveal.delay-3 { transition-delay: 0.3s; }
-        .reveal.delay-4 { transition-delay: 0.4s; }
+        .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+        .reveal.delay-1 { transition-delay: .08s; } .reveal.delay-2 { transition-delay: .16s; }
+        .reveal.delay-3 { transition-delay: .24s; } .reveal.delay-4 { transition-delay: .32s; }
+        .reveal.delay-5 { transition-delay: .4s; } .reveal.delay-6 { transition-delay: .48s; }
         .reveal.revealed { opacity: 1; transform: translateY(0); }
 
-        .reveal-left {
-          opacity: 0; transform: translateX(-40px);
-          transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1);
-        }
-        .reveal-left.revealed { opacity: 1; transform: translateX(0); }
+        @keyframes fadeSlideUp { from { opacity:0; transform: translateY(24px);} to { opacity:1; transform: translateY(0);} }
+        .hero-eyebrow { animation: fadeSlideUp .7s cubic-bezier(.22,1,.36,1) 0s both; }
+        .hero-title   { animation: fadeSlideUp .8s cubic-bezier(.22,1,.36,1) .1s both; }
+        .hero-sub     { animation: fadeSlideUp .8s cubic-bezier(.22,1,.36,1) .22s both; }
+        .hero-btns    { animation: fadeSlideUp .8s cubic-bezier(.22,1,.36,1) .34s both; }
+        .hero-tags    { animation: fadeSlideUp .8s cubic-bezier(.22,1,.36,1) .44s both; }
+        .hero-engine  { animation: fadeSlideUp .8s cubic-bezier(.22,1,.36,1) .54s both; }
+        .hero-visual  { animation: fadeSlideUp .9s cubic-bezier(.22,1,.36,1) .2s both; }
 
-        .reveal-right {
-          opacity: 0; transform: translateX(40px);
-          transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1);
-        }
-        .reveal-right.revealed { opacity: 1; transform: translateX(0); }
+        .magnetic { display: inline-flex; align-items: center; white-space: nowrap; transition: transform .45s cubic-bezier(.22,1,.36,1); }
 
-        .reveal-scale {
-          opacity: 0; transform: scale(0.88);
-          transition: opacity 0.6s cubic-bezier(.22,1,.36,1), transform 0.6s cubic-bezier(.22,1,.36,1);
-        }
-        .reveal-scale.revealed { opacity: 1; transform: scale(1); }
+        .card-hover { transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease; }
+        .card-hover:hover { transform: translateY(-6px); box-shadow: 0 18px 36px rgba(37,99,235,0.14); }
 
-        @keyframes fadeSlideUp {
-          from { opacity: 0; transform: translateY(30px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; } to { opacity: 1; }
-        }
-        .hero-title  { animation: fadeSlideUp 0.9s cubic-bezier(.22,1,.36,1) 0.1s both; }
-        .hero-sub    { animation: fadeSlideUp 0.9s cubic-bezier(.22,1,.36,1) 0.3s both; }
-        .hero-btns   { animation: fadeSlideUp 0.9s cubic-bezier(.22,1,.36,1) 0.5s both; }
-        .hero-img    { animation: fadeSlideUp 0.9s cubic-bezier(.22,1,.36,1) 0.2s both; }
-        .hero-brands { animation: fadeIn 1s ease 0.7s both; }
+        @keyframes float-up-down { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-10px);} }
+        .float-card { animation: float-up-down 4s ease-in-out infinite; }
+        .float-card.d2 { animation-delay: .8s; }
+        .float-card.d3 { animation-delay: 1.6s; }
 
-        .card-hover {
-          transition: transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s ease;
-        }
-        .card-hover:hover {
-          transform: translateY(-8px) scale(1.02);
-          box-shadow: 0 20px 40px rgba(103,119,173,0.22);
-        }
+        @keyframes spin-slow { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }
+        .globe-spin { animation: spin-slow 60s linear infinite; }
 
-        .magnetic {
-          transition: transform 0.45s cubic-bezier(.22,1,.36,1);
-          display: inline-block;
+        header { backdrop-filter: blur(10px); }
+        .nav-link { position: relative; }
+        .nav-link::after {
+          content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: #2563EB;
+          transition: width .3s cubic-bezier(.22,1,.36,1);
         }
+        .nav-link:hover::after { width: 100%; }
 
-        @keyframes pop {
-          0%   { transform: scale(0.7); opacity: 0; }
-          60%  { transform: scale(1.08); }
-          100% { transform: scale(1); opacity: 1; }
-        }
-        .stat-pop { animation: pop 0.6s cubic-bezier(.22,1,.36,1) both; }
+        .dot { transition: all .3s ease; }
 
-        @keyframes float-y {
-          0%, 100% { transform: translateY(0); }
-          50%       { transform: translateY(-6px); }
-        }
-        .float-brand:hover { animation: float-y 1.2s ease-in-out infinite; }
-
-        @keyframes navSlide {
-          from { transform: translateY(-100%); opacity: 0; }
-          to   { transform: translateY(0); opacity: 1; }
-        }
-        header { animation: navSlide 0.6s cubic-bezier(.22,1,.36,1) both; }
-
-        .testimonial-card {
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-          position: relative; overflow: hidden;
-        }
-        .testimonial-card::before {
-          content: ''; position: absolute; top: 0; left: -100%;
-          width: 60%; height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-          transition: left 0.5s ease;
-        }
-        .testimonial-card:hover::before { left: 160%; }
-        .testimonial-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 16px 32px rgba(103,119,173,0.18);
-        }
-
-        .industry-card {
-          transition: transform 0.4s ease, box-shadow 0.4s ease;
-          transform-style: preserve-3d;
-        }
-        .industry-card:hover {
-          transform: perspective(600px) rotateX(-3deg) rotateY(3deg) translateY(-6px);
-          box-shadow: 0 20px 40px rgba(103,119,173,0.2);
-        }
-
-        @keyframes bounce-arrow {
-          0%, 100% { transform: translateY(0); opacity: 0.6; }
-          50%       { transform: translateY(8px); opacity: 1; }
-        }
-        #scroll-indicator { animation: bounce-arrow 1.6s ease-in-out infinite; }
-
-        @keyframes twinkle {
-          0%, 100% { opacity: 1; }
-          50%       { opacity: 0.4; }
-        }
-        .star-animated { display: inline-block; animation: twinkle 1.8s ease-in-out infinite; }
-        .star-animated:nth-child(2) { animation-delay: 0.2s; }
-        .star-animated:nth-child(3) { animation-delay: 0.4s; }
-        .star-animated:nth-child(4) { animation-delay: 0.6s; }
-        .star-animated:nth-child(5) { animation-delay: 0.8s; }
-
-        .heading-line {
-          position: relative; display: inline-block;
-        }
-        .heading-line::after {
-          content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
-          background: #6777AD;
-          transition: width 0.6s cubic-bezier(.22,1,.36,1);
-        }
-        .reveal.revealed .heading-line::after { width: 100%; }
-
-        @keyframes glow-pulse {
-          0%, 100% { box-shadow: 0 0 15px rgba(103,119,173,0.3); }
-          50%       { box-shadow: 0 0 35px rgba(103,119,173,0.6); }
-        }
-        .cta-section .inner { animation: glow-pulse 3s ease-in-out infinite; }
-
-        /* ── Active nav link style ── */
-        .nav-link-about {
-          color: #2563EB !important;
-          font-weight: 700;
-          border-bottom: 2px solid #2563EB;
-          padding-bottom: 2px;
-        }
+        @keyframes testimonial-in { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: translateY(0);} }
+        .testimonial-card { animation: testimonial-in .5s cubic-bezier(.22,1,.36,1) both; }
       `}</style>
 
-      {/* ─── Scroll progress bar ──────────────────────────────────────── */}
       <div id="scroll-bar" style={{ width: `${scrollProgress * 100}%` }} />
 
-      {/* ─── Custom cursor (arrow + sparkle trail) ───────────────────── */}
       <div
         id="ab-arrow"
         ref={arrowRef}
         className={`${cursorHovering ? "hovering" : ""} ${cursorClicking ? "clicking" : ""}`}
-        style={{ position: "fixed", top: 0, left: 0, pointerEvents: "none", zIndex: 9999 }}
       >
-        <svg width="26" height="32" viewBox="0 0 26 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="24" height="30" viewBox="0 0 26 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M2 2L2 24L8.5 18L13.5 29L16.5 27.5L11.5 16.5L20 16.5L2 2Z"
-            fill="white"
-            stroke="#6777AD"
-            strokeWidth="2"
-            strokeLinejoin="round"
-            strokeLinecap="round"
+            fill="white" stroke="#2563EB" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round"
           />
         </svg>
       </div>
 
       <div
-        className="min-h-screen"
+        className="min-h-screen bg-[#F7F9FC]"
         onClick={(e) => {
           const ripple = document.createElement("div");
           ripple.className = "ripple";
@@ -497,471 +481,434 @@ export default function Home() {
         }}
       >
         {/* NAVBAR */}
-        <header
-          className="h-25 w-full backdrop-blur-md border-b border-blue-100/50 sticky top-0 z-50"
-          style={{ background: "linear-gradient(to right, rgba(200,210,240,0.95),rgba(220,230,248,0.90),rgba(235,242,255,0.95))" }}
-        >
-          <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div className="flex items-center gap-2 font-bold text-lg">
-              <img src="/logo.svg" alt="SM Solutions Logo" className="w-27 h-20 object-contain" />
+        <header className="w-full bg-white/85 border-b border-slate-100 sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-500 flex items-center justify-center text-white font-black text-lg">S</div>
+              <div className="leading-tight">
+                <div className="font-bold text-lg text-slate-900 tracking-tight">SM Solutions</div>
+                <div className="text-[9px] tracking-[0.12em] text-slate-400 font-medium uppercase">Engineering Growth. Designing Impact.</div>
+              </div>
             </div>
 
-            <nav className="hidden md:flex gap-8 text-base font-medium">
+            <nav className="hidden md:flex gap-9 text-[15px] font-medium text-slate-600">
               {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="hover:text-blue-600 relative group"
-                  style={{ color: "#404359", fontFamily: "'DM Sans', sans-serif" }}
-                >
+                <a key={link.label} href={link.href} className="nav-link flex items-center gap-1 hover:text-blue-600 transition-colors">
                   {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300" />
+                  {link.hasDropdown && <ChevronDown size={14} />}
                 </a>
               ))}
             </nav>
 
-            <button
-              className="magnetic text-white px-6 py-2 rounded-lg font-semibold shadow relative overflow-hidden tracking-wide"
-              style={{
-                backgroundImage: "url('/btn_bg.png')", backgroundSize: "cover",
-                backgroundPosition: "center", backgroundRepeat: "no-repeat",
-                fontFamily: "'DM Sans', sans-serif", fontSize: "15px",
-                fontWeight: "600", letterSpacing: "0.3px",
-              }}
-            >
-              Book a Strategy Call
+            <button className="magnetic bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-colors flex items-center gap-2">
+              Book a Strategy Call <ArrowRight size={15} />
             </button>
           </div>
         </header>
 
         {/* HERO */}
-        <section
-          className="w-full"
-          style={{
-            backgroundImage: "url('/header_background.png')",
-            backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "fit",
-          }}
-        >
-          <div className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-5 items-center">
+        <section className="w-full overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6 pt-16 pb-8 grid md:grid-cols-2 gap-10 items-center">
             <div>
-              {/* ── Hero title: text-5xl md:text-6xl (up from text-4xl md:text-5xl) ── */}
-              <h1 className="hero-title text-5xl md:text-6xl font-bold leading-tight text-slate-900">
-                Building Digital{" "}
-                <span className="text-blue-600">Success</span> <br />
-                for Global Brands
+              <p className="hero-eyebrow text-blue-600 font-semibold text-sm mb-4">Digital Growth Partner</p>
+              <h1 className="hero-title text-5xl md:text-[3.4rem] font-bold leading-[1.08] text-slate-900">
+                We Engineer Digital Systems That
+                <br />
+                <span className="text-blue-600">Drive Business Growth.</span>
               </h1>
-              {/* ── Hero subtitle: text-lg (up from text-base) ── */}
-              <p className="hero-sub mt-5 text-slate-500 text-lg leading-relaxed">
-                We create high-performance digital ecosystems that drive measurable growth.
+              <p className="hero-sub mt-6 text-slate-500 text-lg leading-relaxed max-w-lg">
+                Strategy, experience, technology and growth — integrated to build digital ecosystems that perform, scale and create measurable business impact.
               </p>
-              <div className="hero-btns mt-7 flex gap-4">
-                {/* ── Image buttons — increased h-12/h-20 (up from h-10/h-18) ── */}
-                <button className="magnetic rounded-lg overflow-hidden transition-all">
-                  <img src="/view_cases.png" alt="View Case Studies" className="h-12 w-auto object-contain block" />
+              <div className="hero-btns mt-8 flex flex-wrap gap-4">
+                <button className="magnetic bg-blue-600 hover:bg-blue-700 text-white px-7 py-3.5 rounded-lg font-semibold flex items-center gap-2 transition-colors">
+                  Explore Our Work <ArrowRight size={16} />
                 </button>
-                <button className="magnetic rounded-lg overflow-hidden transition-all mt-2">
-                  <img src="/book_call.png" alt="book call" className="h-20 w-auto object-contain block" />
+                <button className="magnetic border border-slate-300 hover:border-blue-400 text-slate-700 px-7 py-3.5 rounded-lg font-semibold flex items-center gap-2 transition-colors">
+                  Book a Strategy Call <ArrowRight size={16} />
                 </button>
               </div>
+              <div className="hero-tags mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-slate-900 text-sm font-bold">
+                {["Strategy", "Experience", "Engineering", "Growth"].map((t, i) => (
+                  <span key={t} className="flex items-center gap-3">
+                    {t}
+                    {i < 3 && <span className="w-1 h-1 rounded-full bg-slate-300" />}
+                  </span>
+                ))}
+              </div>
+              <div className="hero-engine mt-8 pt-6 border-t border-slate-200">
+                <p className="text-xs font-semibold text-slate-400 tracking-wide mb-3">POWERED BY THE SM GROWTH ENGINE™</p>
+                <div className="flex flex-wrap items-center gap-3 text-sm font-semibold text-slate-700">
+                  {[
+                    { icon: Search, label: "Diagnose" },
+                    { icon: Compass, label: "Architect" },
+                    { icon: Hammer, label: "Build" },
+                    { icon: Rocket, label: "Scale" },
+                  ].map((s, i) => (
+                    <span key={s.label} className="flex items-center gap-3">
+                      <span className="flex items-center gap-1.5">
+                        <s.icon size={15} className="text-blue-600" /> {s.label}
+                      </span>
+                      {i < 3 && <ArrowRight size={13} className="text-slate-300" />}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
-            <div className="hero-img relative flex justify-center items-center">
-              <img src="/cards.png" alt="Dashboard Cards" className="w-full max-w-full object-contain relative z-20" />
+
+            <div className="hero-visual relative flex justify-center items-center min-h-[420px]">
+              <img
+                src="/earth.png"
+                alt="Global reach"
+                className="globe-spin absolute w-96 h-96 object-contain"
+                style={{ filter: "drop-shadow(0 30px 50px rgba(37,99,235,0.35))" }}
+              />
+              <div className="float-card absolute top-2 left-0 bg-white rounded-xl shadow-xl p-4 w-48 border border-slate-100">
+                <p className="text-[11px] text-slate-400 font-medium flex justify-between">Performance Overview <ArrowRight size={12} /></p>
+                <p className="text-[11px] text-slate-400 mt-1">Revenue Influenced</p>
+                <p className="text-2xl font-bold text-slate-800 mt-0.5">$75M+</p>
+                <p className="text-[11px] text-emerald-500 font-semibold mt-1">▲ 26.4% vs last year</p>
+              </div>
+              <div className="float-card d2 absolute top-24 right-0 bg-white rounded-xl shadow-xl p-4 w-48 border border-slate-100">
+                <p className="text-[11px] text-slate-400 font-medium flex justify-between">Project Delivery <ArrowRight size={12} /></p>
+                <p className="text-2xl font-bold text-slate-800 mt-2">350+</p>
+                <p className="text-[11px] text-slate-400">Successful Projects</p>
+                <p className="text-[11px] text-emerald-500 font-semibold mt-1">▲ 18.2%</p>
+              </div>
+              <div className="float-card d3 absolute bottom-2 left-6 bg-white rounded-xl shadow-xl p-4 w-44 border border-slate-100">
+                <p className="text-[11px] text-slate-400 font-medium">Client Satisfaction</p>
+                <p className="text-2xl font-bold text-slate-800 mt-1">4.9/5</p>
+                <div className="flex gap-0.5 mt-1 text-blue-500">
+                  {Array.from({ length: 5 }).map((_, i) => <Star key={i} size={13} fill="currentColor" />)}
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Scroll indicator */}
-          <div id="scroll-indicator" className="flex justify-center pb-2">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6777AD" strokeWidth="2">
-              <path d="M12 5v14M5 12l7 7 7-7" />
-            </svg>
-          </div>
-
-          {/* BRANDS — increased text-base (up from text-sm) */}
-          <div className="hero-brands w-full pb-10">
-            <div className="flex flex-wrap justify-center items-center text-slate-700 text-base font-semibold bg-white/30 backdrop-blur-md">
-              {brands.map((brand, i) => (
-                <span key={i} className="flex items-center float-brand">
-                  <span className="px-6 py-4">{brand}</span>
-                  {i < brands.length - 1 && <span className="h-5 w-px bg-gray-300" />}
-                </span>
+          {/* STATS */}
+          <div className="max-w-7xl mx-auto px-6 pb-7">
+            <div className="reveal bg-white rounded-2xl border border-slate-100 shadow-sm flex flex-wrap md:flex-nowrap items-center justify-between">
+              {stats.map((s, i) => (
+                <div
+                  key={i}
+                  className={`flex-1 min-w-[45%] md:min-w-0 flex items-center justify-center gap-3 px-5 py-6 border-slate-100 ${i < stats.length - 1 ? "md:border-r" : ""
+                    } ${i < stats.length - 1 ? "border-b md:border-b-0" : ""}`}
+                >
+                  <div className="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 flex-shrink-0">
+                    <s.icon size={17} />
+                  </div>
+                  <div className="text-left">
+                    <h2 className="text-xl md:text-2xl font-bold text-slate-800 leading-tight" data-target={s.value} data-counted="false">{s.value}</h2>
+                    <p className="text-slate-500 text-xs whitespace-nowrap">{s.label}</p>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
+        </section>
 
-          {/* STATS — increased stat number to text-5xl (up from text-4xl), label text-base (up from text-sm) */}
-          <div className="flex flex-wrap justify-center items-start gap-0 py-10">
-            {stats.map((s, i) => (
-              <div
-                key={i}
-                className={`reveal stat-pop px-10 text-center delay-${i + 1} ${i < stats.length - 1 ? "border-r border-gray-300" : ""}`}
-              >
-                <h2
-                  className="text-5xl font-bold text-slate-800"
-                  data-target={s.value}
-                  data-counted="false"
-                >
-                  {s.value}
-                </h2>
-                <p className="text-slate-500 text-base mt-2">{s.label}</p>
-                <div className="mt-2 text-yellow-400 text-lg">
-                  {s.stars.split("").map((ch, j) => (
-                    <span key={j} className={ch === "★" ? "star-animated" : ""}>{ch}</span>
-                  ))}
+        {/* BRANDS */}
+        <section className="max-w-7xl mx-auto px-6 pb-7">
+          <div className="reveal bg-white rounded-2xl border border-slate-100 shadow-sm px-8 py-6 text-center">
+            <p className="text-blue-600 font-semibold text-xs tracking-wide mb-5">TRUSTED BY AMBITIOUS BRANDS</p>
+            <div className="flex flex-wrap justify-center items-center gap-x-14 gap-y-8">
+              {brands.map((b) => (
+                <img
+                  key={b.name}
+                  src={b.logo}
+                  alt={b.name}
+                  title={b.name}
+                  className="h-16 md:h-20 w-auto max-w-[180px] object-contain"
+                />
+              ))}
+            </div>
+            <a href="/casedetails" className="mt-5 inline-flex items-center gap-1 text-blue-600 font-semibold text-sm hover:gap-2 transition-all">
+              View All Case Studies <ArrowRight size={14} />
+            </a>
+          </div>
+        </section>
+
+        {/* CASE STUDIES */}
+        <section className="max-w-7xl mx-auto px-0 py-0">
+          <div className="flex flex-wrap justify-between items-start gap-4 mb-10">
+            <div className="reveal">
+              <p className="text-blue-600 font-semibold text-xs tracking-wide mb-2">FEATURED SUCCESS STORIES</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Real Results. Real Impact.</h2>
+              <p className="text-slate-500 mt-2 max-w-md">Explore how we've helped global brands accelerate growth through strategy, design and technology.</p>
+            </div>
+            <button className="reveal magnetic border border-slate-300 hover:border-blue-400 text-slate-700 px-5 py-2.5 rounded-lg font-semibold text-sm flex items-center gap-2 transition-colors flex-shrink-0">
+              View All Case Studies <ArrowRight size={15} />
+            </button>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {caseStudies.map((c, i) => (
+              <div key={i} className={`reveal card-hover delay-${i + 1} bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden`}>
+                <div className="h-44 relative flex items-center justify-center" style={{ background: c.gradient }}>
+                  <span className="absolute top-4 left-4 text-[11px] font-bold text-white px-3 py-1 rounded-full" style={{ background: "rgba(255,255,255,0.18)", backdropFilter: "blur(6px)" }}>
+                    {c.tag}
+                  </span>
+                </div>
+                <div className="p-6">
+                  <h3 className="font-bold text-slate-900 text-lg">{c.name}</h3>
+                  <p className="text-sm text-slate-500 mt-2 leading-relaxed">{c.desc}</p>
+                  <a href="#" className="mt-4 inline-flex items-center gap-1 text-blue-600 font-semibold text-sm hover:gap-2 transition-all">
+                    View Case Study <ArrowRight size={13} />
+                  </a>
                 </div>
               </div>
             ))}
           </div>
+        </section>
 
-          {/* ── Strategy button image — increased h-14 (up from h-12) ── */}
-          <div className="flex justify-center">
-            <button className="magnetic mt-4 mb-10 rounded-lg overflow-hidden transition-all hover:opacity-90">
-              <img src="/button_three.png" alt="Get Your Custom Strategy" className="h-14 w-auto object-contain block" />
-            </button>
+        {/* WHAT WE DO */}
+        <section className="max-w-7xl mx-auto px-6 py-14">
+          <div className="reveal mb-10">
+            <p className="text-blue-600 font-semibold text-xs tracking-wide mb-2">WHAT WE DO</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Digital Systems. Built for Growth.</h2>
+            <p className="text-slate-500 mt-2 max-w-lg">End-to-end capabilities to build, optimize and grow your digital ecosystem.</p>
+          </div>
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {services.map((s, i) => (
+              <div key={i} className={`reveal card-hover delay-${(i % 6) + 1} bg-white rounded-2xl border border-slate-100 shadow-sm p-5`}>
+                <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 mb-4">
+                  <s.icon size={18} />
+                </div>
+                <h3 className="font-semibold text-slate-900 text-sm mb-1.5">{s.title}</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">{s.desc}</p>
+              </div>
+            ))}
           </div>
         </section>
 
-        {/* CASE STUDIES → FOOTER — shared background */}
-        <div
-          className="relative"
-          style={{
-            backgroundImage: "url('/background.png')",
-            backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center",
-          }}
-        >
-          <div className="absolute inset-0 bg-white/40 -z-0" />
-          <div className="relative z-10">
+        {/* TECH STACK */}
+        <section className="max-w-7xl mx-auto px-0 py-0">
+          <p className="reveal text-blue-600 font-semibold text-xs tracking-wide mb-8">TECHNOLOGY THAT POWERS THE EXPERIENCE</p>
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
+            {techStack.map((col, i) => (
+              <div key={col.title} className={`reveal delay-${i + 1} bg-white rounded-2xl border border-slate-100 shadow-sm p-6`}>
+                <h3 className="font-bold text-slate-900 mb-4">{col.title}</h3>
+                <ul className="space-y-2.5 text-sm text-slate-500">
+                  {col.items.map((item) => (
+                    <li key={item} className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500" /> {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
 
-            {/* CASE STUDIES */}
-            <section className="max-w-[1500px] mx-auto px-2 py-14">
-              <div className="text-center reveal">
-                <div className="flex items-center justify-center gap-4">
-                  <img src="/line_left.png" alt="" className="flex-1 h-auto object-fill" />
-                  {/* ── Section headings: text-3xl (up from text-2xl) ── */}
-                  <h2 className="text-3xl font-normal text-slate-900 whitespace-nowrap heading-line">
-                    In-Depth Success <span style={{ color: "#6777AD" }} className="font-bold">Stories</span>
-                  </h2>
-                  <img src="/line_right.png" alt="" className="flex-1 h-auto object-fill" />
+        {/* PROCESS */}
+        <section className="max-w-7xl mx-auto px-6 py-2">
+          <div className="reveal mb-10">
+            <p className="text-blue-600 font-semibold text-xs tracking-wide mb-2">OUR APPROACH</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">A Proven Process. Predictable Results.</h2>
+            <p className="text-slate-500 mt-2 max-w-lg">A systematic approach to deliver digital solutions that create measurable business impact.</p>
+          </div>
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6 relative">
+            {processSteps.map((s, i) => (
+              <div key={s.num} className={`reveal delay-${i + 1} relative`}>
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-11 h-11 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">{s.num}</div>
+                  {i < processSteps.length - 1 && <ArrowRight size={16} className="hidden md:block text-slate-300 ml-2" />}
                 </div>
-                {/* ── Section subtitle: text-base (up from text-sm) ── */}
-                <p className="text-slate-500 mt-2 text-base">Curating partners, ideas & marketing experiences</p>
+                <div className="text-blue-600 mb-2"><s.icon size={20} /></div>
+                <h3 className="font-bold text-slate-900 mb-1.5">{s.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{s.desc}</p>
               </div>
+            ))}
+          </div>
+        </section>
 
-              <div className="mt-10 grid md:grid-cols-4 gap-6">
-                {caseStudies.map((c, i) => (
-                  <div
-                    key={i}
-                    className={`reveal card-hover delay-${i + 1} bg-[#e6e6f8] border border-blue-200 rounded-2xl shadow-[0_8px_20px_rgba(59,130,246,0.3)] p-6 flex flex-col gap-3`}
-                  >
-                    <div className="rounded-xl overflow-hidden">
-                      <img src="/e_commarce_image.png" alt={c.title} className="w-full object-contain" />
-                    </div>
-                    <div className="mt-4">
-                      {/* ── Card title: text-lg (up from text-base) ── */}
-                      <h3 className="font-semibold text-slate-900 text-lg">{c.title}</h3>
-                      <img src="/line_middle.png" alt="" className="w-full my-2" />
-                      <div className="flex items-center gap-2 mt-2">
-                        <span className="text-orange-400 font-bold text-base">350%</span>
-                        <span className="text-slate-400 text-base">Growth in Online Revenue</span>
-                      </div>
-                      {/* ── Card body: text-base (up from text-sm) ── */}
-                      <p className="text-base text-slate-500 mt-2 leading-relaxed">{c.desc}</p>
-                    </div>
+        {/* INDUSTRIES */}
+        <section className="max-w-7xl mx-auto px-6 py-14">
+          <div className="grid md:grid-cols-[0.9fr_1.1fr] gap-10 items-start">
+            <div className="reveal">
+              <p className="text-blue-600 font-semibold text-xs tracking-wide mb-2">INDUSTRIES WE SERVE</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 leading-tight">Serving Clients Across 8+ Countries</h2>
+              <p className="text-slate-500 mt-3 max-w-sm">From startups to enterprises, we help businesses unlock digital growth across industries.</p>
+              <div className="mt-6 w-full max-w-md">
+                <img
+                  src="/world-map.png"
+                  alt="SM Solutions clients across 8+ countries"
+                  className="w-full h-auto object-contain opacity-90"
+                  draggable={false}
+                />
+              </div>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {industries.map((ind, i) => (
+                <div key={ind.title} className={`reveal card-hover delay-${(i % 6) + 1} bg-white rounded-2xl border border-slate-100 shadow-sm p-5`}>
+                  <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 mb-3">
+                    <ind.icon size={17} />
                   </div>
-                ))}
-
-                <div className="reveal reveal-scale card-hover bg-white border-2 border-blue-200 rounded-2xl shadow-sm p-6 flex flex-col gap-3">
-                  {/* ── Audit card title: text-xl (up from text-lg) ── */}
-                  <h3 className="font-bold text-xl text-slate-900">
-                    Get Your FREE <span className="font-extrabold text-slate-900">Marketing Audit</span>
-                  </h3>
-                  {/* ── Audit card body: text-sm (up from text-xs) ── */}
-                  <p className="text-sm text-slate-500 leading-relaxed">
-                    Gale Be: pnupuptart condammogsarfth COaeaetLamnt and irun sunuinpxtneZincpe ctviataetk Pon hi pretoltoes
-                  </p>
-                  <ul className="space-y-1">
-                    {["In Grepth Webesite beoarors.", "Actunedible Gronten plain", "Dalietatro eoe 5 heurs."].map((pt, j) => (
-                      <li key={j} className="flex items-center gap-2 text-sm text-slate-600">
-                        <span className="text-yellow-400">◆</span> {pt}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-0">
-                    <img src="/groups_img.svg" alt="Get Audit and Partners" className="w-full object-contain" />
-                  </div>
+                  <h3 className="font-semibold text-slate-900 text-sm mb-1">{ind.title}</h3>
+                  <p className="text-xs text-slate-500 leading-relaxed">{ind.desc}</p>
                 </div>
-              </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-              {/* ── Section CTA button: increased px/py ── */}
-              <div className="text-center mt-10 reveal">
-                <button
-                  className="magnetic text-white px-10 py-4 rounded-lg font-semibold shadow text-lg"
-                  style={{
-                    backgroundImage: "url('/btn_bg.png')", backgroundSize: "cover",
-                    backgroundPosition: "center", backgroundRepeat: "no-repeat",
-                  }}
-                >
-                  Explore All Case Studies
-                </button>
-              </div>
-            </section>
+        {/* TESTIMONIALS */}
+        <section className="max-w-7xl mx-auto px-6 py-14">
+          <div className="grid md:grid-cols-[0.9fr_1.1fr] lg:grid-cols-[0.75fr_1.25fr] gap-10 items-start">
+            {/* Left: heading */}
+            <div className="reveal">
+              <p className="text-blue-600 font-semibold text-xs tracking-wide mb-2">WHAT OUR CLIENTS SAY</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 leading-tight">
+                Partnerships Built on Trust.
+                <br />
+                Results That Speak.
+              </h2>
+            </div>
 
-            {/* INDUSTRIES */}
-            <section className="max-w-[1500px] mx-auto px-2 py-14">
-              <div className="reveal flex items-center justify-center gap-2">
-                <img src="/line_left.png" alt="" className="flex-1 h-auto object-fill" />
-                <h2 className="text-3xl font-normal text-slate-900 whitespace-nowrap">
-                  Industries <span style={{ color: "#6777AD" }} className="font-bold">We Serve</span>
-                </h2>
-                <img src="/line_right.png" alt="" className="flex-1 h-auto object-fill" />
-              </div>
-
-              <div className="mt-10 grid md:grid-cols-5 gap-6">
-                {industries.map((ind, i) => (
-                  <div
-                    key={i}
-                    className={`reveal industry-card delay-${i + 1} rounded-2xl shadow-sm p-5`}
-                    style={{
-                      backgroundImage: `url('${industryBgs[i]}')`,
-                      backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat",
-                    }}
-                  >
-                    <div className="flex items-center gap-3 mb-3">
-                      <img src={ind.icon} alt={ind.title} className="w-12 h-12 object-contain" />
-                      <div>
-                        {/* ── Industry card title: text-lg (up from text-base) ── */}
-                        <h3 className="font-bold text-slate-900 text-lg leading-tight">{ind.title}</h3>
-                        <p className="text-sm text-slate-400">{ind.subtitle}</p>
-                      </div>
-                    </div>
-                    <div className="w-full h-px bg-gray-200 mb-3" />
-                    {/* ── Industry desc: text-sm (up from text-xs) ── */}
-                    <p className="text-sm text-slate-500 leading-relaxed mb-3">{ind.desc}</p>
-                    <ul className="space-y-1">
-                      {ind.points.map((p, idx) => (
-                        <li key={idx} className="flex items-center gap-2 text-sm text-slate-500">
-                          <span className="text-green-400 text-sm">✓</span> {p}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-
-                <div className="reveal reveal-right bg-white/55 backdrop-blur-md border border-gray-200 rounded-2xl shadow-sm p-6 card-hover">
-                  <h3 className="font-bold text-xl text-slate-900">
-                    Get Your FREE <span className="text-blue-600">Marketing Audit</span>
-                  </h3>
-                  <p className="text-base text-slate-500 mt-2">Improve your marketing performance with expert insights.</p>
-                  {/* ── Audit button: py-4 text-lg (up from py-3) ── */}
-                  <button className="magnetic mt-6 bg-blue-600 hover:bg-blue-700 text-white py-4 w-full rounded-lg font-semibold text-lg">
-                    Get Audit
-                  </button>
-                  <div className="mt-4 flex gap-3 text-sm text-slate-500 font-semibold justify-center">
-                    <span>Google</span><span>Meta</span><span>Partner</span>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* TESTIMONIALS */}
-            <section className="max-w-[1500px] mx-auto px-2 py-14">
-              <div className="text-center">
-                <div className="reveal flex items-center justify-center gap-2 mb-10">
-                  <img src="/line_left.png" alt="" className="flex-1 h-auto object-fill" />
-                  <h2 className="text-3xl font-normal text-slate-900 whitespace-nowrap">
-                    Proven Results, Trusted by <span style={{ color: "#6777AD" }} className="font-bold">Clients</span>
-                  </h2>
-                  <img src="/line_right.png" alt="" className="flex-1 h-auto object-fill" />
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-4 gap-6">
-                {testimonials.map((t, i) => (
-                  <div
-                    key={i}
-                    className={`reveal testimonial-card delay-${i + 1} rounded-2xl p-5 flex flex-col gap-3 border border-blue-200`}
-                    style={{
-                      backgroundImage: "url('/bg_peple.png')",
-                      backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat",
-                    }}
-                  >
-                    <div className="flex items-center gap-3">
-                      <img src={t.image} alt={t.name} className="w-14 h-10 object-cover flex-shrink-0" />
-                      <div>
-                        {/* ── Testimonial name: text-base (up from text-sm) ── */}
-                        <h3 className="font-bold text-slate-900 text-base leading-tight">{t.name}</h3>
-                        <p className="text-sm text-slate-400 mt-0">{t.role}</p>
-                      </div>
-                    </div>
-                    <div className="w-full h-px bg-blue-100 my-1" />
-                    {/* ── Testimonial text: text-sm (up from text-xs) ── */}
-                    <p className="text-sm text-slate-500 leading-relaxed">{t.text}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* FREELANCE TALENTS */}
-            <section className="max-w-[1500px] mx-auto px-2 py-4">
-              <div className="reveal reveal-scale bg-white/10 backdrop-blur-md rounded-3xl shadow-lg p-12 text-center" style={{ border: "2px solid #d6d1e7" }}>
-                <div className="absolute left-8 top-1/2 -translate-y-1/2">
-                  <img src="/people_left.png" alt="people left" className="w-52 h-auto object-contain" />
-                </div>
-                <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col items-end">
-                  <img src="/people_right.png" alt="people right" className="w-52 h-auto object-contain" />
-                </div>
-                <div className="relative z-10 max-w-xl mx-auto">
-                  <div className="flex justify-center mb-4">
-                    <img src="/lebel.png" alt="Start Now!" className="h-12 w-auto object-contain" />
-                  </div>
-                  {/* ── Freelance section heading: text-3xl md:text-4xl (up from text-2xl md:text-3xl) ── */}
-                  <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
-                    Find Freelance Talents <br />
-                    <span style={{ color: "#6777AD" }}>For Your Business Today!</span>
-                  </h2>
-                  {/* ── Freelance section body: text-base (up from text-sm) ── */}
-                  <p className="text-slate-500 mt-3 text-base max-w-lg mx-auto leading-relaxed">
-                    From tech experts to creative professionals, we've got you covered for all your
-                    business needs connecting you with top freelance talents quickly, reliably, and hassle-free.
-                  </p>
-                  <div className="mt-7 flex justify-center items-center gap-4">
-                    <button
-                      className="magnetic text-white px-12 py-4 rounded-lg font-semibold text-lg"
-                      style={{
-                        background: "linear-gradient(135deg, #6777AD 0%, #a78bfa 50%, #60a5fa 100%)",
-                        boxShadow: "0 4px 20px rgba(103,119,173,0.45)",
-                        transition: "opacity 0.3s ease, box-shadow 0.3s ease",
-                      }}
-                      onMouseEnter={e => {
-                        (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 6px 28px rgba(103,119,173,0.65)";
-                        (e.currentTarget as HTMLButtonElement).style.opacity = "0.92";
-                      }}
-                      onMouseLeave={e => {
-                        (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 20px rgba(103,119,173,0.45)";
-                        (e.currentTarget as HTMLButtonElement).style.opacity = "1";
-                      }}
+            {/* Right: testimonial cards */}
+            <div>
+              <div className="grid sm:grid-cols-2 gap-5">
+                {[0, 1].map((offset) => {
+                  const t = testimonials[(activeTestimonial + offset) % testimonials.length];
+                  return (
+                    <div
+                      key={t.name}
+                      className="testimonial-card card-hover bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col"
                     >
-                      Meet Us
-                    </button>
-                    <a href="#" className="magnetic text-base font-semibold text-slate-700 hover:text-blue-600 flex items-center gap-1">
-                      Click to Join Us →
-                    </a>
-                  </div>
+                      <div className="flex items-start gap-3">
+                        <span className="text-blue-600 text-[44px] font-black leading-none -mt-2 select-none flex-shrink-0">&ldquo;</span>
+                        <p className="text-slate-600 text-sm leading-relaxed">{t.text}</p>
+                      </div>
+                      <div className="flex items-center justify-between gap-3 mt-6 pt-4 border-t border-slate-100">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <img
+                            src={t.avatar}
+                            alt={t.name}
+                            className="w-10 h-10 rounded-full object-cover border-2 border-blue-100 flex-shrink-0"
+                          />
+                          <div className="min-w-0">
+                            <p className="font-semibold text-slate-900 text-sm truncate">{t.name}</p>
+                            <p className="text-xs text-slate-500 truncate">{t.role}</p>
+                          </div>
+                        </div>
+                        <img src={t.logo} alt={t.company} className="h-6 md:h-7 w-auto max-w-[96px] object-contain flex-shrink-0" />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Dots */}
+              <div className="flex justify-center gap-2 mt-6">
+                {testimonials.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    aria-label={`Show testimonial ${i + 1}`}
+                    onClick={() => setActiveTestimonial(i)}
+                    className={`dot h-2 rounded-full ${i === activeTestimonial ? "bg-blue-600 w-6" : "bg-slate-300 w-2 hover:bg-slate-400"}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA + FOOTER */}
+        <section className="w-full">
+          <div className="reveal w-full bg-blue-600">
+            {/* CTA strip */}
+            <div className="max-w-7xl mx-auto px-6 py-7 md:py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="flex items-center gap-4 text-white">
+                <div className="w-12 h-12 rounded-full bg-white/15 flex items-center justify-center flex-shrink-0">
+                  <Rocket size={20} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-xl md:text-2xl leading-tight">Ready to Build Something Impactful?</h3>
+                  <p className="text-blue-100 text-sm mt-1">Let's discuss how we can help you achieve measurable growth.</p>
                 </div>
               </div>
-            </section>
+              <button className="magnetic bg-white text-blue-700 hover:bg-blue-50 px-6 py-3 rounded-lg font-semibold text-sm flex items-center gap-2 transition-colors flex-shrink-0">
+                Book a Strategy Call <ArrowRight size={16} />
+              </button>
+            </div>
 
-            {/* CTA */}
-            <section className="cta-section max-w-[1500px] mx-auto px-2 py-6">
-              <div className="reveal reveal-scale inner bg-white/10 backdrop-blur-md rounded-3xl shadow-lg p-12 text-center" style={{ border: "2px solid #d6d1e7" }}>
-                {/* ── CTA heading: text-4xl (up from text-3xl) ── */}
-                <h2 className="text-4xl font-bold text-slate-900">
-                  Ready to Scale <span style={{ color: "#6777AD" }}>Your Digital Growth?</span>
-                </h2>
-                {/* ── CTA subtext: text-base (up from text-sm) ── */}
-                <p className="text-slate-500 mt-3 text-base">Get a custom strategy tailored for your business goals.</p>
-                {/* ── CTA button: px-10 py-4 text-lg (up from px-8 py-3) ── */}
-                <button
-                  className="magnetic text-white px-10 py-4 rounded-lg font-semibold shadow mt-8 text-lg"
-                  style={{
-                    backgroundImage: "url('/btn_bg.png')", backgroundSize: "cover",
-                    backgroundPosition: "center", backgroundRepeat: "no-repeat",
-                  }}
-                >
-                  Book a Free Strategy Call
-                </button>
-              </div>
-            </section>
-
-            {/* FOOTER */}
-            <footer className="bg-transparent mt-10">
-              <div className="max-w-[1500px] mx-auto px-2 pb-10">
-                <div className="reveal bg-white/10 backdrop-blur-md rounded-3xl shadow-lg p-12 text-center" style={{ border: "2px solid #d6d1e7" }}>
-                  <div className="px-6 py-14 grid md:grid-cols-4 gap-0">
-                    <div className="pr-10 text-left">
-                      <div className="flex items-center gap-2 font-bold text-lg">
-                        <img src="/logo.svg" alt="SM Solutions Logo" className="w-27 h-20 object-contain" />
-                      </div>
-                      {/* ── Footer tagline: text-base (up from text-sm) ── */}
-                      <span className="text-base mt-4 leading-relaxed block" style={{ color: "#505268" }}>
-                        We build high-performance digital ecosystems that drive measurable growth for global brands.
-                      </span>
-                    </div>
-                    {[
-                      { title: "Services", items: ["Performance Marketing", "Conversion Optimization", "Web Development", "Branding", "Graphic Design", "UI/UX Strategy"] },
-                      { title: "Company", items: ["About Us", "Case Studies", "Careers", "Services", "Graphic Design", "Contact"] },
-                    ].map((col) => (
-                      <div key={col.title} className="flex gap-6">
-                        <img src="/vertial_line.png" alt="" className="h-auto w-px object-fill" />
-                        <div className="text-left flex-1 pl-4">
-                          {/* ── Footer column heading: text-xl (up from text-lg) ── */}
-                          <h3 className="font-extrabold text-xl" style={{ color: "#3b3e47" }}>{col.title}</h3>
-                          {/* ── Footer links: text-base (up from text-sm) ── */}
-                          <ul className="mt-4 space-y-2 text-base" style={{ color: "#505268" }}>
-                            {col.items.map((item) => (
-                              <li key={item} className="hover:text-blue-600 cursor-pointer transition-colors">{item}</li>
-                            ))}
-                          </ul>
+            {/* Dark footer panel */}
+            <footer className="w-full bg-[#0B1220]">
+              <div className="max-w-7xl mx-auto px-6 pt-12 pb-5">
+                <div className="grid grid-cols-2 md:grid-cols-12 gap-x-6 gap-y-10 pb-10 border-b border-white/10">
+                  {/* Brand */}
+                  <div className="col-span-2 md:col-span-3">
+                    <div className="flex items-end gap-2 mb-4">
+                      <span className="text-white font-black text-[40px] leading-none tracking-tight">SM</span>
+                      <div className="leading-tight pb-0.5">
+                        <div className="font-bold text-lg text-white">Solutions</div>
+                        <div className="text-[8px] tracking-[0.14em] text-slate-400 font-medium uppercase">
+                          Engineering Growth. Designing Impact.
                         </div>
                       </div>
-                    ))}
-                    <div className="flex gap-6">
-                      <img src="/vertial_line.png" alt="" className="h-auto w-px object-fill" />
-                      <div className="text-left flex-1 pl-2">
-                        <h3 className="font-extrabold text-xl" style={{ color: "#3b3e47" }}>Contact</h3>
-                        <ul className="mt-4 space-y-2 text-base" style={{ color: "#505268" }}>
-                          <li className="flex items-center gap-3"><img src="/phonee.png" alt="phone" className="w-5 h-5 object-contain" />+1 (555) 123-4567</li>
-                          <li className="flex items-center gap-3"><img src="/mail.png" alt="mail" className="w-5 h-5 object-contain" />Info@example.com</li>
-                          <li className="flex items-start gap-3"><img src="/location_marker.png" alt="location" className="w-5 h-5 object-contain mt-0.5" />544 honey creek rd. West des moines, ia 50265</li>
-                        </ul>
-                      </div>
                     </div>
-                  </div>
-
-                  <div className="px-6 pb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-t border-gray-200 pt-8">
-                    <div className="text-left">
-                      {/* ── Newsletter heading: text-xl (up from text-lg) ── */}
-                      <h4 className="font-extrabold text-xl" style={{ color: "#3b3e47" }}>Stay in the loop</h4>
-                      <p className="text-base text-slate-500 mt-1">Get updates about new features and opportunities</p>
-                    </div>
-                    <div className="relative w-full md:w-auto">
-                      <img src="/input_box.png" alt="" className="h-15 w-full md:w-96 object-fill rounded-full" />
-                      {/* ── Email input: text-base (up from text-sm) ── */}
-                      <input type="email" placeholder="Enter Your Email" className="absolute inset-0 bg-transparent outline-none text-base px-6 py-2 text-slate-700 placeholder-slate-400 w-full" />
-                      <button className="absolute right-1 top-1/2 -translate-y-1/2 magnetic">
-                        <img src="/circle_next.png" alt="Submit" className="w-13 h-13 object-contain mr-.5" />
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="px-6 pb-8 flex flex-col md:flex-row justify-between items-center text-base gap-4 border-t border-gray-200 pt-6">
-                    <div className="text-left">
-                      <p className="font-semibold" style={{ color: "#6777AD" }}>© 2026 SMSolutions. Copyright and rights reserved</p>
-                      <div className="flex gap-3 mt-1" style={{ color: "#505268" }}>
-                        <a href="#" className="hover:text-blue-600">Terms and Conditions</a>
-                        <span>•</span>
-                        <a href="#" className="hover:text-blue-600">Privacy Policy</a>
-                        <span>•</span>
-                        <a href="#" className="hover:text-blue-600">Cookie Policy</a>
-                      </div>
-                    </div>
-                    <div className="flex gap-3">
-                      {[
-                        { src: "/linkin.png", alt: "LinkedIn" },
-                        { src: "/twetter.png", alt: "Twitter" },
-                        { src: "/instragram.png", alt: "Instagram" },
-                        { src: "/git.png", alt: "GitHub" },
-                      ].map((s) => (
-                        <a key={s.alt} href="#" className="magnetic hover:scale-110 transition-transform block">
-                          <img src={s.src} alt={s.alt} className="w-10 h-10 object-contain" />
+                    <p className="text-[13px] text-slate-400 leading-relaxed max-w-[240px]">
+                      We build high-performance digital ecosystems that drive measurable growth for ambitious brands worldwide.
+                    </p>
+                    <div className="flex items-center gap-2.5 mt-6">
+                      {socials.map((Icon, i) => (
+                        <a
+                          key={i}
+                          href="#"
+                          className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-slate-300 hover:text-white hover:border-blue-400 hover:bg-blue-600/20 transition-colors"
+                        >
+                          <Icon size={14} />
                         </a>
                       ))}
                     </div>
+                  </div>
+
+                  {/* Link columns */}
+                  {footerCols.map((col) => (
+                    <div key={col.title} className="md:col-span-2">
+                      <h4 className="font-semibold text-white text-sm mb-4">{col.title}</h4>
+                      <ul className="space-y-2.5 text-[13px] text-slate-400">
+                        {col.items.map((item) => (
+                          <li key={item}>
+                            <a href="#" className="hover:text-blue-400 transition-colors">{item}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+
+                  {/* Contact */}
+                  <div className="col-span-2 md:col-span-1 md:min-w-[190px]">
+                    <h4 className="font-semibold text-white text-sm mb-4">Contact</h4>
+                    <ul className="space-y-3 text-[13px] text-slate-300">
+                      {contacts.map((c) => (
+                        <li key={c.text} className="flex items-center gap-2.5 whitespace-nowrap">
+                          <span className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-white flex-shrink-0">
+                            <c.icon size={12} />
+                          </span>
+                          {c.text}
+                        </li>
+                      ))}
+                    </ul>
+                    <button className="magnetic mt-5 bg-blue-600 hover:bg-blue-700 text-white text-[13px] px-4 py-2.5 rounded-md font-semibold whitespace-nowrap transition-colors">
+                      Book a Strategy Call
+                    </button>
+                  </div>
+                </div>
+
+                {/* Bottom bar */}
+                <div className="flex flex-col md:flex-row justify-between items-center gap-3 pt-5 text-xs text-slate-500">
+                  <p>© 2024 SM Solutions. All Rights Reserved.</p>
+                  <div className="flex gap-6">
+                    <a href="#" className="hover:text-blue-400 transition-colors">Privacy Policy</a>
+                    <a href="#" className="hover:text-blue-400 transition-colors">Terms & Conditions</a>
+                    <a href="#" className="hover:text-blue-400 transition-colors">Sitemap</a>
                   </div>
                 </div>
               </div>
             </footer>
           </div>
-        </div>
+        </section>
       </div>
     </>
   );
