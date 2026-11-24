@@ -121,7 +121,7 @@ export default function Home() {
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
-    { label: "Services", href: "#services", hasDropdown: true },
+    { label: "Services", href: "/services", hasDropdown: false },
     { label: "Case Studies", href: "/casedetails" },
     { label: "Insights", href: "#" },
     { label: "Contact", href: "#" },
