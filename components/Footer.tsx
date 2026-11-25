@@ -10,7 +10,7 @@ import {
 const footerCols = [
   { title: "Services", items: ["Digital Strategy", "Web Development", "Mobile App Development", "Cloud & DevOps", "UI/UX Design", "Digital Marketing"] },
   { title: "Industries", items: ["E-Commerce", "FMCG & Consumer", "Real Estate", "Manufacturing", "SaaS & Technology", "Healthcare"] },
-  { title: "Company", items: ["About Us", "Our Team", "Careers", "Partners", "Blog", "Contact Us"] },
+  { title: "Company", items: ["About Us", "Careers", "Partners", "Blog", "Policies", "Contact Us"] },
   { title: "Resources", items: ["Case Studies", "Insights", "Whitepapers", "FAQs"] },
 ];
 
@@ -18,6 +18,7 @@ const footerLinks: Record<string, string> = {
   "About Us": "/about",
   "Case Studies": "/case-studies",
   "Contact Us": "/contact",
+  Policies: "/terms",
 };
 
 const socials = [LinkedinIcon, InstagramIcon, FacebookIcon, TwitterIcon, YoutubeIcon];

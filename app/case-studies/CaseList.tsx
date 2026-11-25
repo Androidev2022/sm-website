@@ -52,7 +52,7 @@ export default function CaseList() {
                     <span className="font-semibold text-slate-800 truncate">{c.services}</span>
                   </div>
                   <Link
-                    href={`/case-studies/${c.slug}`}
+                    href={c.fullStoryHref ?? `/case-studies/${c.slug}`}
                     className="sm:ml-auto inline-flex items-center gap-1 text-blue-600 font-semibold text-[13px] hover:gap-2 transition-all"
                   >
                     View Case Study <ArrowRight size={14} />
