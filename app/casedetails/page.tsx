@@ -452,7 +452,7 @@ export default function Page() {
 
     return (
         <main
-            className="min-h-screen bg-[#F7F6FD] bg-top bg-no-repeat"
+            className="min-h-screen bg-[#F7F6FD] bg-top bg-no-repeat pb-14 md:pb-20"
             style={{ backgroundImage: "url('/bg.png')", backgroundSize: "100% auto" }}
         >
             {/* Ambient cursor glow — sits behind everything, ignores pointer events */}
@@ -1240,7 +1240,7 @@ export default function Page() {
             </section>
 
             {/* SUCCESS STORY BANNER */}
-            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-6">
+            {/* <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-6">
                 <Reveal className="flex flex-col items-start justify-between gap-6 rounded-2xl bg-[#4C5FEA] px-8 py-8 sm:flex-row sm:items-center">
                     <div className="flex items-center gap-4">
                         <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white">
@@ -1259,7 +1259,7 @@ export default function Page() {
                         Connect With Us →
                     </button>
                 </Reveal>
-            </section>
+            </section> */}
 
         </main>
     );
