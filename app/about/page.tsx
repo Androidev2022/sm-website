@@ -374,7 +374,7 @@ export default function AboutUsPage() {
                 <button className="magnetic lift-btn" style={{ background: "transparent", color: "#2563EB", border: "2px solid #2563EB", borderRadius: 8, padding: "11px 24px", fontSize: 13, fontWeight: 600, cursor: "pointer", transition: "background .2s,color .2s,transform .2s,box-shadow .2s" }}
                   onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.background = "#2563EB"; el.style.color = "#fff"; }}
                   onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.background = "transparent"; el.style.color = "#2563EB"; }}>
-                  Book a Strategy Call
+                  Connect With Us
                 </button>
               </div>
             </div>
@@ -541,7 +541,7 @@ export default function AboutUsPage() {
                 </p>
                 <div style={{ display: "flex", gap: 16, justifyContent: "center" }}>
                   <button className="magnetic shimmer-btn lift-btn" style={{ background: "#fff", color: "#2563EB", border: "none", borderRadius: 10, padding: "14px 32px", fontSize: 14, fontWeight: 700, cursor: "pointer", boxShadow: "0 6px 20px rgba(0,0,0,0.2)" }}>
-                    Book a Free Strategy Call
+                    Connect With Us
                   </button>
                   <a href="/case-studies" className="magnetic lift-btn" style={{ background: "transparent", color: "#fff", border: "2px solid rgba(255,255,255,0.55)", borderRadius: 10, padding: "14px 32px", fontSize: 14, fontWeight: 600, cursor: "pointer", transition: "border-color .2s,transform .2s,box-shadow .2s" }}
                     onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#fff"; }}

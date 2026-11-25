@@ -20,9 +20,8 @@ export default function Testimonials() {
           <figure
             key={t.name}
             onMouseEnter={() => setActive(i)}
-            className={`bg-white rounded-2xl border p-6 flex flex-col transition-all ${
-              active === i ? "border-blue-200 shadow-lg shadow-blue-600/5" : "border-slate-100 shadow-sm"
-            } ${active === i ? "" : "hidden md:flex"}`}
+            className={`bg-white rounded-2xl border p-6 flex flex-col transition-all ${active === i ? "border-blue-200 shadow-lg shadow-blue-600/5" : "border-slate-100 shadow-sm"
+              } ${active === i ? "" : "hidden md:flex"}`}
           >
             <Quote size={22} className="text-blue-600/70" />
             <blockquote className="mt-3 text-sm text-slate-600 leading-relaxed flex-1">{t.quote}</blockquote>

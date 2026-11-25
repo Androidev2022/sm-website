@@ -333,7 +333,7 @@ export default function Home() {
                   Explore Our Work <ArrowRight size={16} />
                 </button>
                 <button className="magnetic border border-slate-300 hover:border-blue-400 text-slate-700 px-7 py-3.5 rounded-lg font-semibold flex items-center gap-2 transition-colors">
-                  Book a Strategy Call <ArrowRight size={16} />
+                  Connect With Us <ArrowRight size={16} />
                 </button>
               </div>
               <div className="hero-tags mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-slate-900 text-sm font-bold">

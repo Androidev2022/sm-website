@@ -1221,7 +1221,7 @@ export default function Page() {
                                 Let&apos;s build a digital experience that drives growth.
                             </p>
                             <button className="mt-6 flex items-center gap-2 rounded-full bg-[#E11D48] px-6 py-3 text-sm font-semibold text-white shadow-md transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#c81b40] active:translate-y-0">
-                                Book a Strategy Call
+                                Connect With Us
                                 <span aria-hidden="true">→</span>
                             </button>
                         </div>
@@ -1256,7 +1256,7 @@ export default function Page() {
                         </div>
                     </div>
                     <button className="shrink-0 whitespace-nowrap rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#4C5FEA] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-gray-50 active:translate-y-0">
-                        Book a Free Strategy Call →
+                        Connect With Us →
                     </button>
                 </Reveal>
             </section>

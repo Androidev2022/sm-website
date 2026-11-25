@@ -11,7 +11,7 @@ export const navLinks: NavLink[] = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Case Studies", href: "/case-studies", match: ["/casedetails"] },
-  { label: "Insights", href: "#" },
+  { label: "Insights", href: "/our-clients" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -44,9 +44,8 @@ export default function Header() {
               <Link
                 key={link.label}
                 href={link.href}
-                className={`nav-link flex items-center gap-1 hover:text-blue-600 transition-colors ${
-                  active ? "active text-blue-600" : ""
-                }`}
+                className={`nav-link flex items-center gap-1 hover:text-blue-600 transition-colors ${active ? "active text-blue-600" : ""
+                  }`}
               >
                 {link.label}
                 {link.hasDropdown && <ChevronDown size={14} />}
@@ -56,7 +55,7 @@ export default function Header() {
         </nav>
 
         <button className="magnetic bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-colors flex items-center gap-2">
-          Book a Strategy Call <ArrowRight size={15} />
+          Connect With Us <ArrowRight size={15} />
         </button>
       </div>
     </header>

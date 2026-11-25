@@ -178,7 +178,7 @@ export default function CaseStudiesPage() {
             Let&apos;s talk about your goals and how we can deliver similar growth for your business.
           </p>
           <button className="mt-6 inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold text-sm transition-colors">
-            Book a Free Strategy Call <ArrowRight size={16} />
+            Connect With Us <ArrowRight size={16} />
           </button>
         </div>
       </section>
