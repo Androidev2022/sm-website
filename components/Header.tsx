@@ -4,22 +4,23 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowRight, ChevronDown } from "lucide-react";
 
-type NavLink = { label: string; href: string; hasDropdown?: boolean };
+type NavLink = { label: string; href: string; hasDropdown?: boolean; match?: string[] };
 
 export const navLinks: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
-  { label: "Case Studies", href: "/casedetails" },
+  { label: "Case Studies", href: "/case-studies", match: ["/casedetails"] },
   { label: "Insights", href: "#" },
-  { label: "Contact", href: "#" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Header() {
   const pathname = usePathname();
 
-  const isActive = (href: string) =>
-    href !== "#" && (href === "/" ? pathname === "/" : pathname.startsWith(href));
+  const isActive = ({ href, match = [] }: NavLink) =>
+    href !== "#" &&
+    (href === "/" ? pathname === "/" : [href, ...match].some((p) => pathname.startsWith(p)));
 
   return (
     <header className="site-header w-full bg-white/85 backdrop-blur-[10px] border-b border-slate-100 sticky top-0 z-50">
@@ -38,7 +39,7 @@ export default function Header() {
 
         <nav className="hidden md:flex gap-9 text-[15px] font-medium text-slate-600">
           {navLinks.map((link) => {
-            const active = isActive(link.href);
+            const active = isActive(link);
             return (
               <Link
                 key={link.label}

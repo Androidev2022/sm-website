@@ -271,7 +271,7 @@ export default function ServicesPage() {
                                     Discuss Your Project <ArrowRight size={16} />
                                 </button>
                                 <a
-                                    href="/casedetails"
+                                    href="/case-studies"
                                     className="magnetic border border-slate-300 hover:border-blue-400 text-slate-700 px-7 py-3.5 rounded-lg font-semibold flex items-center gap-2 transition-colors"
                                 >
                                     View Our Work <ArrowRight size={16} />
@@ -427,7 +427,7 @@ export default function ServicesPage() {
                                 />
                             ))}
                         </div>
-                        <a href="/casedetails" className="mt-5 inline-flex items-center gap-1 text-blue-600 font-semibold text-sm hover:gap-2 transition-all">
+                        <a href="/case-studies" className="mt-5 inline-flex items-center gap-1 text-blue-600 font-semibold text-sm hover:gap-2 transition-all">
                             View All Case Studies <ArrowRight size={14} />
                         </a>
                     </div>

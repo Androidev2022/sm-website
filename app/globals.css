@@ -58,3 +58,10 @@ body {
 }
 .nav-link:hover::after, .nav-link.active::after { width: 100%; }
 .magnetic { display: inline-flex; align-items: center; white-space: nowrap; transition: transform .45s cubic-bezier(.22,1,.36,1); }
+
+/* ─── Contact page ───────────────────────────────────────────────────────── */
+@keyframes contact-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.contact-float { animation: contact-float 4.5s ease-in-out infinite; }
+.contact-float-d2 { animation-delay: .9s; }
+.contact-float-d3 { animation-delay: 1.8s; }
+@media (prefers-reduced-motion: reduce) { .contact-float { animation: none; } }

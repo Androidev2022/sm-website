@@ -14,6 +14,12 @@ const footerCols = [
   { title: "Resources", items: ["Case Studies", "Insights", "Whitepapers", "FAQs"] },
 ];
 
+const footerLinks: Record<string, string> = {
+  "About Us": "/about",
+  "Case Studies": "/case-studies",
+  "Contact Us": "/contact",
+};
+
 const socials = [LinkedinIcon, InstagramIcon, FacebookIcon, TwitterIcon, YoutubeIcon];
 
 const contacts = [
@@ -80,7 +86,7 @@ export default function Footer() {
                   <ul className="space-y-2.5 text-[13px] text-slate-400">
                     {col.items.map((item) => (
                       <li key={item}>
-                        <a href="#" className="hover:text-blue-400 transition-colors">{item}</a>
+                        <a href={footerLinks[item] ?? "#"} className="hover:text-blue-400 transition-colors">{item}</a>
                       </li>
                     ))}
                   </ul>

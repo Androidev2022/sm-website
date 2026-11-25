@@ -368,9 +368,9 @@ export default function AboutUsPage() {
                 We blend strategy, creativity and technology to build digital ecosystems that drive measurable growth for global brands.
               </p>
               <div className="hero-btns" style={{ display: "flex", gap: 12 }}>
-                <button className="magnetic shimmer-btn lift-btn" style={{ background: "#2563EB", color: "#fff", border: "none", borderRadius: 8, padding: "11px 24px", fontSize: 13, fontWeight: 600, cursor: "pointer", boxShadow: "0 4px 14px rgba(37,99,235,0.3)" }}>
+                <a href="/case-studies" className="magnetic shimmer-btn lift-btn" style={{ background: "#2563EB", color: "#fff", border: "none", borderRadius: 8, padding: "11px 24px", fontSize: 13, fontWeight: 600, cursor: "pointer", boxShadow: "0 4px 14px rgba(37,99,235,0.3)" }}>
                   View Case Studies
-                </button>
+                </a>
                 <button className="magnetic lift-btn" style={{ background: "transparent", color: "#2563EB", border: "2px solid #2563EB", borderRadius: 8, padding: "11px 24px", fontSize: 13, fontWeight: 600, cursor: "pointer", transition: "background .2s,color .2s,transform .2s,box-shadow .2s" }}
                   onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.background = "#2563EB"; el.style.color = "#fff"; }}
                   onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.background = "transparent"; el.style.color = "#2563EB"; }}>
@@ -543,11 +543,11 @@ export default function AboutUsPage() {
                   <button className="magnetic shimmer-btn lift-btn" style={{ background: "#fff", color: "#2563EB", border: "none", borderRadius: 10, padding: "14px 32px", fontSize: 14, fontWeight: 700, cursor: "pointer", boxShadow: "0 6px 20px rgba(0,0,0,0.2)" }}>
                     Book a Free Strategy Call
                   </button>
-                  <button className="magnetic lift-btn" style={{ background: "transparent", color: "#fff", border: "2px solid rgba(255,255,255,0.55)", borderRadius: 10, padding: "14px 32px", fontSize: 14, fontWeight: 600, cursor: "pointer", transition: "border-color .2s,transform .2s,box-shadow .2s" }}
+                  <a href="/case-studies" className="magnetic lift-btn" style={{ background: "transparent", color: "#fff", border: "2px solid rgba(255,255,255,0.55)", borderRadius: 10, padding: "14px 32px", fontSize: 14, fontWeight: 600, cursor: "pointer", transition: "border-color .2s,transform .2s,box-shadow .2s" }}
                     onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#fff"; }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.55)"; }}>
                     View Case Studies →
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>

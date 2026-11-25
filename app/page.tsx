@@ -430,7 +430,7 @@ export default function Home() {
                 />
               ))}
             </div>
-            <a href="/casedetails" className="mt-5 inline-flex items-center gap-1 text-blue-600 font-semibold text-sm hover:gap-2 transition-all">
+            <a href="/case-studies" className="mt-5 inline-flex items-center gap-1 text-blue-600 font-semibold text-sm hover:gap-2 transition-all">
               View All Case Studies <ArrowRight size={14} />
             </a>
           </div>
@@ -444,9 +444,9 @@ export default function Home() {
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Real Results. Real Impact.</h2>
               <p className="text-slate-500 mt-2 max-w-md">Explore how we've helped global brands accelerate growth through strategy, design and technology.</p>
             </div>
-            <button className="reveal magnetic border border-slate-300 hover:border-blue-400 text-slate-700 px-5 py-2.5 rounded-lg font-semibold text-sm flex items-center gap-2 transition-colors flex-shrink-0">
+            <a href="/case-studies" className="reveal magnetic border border-slate-300 hover:border-blue-400 text-slate-700 px-5 py-2.5 rounded-lg font-semibold text-sm flex items-center gap-2 transition-colors flex-shrink-0">
               View All Case Studies <ArrowRight size={15} />
-            </button>
+            </a>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
