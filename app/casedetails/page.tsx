@@ -4,14 +4,6 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import type { JSX } from "react";
 
-const navLinks = [
-    { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Services", href: "#" },
-    { label: "Case Studies", href: "/casedetails" },
-    { label: "Contact", href: "#" },
-];
-
 const stats = [
     { value: "+156%", label: "Traffic Growth", sub: "Organic Traffic" },
     { value: "+142%", label: "Revenue Growth", sub: "E-commerce Revenue" },
@@ -300,64 +292,6 @@ function IconUserOutline() {
     );
 }
 
-function IconLinkedIn() {
-    return (
-        <svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5">
-            <path d="M20.45 20.45h-3.56v-5.6c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.69H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 110-4.13 2.07 2.07 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45z" />
-        </svg>
-    );
-}
-
-function IconTwitter() {
-    return (
-        <svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5">
-            <path d="M22 5.9c-.67.3-1.4.5-2.15.6a3.7 3.7 0 001.64-2.05 7.3 7.3 0 01-2.34.9 3.68 3.68 0 00-6.27 3.36A10.45 10.45 0 013.16 4.9a3.7 3.7 0 001.14 4.92 3.6 3.6 0 01-1.67-.46v.05a3.68 3.68 0 002.95 3.61 3.7 3.7 0 01-1.66.06 3.68 3.68 0 003.44 2.56A7.4 7.4 0 012 17.03a10.4 10.4 0 005.64 1.65c6.77 0 10.47-5.6 10.47-10.47l-.01-.48A7.5 7.5 0 0022 5.9z" />
-        </svg>
-    );
-}
-
-function IconInstagram() {
-    return (
-        <svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5">
-            <path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.22.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.05.41 2.22.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.22-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.05.36-2.22.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.22-.41a3.7 3.7 0 01-1.38-.9 3.7 3.7 0 01-.9-1.38c-.16-.42-.36-1.05-.41-2.22-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.22.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.05-.36 2.22-.41 1.27-.06 1.65-.07 4.85-.07zM12 0C8.74 0 8.33.01 7.05.07c-1.28.06-2.15.26-2.91.56-.79.31-1.46.72-2.13 1.38A5.9 5.9 0 00.63 4.14c-.3.76-.5 1.63-.56 2.91C0 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.28.26 2.15.56 2.91.31.79.72 1.46 1.38 2.13.66.66 1.33 1.07 2.13 1.38.76.3 1.63.5 2.91.56C8.33 24 8.74 24 12 24s3.67-.01 4.95-.07c1.28-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.38.66-.66 1.07-1.33 1.38-2.13.3-.76.5-1.63.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.28-.26-2.15-.56-2.91a5.9 5.9 0 00-1.38-2.13A5.9 5.9 0 0019.86.63c-.76-.3-1.63-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1012 18.15 6.16 6.16 0 0012 5.84zm0 10.16a4 4 0 110-8 4 4 0 010 8zm6.4-10.4a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z" />
-        </svg>
-    );
-}
-
-function IconPhone() {
-    return (
-        <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M4 4.5h3.5l1.5 4.5-2 1.5a11 11 0 005.5 5.5l1.5-2 4.5 1.5V19a1.5 1.5 0 01-1.6 1.5A15.5 15.5 0 013 6.1 1.5 1.5 0 014.5 4.5z" />
-        </svg>
-    );
-}
-
-function IconMail() {
-    return (
-        <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="3" y="5" width="18" height="14" rx="2" />
-            <path d="M3.5 6.5L12 13l8.5-6.5" />
-        </svg>
-    );
-}
-
-function IconPin() {
-    return (
-        <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 21s7-6.6 7-11.5A7 7 0 105 9.5C5 14.4 12 21 12 21z" />
-            <circle cx="12" cy="9.5" r="2.3" />
-        </svg>
-    );
-}
-
-function IconSkype() {
-    return (
-        <svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5">
-            <path d="M12.5 17.6c-3.6 0-5.2-1.77-5.2-3.06 0-.67.48-1.14 1.14-1.14 1.5 0 1.14 2.16 4.06 2.16 1.44 0 2.24-.78 2.24-1.58 0-.48-.24-1.02-1.2-1.26l-3.16-.8c-2.54-.64-3-2.02-3-3.32 0-2.7 2.54-3.72 4.92-3.72 2.2 0 4.8.9 4.8 2.5 0 .69-.6 1.1-1.26 1.1-1.28 0-1.04-1.78-3.72-1.78-1.28 0-2 .58-2 1.36 0 .78.96 1.02 1.8 1.22l2.34.56c2.56.62 3.34 2.12 3.34 3.56 0 2.2-1.7 3.98-4.94 3.98a1.44 1.44 0 01-.16-.02c-.06 0-.06.01 0 0zM21.66 14.94a9.68 9.68 0 00.2-1.94A9.7 9.7 0 0012.16 3.3c-.65 0-1.29.05-1.92.15A5.4 5.4 0 007.6 2.5a5.44 5.44 0 00-4.85 7.9c-.1.63-.15 1.27-.15 1.92a9.7 9.7 0 009.7 9.7c.65 0 1.3-.06 1.93-.16a5.42 5.42 0 007.9-4.87c0-.68-.16-1.34-.47-1.95z" />
-        </svg>
-    );
-}
-
 /* ---------------------------------------------------------------------- */
 /* Scroll-reveal: a single shared IntersectionObserver drives every       */
 /* `.reveal` element instead of spinning one up per card, so a page with  */
@@ -626,61 +560,6 @@ export default function Page() {
                     }
                 }
             `}</style>
-
-            {/* NAV */}
-            <header
-                className="h-25 w-full backdrop-blur-md border-b border-blue-100/50 sticky top-0 z-50"
-                style={{
-                    background:
-                        "linear-gradient(to right, rgba(200,210,240,0.95),rgba(220,230,248,0.90),rgba(235,242,255,0.95))",
-                }}
-            >
-                <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-                    <div className="flex items-center gap-2 font-bold text-lg">
-                        <img src="/logo.svg" alt="SM Solutions Logo" className="w-27 h-20 object-contain" />
-                    </div>
-
-                    <nav className="hidden md:flex gap-8 text-base font-medium">
-                        {navLinks.map((link) => {
-                            const isActive = link.label === "Case Studies";
-                            return (
-                                <a
-                                    key={link.label}
-                                    href={link.href}
-                                    className="relative group"
-                                    style={{
-                                        color: isActive ? "#2563EB" : "#404359",
-                                        fontFamily: "'DM Sans', sans-serif",
-                                        fontWeight: isActive ? 700 : 500,
-                                    }}
-                                >
-                                    {link.label}
-                                    <span
-                                        className={`absolute -bottom-1 left-0 h-0.5 bg-blue-500 transition-all duration-300 ${isActive ? "w-full" : "w-0 group-hover:w-full"
-                                            }`}
-                                    />
-                                </a>
-                            );
-                        })}
-                    </nav>
-
-                    <button
-                        className="text-white px-6 py-2 rounded-lg font-semibold shadow relative overflow-hidden tracking-wide transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98]"
-                        style={{
-                            backgroundImage: "url('/btn_bg.png')",
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                            backgroundRepeat: "no-repeat",
-                            fontFamily: "'DM Sans', sans-serif",
-                            fontSize: "15px",
-                            fontWeight: "600",
-                            letterSpacing: "0.3px",
-                        }}
-                    >
-                        Book a Strategy Call
-                    </button>
-                </div>
-            </header>
 
             {/* HERO */}
             <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-10">
@@ -1382,104 +1261,6 @@ export default function Page() {
                 </Reveal>
             </section>
 
-            {/* FOOTER */}
-            <footer className="relative z-[1] mx-auto max-w-[1800px] px-1 pb-10 pt-16">
-                <Reveal as="div" className="rounded-3xl border border-white/60 bg-white/20 px-10 pt-10 backdrop-blur-sm">
-                    <div className="grid divide-y divide-gray-200/70 pb-8 md:grid-cols-4 md:divide-x md:divide-y-0">
-                        <div className="pb-6 md:pb-0 md:pr-8">
-                            <img src="/logo.svg" alt="SM Solutions Logo" className="mb-3 h-10 w-auto object-contain" />
-                            <p className="max-w-xs text-[12px] leading-relaxed text-[#4C4F5B]">
-                                We build high-performance digital ecosystems that drive measurable growth for global
-                                brands.
-                            </p>
-                        </div>
-                        <div className="py-6 md:py-0 md:px-8">
-                            <p className="mb-3 text-sm font-bold text-[#16151A]">Services</p>
-                            <ul className="space-y-2 text-[12px] text-[#4C4F5B]">
-                                <li>Performance Marketing</li>
-                                <li>Conversion Optimization</li>
-                                <li>Web Development</li>
-                                <li>Branding</li>
-                                <li>Graphic Design</li>
-                                <li>UI Ux Strategy</li>
-                            </ul>
-                        </div>
-                        <div className="py-6 md:py-0 md:px-8">
-                            <p className="mb-3 text-sm font-bold text-[#16151A]">Company</p>
-                            <ul className="space-y-2 text-[12px] text-[#4C4F5B]">
-                                <li>About Us</li>
-                                <li>Case Studies</li>
-                                <li>Careers</li>
-                                <li>Services</li>
-                                <li>Contact</li>
-                            </ul>
-                        </div>
-                        <div className="pt-6 md:pt-0 md:pl-8">
-                            <p className="mb-3 text-sm font-bold text-[#16151A]">Contact</p>
-                            <ul className="space-y-3 text-[12px] text-[#4C4F5B]">
-                                <li className="flex items-center gap-2 text-[#9297A3]">
-                                    <IconPhone />
-                                    <span className="text-[#4C4F5B]">+91 86301 80711</span>
-                                </li>
-                                <li className="flex items-center gap-2 text-[#9297A3]">
-                                    <IconMail />
-                                    <span className="text-[#4C4F5B]">contact@smsolutions.in</span>
-                                </li>
-                                <li className="flex items-center gap-2 text-[#9297A3]">
-                                    <IconPin />
-                                    <span className="text-[#4C4F5B]">Kolkata, West Bengal 700132</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col items-start justify-between gap-4 border-t border-gray-200/70 py-6 md:flex-row md:items-center">
-                        <div>
-                            <p className="text-sm font-bold text-[#16151A]">Stay in the loop</p>
-                            <p className="text-[12px] text-[#4C4F5B]">
-                                Get updates about new features and opportunities
-                            </p>
-                        </div>
-                        <div className="flex w-full max-w-xs items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2">
-                            <input
-                                type="email"
-                                placeholder="Enter Your Email"
-                                className="w-full bg-transparent text-[12px] outline-none placeholder:text-[#9297A3]"
-                            />
-                            <button className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#5593FF] text-white transition-transform duration-200 hover:scale-110">
-                                →
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col items-start justify-between gap-3 border-t border-gray-200/70 py-6 text-[11px] md:flex-row md:items-center">
-                        <div className="space-y-1">
-                            <p className="font-bold text-[#2E5C8A]">© 2026 SMSolutions. Copyright and rights reserved</p>
-                            <div className="flex flex-wrap gap-x-2 text-[#6E7180]">
-                                <span>Terms and Condtions</span>
-                                <span>•</span>
-                                <span>Privacy Policy</span>
-                                <span>•</span>
-                                <span>Cookie Policy</span>
-                            </div>
-                        </div>
-                        <div className="flex gap-3">
-                            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#7C8194] text-white transition-transform duration-200 hover:-translate-y-1 hover:bg-[#E11D48]">
-                                <IconLinkedIn />
-                            </span>
-                            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#7C8194] text-white transition-transform duration-200 hover:-translate-y-1 hover:bg-[#E11D48]">
-                                <IconTwitter />
-                            </span>
-                            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#7C8194] text-white transition-transform duration-200 hover:-translate-y-1 hover:bg-[#E11D48]">
-                                <IconInstagram />
-                            </span>
-                            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#7C8194] text-white transition-transform duration-200 hover:-translate-y-1 hover:bg-[#E11D48]">
-                                <IconSkype />
-                            </span>
-                        </div>
-                    </div>
-                </Reveal>
-            </footer>
         </main>
     );
 }

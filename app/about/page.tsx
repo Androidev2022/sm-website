@@ -25,15 +25,6 @@ const InnovationIcon = () => (
   </svg>
 );
 
-// ── Nav links ────────────────────────────────────────────────────────────────
-const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Services", href: "#" },
-  { label: "Case Studies", href: "#" },
-  { label: "Contact", href: "#" },
-];
-
 // ── Data ─────────────────────────────────────────────────────────────────────
 const HERO_STATS: StatItem[] = [
   { value: "10+", label: "Years of Experience" },
@@ -182,96 +173,10 @@ function Reveal({ children, dir = "up", delay = 0 }: { children: React.ReactNode
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 export default function AboutUsPage() {
-  const arrowRef = useRef<HTMLDivElement>(null);
-  const mousePos = useRef({ x: -200, y: -200 });
-  const [cursorHovering, setCursorHovering] = useState(false);
-  const [cursorClicking, setCursorClicking] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [journeyVisible, setJourneyVisible] = useState(false);
   const journeyRef = useRef<HTMLDivElement>(null);
   const [activeJourney, setActiveJourney] = useState(-1);
-
-  // Arrow cursor + sparkle trail
-  useEffect(() => {
-    let lastSpawn = 0;
-    const COLORS = ["#a78bfa", "#60a5fa", "#f472b6", "#fbbf24", "#6777AD", "#34d399"];
-
-    const spawnSparkle = (x: number, y: number) => {
-      const el = document.createElement("div");
-      const size = 6 + Math.random() * 8;
-      const angle = Math.random() * Math.PI * 2;
-      const dist = 18 + Math.random() * 28;
-      const color = COLORS[Math.floor(Math.random() * COLORS.length)];
-      const rot = Math.random() * 360;
-      const dur = 500 + Math.random() * 400;
-
-      // star shape via clip-path
-      el.style.cssText = `
-        position:fixed;pointer-events:none;z-index:9997;
-        width:${size}px;height:${size}px;
-        left:${x - size / 2}px;top:${y - size / 2}px;
-        background:${color};
-        clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
-        transform:rotate(${rot}deg) scale(1);
-        opacity:1;
-        transition:transform ${dur}ms cubic-bezier(.22,1,.36,1), opacity ${dur}ms ease, left ${dur}ms ease, top ${dur}ms ease;
-        box-shadow:0 0 6px ${color}88;
-      `;
-      document.body.appendChild(el);
-
-      requestAnimationFrame(() => {
-        el.style.left = `${x + Math.cos(angle) * dist - size / 2}px`;
-        el.style.top = `${y + Math.sin(angle) * dist - size / 2}px`;
-        el.style.transform = `rotate(${rot + 180}deg) scale(0)`;
-        el.style.opacity = "0";
-      });
-      setTimeout(() => el.remove(), dur + 50);
-    };
-
-    const onMove = (e: MouseEvent) => {
-      mousePos.current = { x: e.clientX, y: e.clientY };
-
-      // Position arrow
-      if (arrowRef.current) {
-        arrowRef.current.style.left = `${e.clientX}px`;
-        arrowRef.current.style.top = `${e.clientY}px`;
-      }
-
-      // Throttle sparkle spawning
-      const now = Date.now();
-      if (now - lastSpawn > 40) {
-        lastSpawn = now;
-        spawnSparkle(e.clientX, e.clientY);
-      }
-    };
-
-    const onDown = () => {
-      setCursorClicking(true);
-      // Burst of sparkles on click
-      for (let i = 0; i < 8; i++) {
-        setTimeout(() => spawnSparkle(mousePos.current.x, mousePos.current.y), i * 30);
-      }
-    };
-    const onUp = () => setCursorClicking(false);
-
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mousedown", onDown);
-    window.addEventListener("mouseup", onUp);
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mousedown", onDown);
-      window.removeEventListener("mouseup", onUp);
-    };
-  }, []);
-
-  // Hover detection
-  useEffect(() => {
-    const enter = () => setCursorHovering(true);
-    const leave = () => setCursorHovering(false);
-    const els = document.querySelectorAll("a,button,input,[data-hover]");
-    els.forEach(el => { el.addEventListener("mouseenter", enter); el.addEventListener("mouseleave", leave); });
-    return () => els.forEach(el => { el.removeEventListener("mouseenter", enter); el.removeEventListener("mouseleave", leave); });
-  }, []);
 
   // Magnetic buttons
   useEffect(() => {
@@ -318,32 +223,7 @@ export default function AboutUsPage() {
   return (
     <>
       <style>{`
-        * { cursor: none !important; }
 
-        /* ── Arrow cursor ── */
-        #ab-arrow {
-          position: fixed;
-          top: 0; left: 0;
-          pointer-events: none;
-          z-index: 9999;
-          transform: translate(0,0);
-          /* offset so tip of arrow is at mouse point */
-          margin-left: 0; margin-top: 0;
-          transition: filter 0.2s;
-          will-change: left, top;
-        }
-        #ab-arrow svg {
-          filter: drop-shadow(0 0 6px rgba(103,119,173,0.7));
-          transition: transform 0.15s cubic-bezier(.22,1,.36,1), filter 0.2s;
-        }
-        #ab-arrow.hovering svg {
-          transform: scale(1.25);
-          filter: drop-shadow(0 0 12px rgba(103,119,173,1)) drop-shadow(0 0 20px rgba(167,139,250,0.7));
-        }
-        #ab-arrow.clicking svg {
-          transform: scale(0.85) rotate(-12deg);
-          filter: drop-shadow(0 0 16px rgba(244,114,182,0.9));
-        }
         #ab-scroll-bar{position:fixed;top:0;left:0;height:3px;z-index:9999;background:linear-gradient(90deg,#6777AD,#a78bfa,#60a5fa);transition:width .05s linear;box-shadow:0 0 10px rgba(103,119,173,0.7);}
         .ab-ripple{position:fixed;border-radius:50%;pointer-events:none;z-index:9996;background:transparent;border:2px solid rgba(103,119,173,0.6);animation:ab-rout .6s ease-out forwards;}
         @keyframes ab-rout{0%{width:8px;height:8px;opacity:1;margin:-4px;}100%{width:60px;height:60px;opacity:0;margin:-30px;}}
@@ -424,26 +304,6 @@ export default function AboutUsPage() {
       {/* Scroll progress */}
       <div id="ab-scroll-bar" style={{ width: `${scrollProgress * 100}%` }} />
 
-      {/* Arrow cursor with sparkle trail */}
-      <div
-        id="ab-arrow"
-        ref={arrowRef}
-        className={`${cursorHovering ? "hovering" : ""} ${cursorClicking ? "clicking" : ""}`}
-        style={{ position: "fixed", top: 0, left: 0, pointerEvents: "none", zIndex: 9999 }}
-      >
-        <svg width="26" height="32" viewBox="0 0 26 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* Arrow body */}
-          <path
-            d="M2 2L2 24L8.5 18L13.5 29L16.5 27.5L11.5 16.5L20 16.5L2 2Z"
-            fill="white"
-            stroke="#6777AD"
-            strokeWidth="2"
-            strokeLinejoin="round"
-            strokeLinecap="round"
-          />
-        </svg>
-      </div>
-
       <div
         style={{
           fontFamily: "'Segoe UI',system-ui,sans-serif",
@@ -463,33 +323,6 @@ export default function AboutUsPage() {
           setTimeout(() => r.remove(), 700);
         }}
       >
-
-        {/* ── HEADER ─────────────────────────────────────────────────────── */}
-        <header className="ab-header" style={{
-          height: 100, width: "100%", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
-          borderBottom: "1px solid rgba(147,197,253,0.5)", position: "sticky", top: 0, zIndex: 50,
-          background: "linear-gradient(to right,rgba(200,210,240,0.95),rgba(220,230,248,0.90),rgba(235,242,255,0.95))",
-        }}>
-          <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", height: "100%", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            {/* Logo */}
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.svg" alt="SM Solutions Logo" style={{ width: 108, height: 80, objectFit: "contain" }} />
-            </div>
-
-            {/* Nav */}
-            <nav style={{ display: "flex", gap: 32 }}>
-              {navLinks.map(link => (
-                <a key={link.label} href={link.href} className={`ab-nav-link${link.label === "About" ? " active" : ""}`}>
-                  {link.label}
-                </a>
-              ))}
-            </nav>
-
-            {/* CTA */}
-            <button className="ab-cta-btn magnetic shimmer-btn">Book a Strategy Call</button>
-          </div>
-        </header>
 
         {/* ── HERO ──────────────────────────────────────────────────────────── */}
         <section style={{ position: "relative", minHeight: 360, paddingTop: 60, paddingBottom: 40, overflow: "hidden" }}>
