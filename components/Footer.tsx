@@ -117,7 +117,7 @@ export default function Footer() {
               <p>© {new Date().getFullYear()} SM Solutions. All Rights Reserved.</p>
               <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
                 <a href="#" className="hover:text-blue-400 transition-colors">Privacy Policy</a>
-                <a href="#" className="hover:text-blue-400 transition-colors">Terms & Conditions</a>
+                <a href="/terms" className="hover:text-blue-400 transition-colors">Terms & Conditions</a>
                 <a href="#" className="hover:text-blue-400 transition-colors">Sitemap</a>
               </div>
             </div>
