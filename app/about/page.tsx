@@ -1,561 +1,559 @@
 "use client";
-
+// app/about/page.tsx  (header & footer come from app/layout.tsx)
 import React, { useEffect, useRef, useState } from "react";
+import { Poppins, Inter } from "next/font/google";
+import {
+  BrainCircuit,
+  Eye,
+  Target,
+  Rocket,
+  TrendingUp,
+  Crosshair,
+  Lightbulb,
+  Puzzle,
+  Handshake,
+  Award,
+} from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/contact";
 
-// ── Types ────────────────────────────────────────────────────────────────────
-interface StatItem { value: string; label: string; }
-interface MissionPillar { icon: React.ReactNode; title: string; description: string; }
-interface JourneyItem { year: string; title: string; description: string; }
-interface ValueItem { icon: React.ReactNode; title: string; description: string; }
+const poppins = Poppins({ subsets: ["latin"], weight: ["500", "600", "700"], variable: "--font-heading", display: "swap" });
+const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-body", display: "swap" });
 
-// ── SVG Icons ────────────────────────────────────────────────────────────────
-const DataDrivenIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-    <circle cx="16" cy="16" r="15" stroke="#4A90D9" strokeWidth="1.5" />
-    <path d="M8 22l5-6 4 3 5-8" stroke="#4A90D9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const InnovationIcon = () => (
-  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-    <circle cx="20" cy="20" r="18" fill="#EEF4FF" stroke="#4A90D9" strokeWidth="1" />
-    <path d="M20 10v3M20 27v3M10 20h3M27 20h3" stroke="#4A90D9" strokeWidth="1.5" strokeLinecap="round" />
-    <circle cx="20" cy="20" r="5" fill="#4A90D9" opacity="0.3" />
-    <circle cx="20" cy="20" r="2.5" fill="#4A90D9" />
-  </svg>
-);
+// ── Design tokens (from the About design) ───────────────────────────────────
+const C = {
+  heading: "#3D3C55",
+  body: "#5B5F78",
+  muted: "#7C8199",
+  blue: "#3B82F6",
+  blueDark: "#2F6FE4",
+  starOff: "#C9D8F5",
+  red: "#E5484D",
+};
 
 // ── Data ─────────────────────────────────────────────────────────────────────
-const HERO_STATS: StatItem[] = [
-  { value: "10+", label: "Years of Experience" },
-  { value: "475+", label: "Projects Delivered" },
+type Stat = { value: number; prefix?: string; suffix: string; decimals?: number; label: string; rating: number };
+
+const HERO_STATS = [
+  { value: "10+", label: ["Years of", "Experience"] },
+  { value: "475+", label: ["Projects", "Delivered"] },
 ];
 
-const METRICS: StatItem[] = [
-  { value: "$75M+", label: "Revenue Generated" },
-  { value: "350+", label: "Successful Projects" },
-  { value: "100+", label: "Clients Worldwide" },
-  { value: "4.9", label: "Client Satisfaction" },
+const METRICS: Stat[] = [
+  { value: 75, prefix: "$", suffix: "M +", label: "Revenue Generated", rating: 4.5 },
+  { value: 350, suffix: " +", label: "Successful Projects", rating: 5 },
+  { value: 100, suffix: " +", label: "Clients Worldwide", rating: 3.5 },
+  { value: 4.9, suffix: "/5", decimals: 1, label: "Client Satisfaction", rating: 4.5 },
 ];
 
-const MISSION_PILLARS: MissionPillar[] = [
-  { icon: <DataDrivenIcon />, title: "Data-Driven", description: "Decisions backed by real insights" },
-  { icon: <DataDrivenIcon />, title: "Creative", description: "Design that converts and captivates" },
-  { icon: <DataDrivenIcon />, title: "Scalable", description: "Growth systems built to last" },
+const PILLARS = [
+  { icon: BrainCircuit, title: "Data-Driven", text: "Lorem ipsum dolor sit amet consectetur. Et." },
+  { icon: Eye, title: "Transparent", text: "Lorem ipsum dolor sit amet consectetur." },
+  { icon: Target, title: "Result-Focused", text: "Lorem ipsum dolor sit amet consectetur." },
 ];
 
-const JOURNEY: JourneyItem[] = [
-  { year: "2005", title: "Founded", description: "Lorem ipsum dolor sit amet consectetur. Fermentum sapien ac bibendum ac semper a. Rutrum netus odio blandit erat facilisi. Adipiscing vivamus." },
-  { year: "2010", title: "Growth Phase", description: "Lorem ipsum dolor sit amet consectetur. Quis nec sapien vestibulum molestie quam ac. Rutrum netus odio blandit erat facilisi. Adipiscing vivamus." },
-  { year: "2015", title: "Global Reach", description: "Lorem ipsum dolor sit amet consectetur. Quis nec sapien vestibulum molestie quam ac. Rutrum netus odio blandit erat facilisi. Adipiscing vivamus." },
-  { year: "2026", title: "Continued Innovation", description: "Lorem ipsum dolor sit amet consectetur. Quis nec sapien vestibulum molestie quam ac. Rutrum netus odio blandit erat facilisi. Adipiscing vivamus." },
+const JOURNEY = [
+  { year: "2005", icon: Rocket, title: "Founded", text: "Lorem ipsum dolor sit amet consectetur. Fermentum sapien ac bibendum ac semper a. Rutrum netus odio blandit erat facilisi. Adipiscing vivamus." },
+  { year: "2010", icon: TrendingUp, title: "Growth Phase", text: "Lorem ipsum dolor sit amet consectetur. Quis nec sapien vestibulum molestie quam ac. Rutrum netus odio blandit erat facilisi. Adipiscing vivamus. Fermentum sapien ac bibendum ac semper a." },
+  { year: "2015", icon: Crosshair, title: "Global Reach", text: "Lorem ipsum dolor sit amet consectetur. Quis nec sapien vestibulum molestie quam ac. Rutrum netus odio blandit erat facilisi. Adipiscing vivamus. Fermentum sapien ac bibendum ac semper a." },
+  { year: "2026", icon: Lightbulb, title: "Continued Innovation", text: "Lorem ipsum dolor sit amet consectetur. Quis nec sapien vestibulum molestie quam ac. Rutrum netus odio blandit erat facilisi. Adipiscing vivamus. Fermentum sapien ac bibendum ac semper a. Rutrum netus odio blandit erat facilisi. Adipiscing vivamus." },
 ];
 
-const VALUES: ValueItem[] = [
-  { icon: <InnovationIcon />, title: "Innovation", description: "Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur." },
-  { icon: <InnovationIcon />, title: "Integrity", description: "Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur." },
-  { icon: <InnovationIcon />, title: "Impact", description: "Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur." },
-  { icon: <InnovationIcon />, title: "Excellence", description: "Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur." },
+const VALUES = [
+  { icon: Lightbulb, title: "Innovation" },
+  { icon: Puzzle, title: "Integrity" },
+  { icon: Handshake, title: "Collaboration" },
+  { icon: Award, title: "Excellence" },
+];
+const VALUE_TEXT = "Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.";
+
+const TEAM = [
+  { name: "Zane Sorell", role: "CEO", bio: "Enjoys adventurous travel, seeks new cultures and offbeat destinations", photo: "/about/team/zane-sorell.jpg" },
+  { name: "Maya Mathy", role: "Founder", bio: "Pop music lover, seeks joy and exciting pop concerts", photo: "/about/team/maya-mathy.jpg" },
+  { name: "Alexis Jensen", role: "CTO", bio: "Bookworm, creative software developer with precision", photo: "/about/team/alexis-jensen.jpg" },
+  { name: "Keira Battye", role: "Product Designer", bio: "Creative painter capturing beauty with imaginative artwork", photo: "/about/team/keira-battye.jpg" },
+  { name: "Dominic Game", role: "3D Artist", bio: "Football enthusiast, enjoys movie nights with friends", photo: "/about/team/dominic-game.jpg" },
 ];
 
-// ── Animated counter hook ─────────────────────────────────────────────────────
-function useCounter(target: number, duration = 1800, start = false) {
-  const [count, setCount] = useState(0);
+const TESTIMONIALS = [
+  { name: "Elizabeth", city: "Chicago" },
+  { name: "Catherine", city: "New York" },
+  { name: "Victoria", city: "Washington, DC" },
+  { name: "Olivia", city: "Austin" },
+  { name: "Sophia", city: "Seattle" },
+  { name: "Amelia", city: "Boston" },
+].map((t) => ({ ...t, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore" }));
+
+// ── Small pieces ─────────────────────────────────────────────────────────────
+function useInView<T extends HTMLElement>(threshold = 0.2) {
+  const ref = useRef<T>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        setInView(true);
+        obs.disconnect();
+      }
+    }, { threshold, rootMargin: "0px 0px -40px 0px" });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return { ref, inView };
+}
+
+function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const { ref, inView } = useInView<HTMLDivElement>(0.1);
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: inView ? 1 : 0,
+        transform: inView ? "none" : "translateY(28px)",
+        transition: `opacity .7s cubic-bezier(.22,1,.36,1) ${delay}ms, transform .7s cubic-bezier(.22,1,.36,1) ${delay}ms`,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function Eyebrow({ children, center = false }: { children: React.ReactNode; center?: boolean }) {
+  return (
+    <p className={`flex items-center gap-1.5 text-[13px] font-semibold tracking-wide uppercase ${center ? "justify-center" : ""}`} style={{ color: C.blue }}>
+      <span className="pulse-dot inline-block w-1.5 h-1.5 rounded-full" style={{ background: C.blue }} />
+      {children}
+    </p>
+  );
+}
+
+function Stars({ rating, color = C.blue, off = C.starOff, size = 15 }: { rating: number; color?: string; off?: string; size?: number }) {
+  return (
+    <div className="flex gap-1 justify-center">
+      {Array.from({ length: 5 }).map((_, i) => {
+        const fill = Math.max(0, Math.min(1, rating - i)); // 0, 0.5 or 1
+        const id = `s-${color.replace("#", "")}-${i}-${fill}`;
+        return (
+          <svg key={i} width={size} height={size} viewBox="0 0 24 24" aria-hidden>
+            <defs>
+              <linearGradient id={id}>
+                <stop offset={`${fill * 100}%`} stopColor={color} />
+                <stop offset={`${fill * 100}%`} stopColor={off} />
+              </linearGradient>
+            </defs>
+            <path fill={`url(#${id})`} d="M12 2.5l2.94 6.1 6.56.9-4.8 4.6 1.2 6.6L12 17.6l-5.9 3.1 1.2-6.6-4.8-4.6 6.56-.9z" />
+          </svg>
+        );
+      })}
+    </div>
+  );
+}
+
+function Counter({ s, start }: { s: Stat; start: boolean }) {
+  const [n, setN] = useState(0);
   useEffect(() => {
     if (!start) return;
-    const startTime = performance.now();
+    const t0 = performance.now();
+    let raf = 0;
     const tick = (now: number) => {
-      const p = Math.min((now - startTime) / duration, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setCount(Math.floor(eased * target));
-      if (p < 1) requestAnimationFrame(tick);
-      else setCount(target);
+      const p = Math.min((now - t0) / 1600, 1);
+      setN(s.value * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) raf = requestAnimationFrame(tick);
     };
-    requestAnimationFrame(tick);
-  }, [start, target, duration]);
-  return count;
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [start, s.value]);
+  return (
+    <>
+      {s.prefix}
+      {s.decimals ? n.toFixed(s.decimals) : Math.round(n)}
+      {s.suffix}
+    </>
+  );
 }
 
-// ── Star row ─────────────────────────────────────────────────────────────────
-const StarRow = ({ filled = 4 }: { filled?: number }) => (
-  <div style={{ display: "flex", gap: 2, justifyContent: "center", marginTop: 6 }}>
-    {Array.from({ length: 5 }).map((_, i) => (
-      <svg key={i} width="14" height="14" viewBox="0 0 14 14" fill={i < filled ? "#4A90D9" : "#C5D8F0"}>
-        <path d="M7 1l1.5 4h4l-3.3 2.4 1.3 4L7 9 3.5 11.4l1.3-4L1.5 5h4z" />
-      </svg>
-    ))}
-  </div>
+// Brand icons for team socials (lucide no longer ships brand logos)
+const SocialIcon = ({ d, label }: { d: string; label: string }) => (
+  <a href="#" aria-label={label} className="text-slate-400 hover:text-blue-500 transition-colors">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d={d} /></svg>
+  </a>
 );
+const ICONS = {
+  facebook: "M12 2a10 10 0 0 0-1.56 19.88v-7H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v7A10 10 0 0 0 12 2z",
+  github: "M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.58 9.58 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z",
+  linkedin: "M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM8.34 18.34H5.67V9.75h2.67v8.59zM7 8.58a1.55 1.55 0 1 1 0-3.1 1.55 1.55 0 0 1 0 3.1zm11.34 9.76h-2.67v-4.18c0-1 0-2.28-1.39-2.28s-1.6 1.09-1.6 2.21v4.25H10V9.75h2.56v1.17h.04a2.8 2.8 0 0 1 2.52-1.39c2.7 0 3.2 1.78 3.2 4.09v4.72z",
+};
 
-// ── Metric card with animated counter ────────────────────────────────────────
-function MetricCard({ m, delay }: { m: StatItem; delay: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-  const isDecimal = m.value.includes(".");
-  const raw = parseFloat(m.value.replace(/[^0-9.]/g, ""));
-  const prefix = m.value.startsWith("$") ? "$" : "";
-  const suffix = m.value.endsWith("+") ? "+" : m.value.endsWith("/5") ? "/5" : "";
-  const counted = useCounter(isDecimal ? Math.floor(raw * 10) : raw, 1800, visible);
-  const display = isDecimal ? (counted / 10).toFixed(1) : counted;
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { setVisible(true); obs.disconnect(); }
-    }, { threshold: 0.3 });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
-
-  return (
-    <div ref={ref} className="metric-card" style={{ textAlign: "center", animationDelay: `${delay}ms` }}>
-      <div style={{ fontSize: "clamp(22px,3vw,36px)", fontWeight: 800, color: "#1e293b", lineHeight: 1 }}>
-        {prefix}{display}{suffix}
-      </div>
-      <div style={{ fontSize: 12, color: "#64748b", margin: "6px 0 4px" }}>{m.label}</div>
-      <StarRow filled={4} />
-    </div>
-  );
-}
-
-// ── Tilt card ─────────────────────────────────────────────────────────────────
-function TiltCard({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const el = ref.current; if (!el) return;
-    const r = el.getBoundingClientRect();
-    const x = ((e.clientX - r.left) / r.width - 0.5) * 14;
-    const y = ((e.clientY - r.top) / r.height - 0.5) * -14;
-    el.style.transform = `perspective(700px) rotateX(${y}deg) rotateY(${x}deg) translateY(-4px)`;
-    el.style.boxShadow = `${-x * 1.5}px ${y * 1.5}px 40px rgba(103,119,173,0.18)`;
-  };
-  const handleLeave = () => {
-    const el = ref.current; if (!el) return;
-    el.style.transform = "perspective(700px) rotateX(0) rotateY(0) translateY(0)";
-    el.style.boxShadow = "0 4px 24px rgba(0,0,0,0.06)";
-  };
-  return (
-    <div ref={ref} onMouseMove={handleMove} onMouseLeave={handleLeave}
-      style={{ transition: "transform 0.15s ease, box-shadow 0.15s ease", ...style }}>
-      {children}
-    </div>
-  );
-}
-
-// ── Reveal wrapper ────────────────────────────────────────────────────────────
-function Reveal({ children, dir = "up", delay = 0 }: { children: React.ReactNode; dir?: "up" | "left" | "right" | "scale"; delay?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [vis, setVis] = useState(false);
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { setVis(true); obs.disconnect(); }
-    }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
-
-  const initial: Record<string, string> = {
-    up: "translateY(32px)",
-    left: "translateX(-36px)",
-    right: "translateX(36px)",
-    scale: "scale(0.88)",
-  };
-
-  return (
-    <div ref={ref} style={{
-      opacity: vis ? 1 : 0,
-      transform: vis ? "none" : initial[dir],
-      transition: `opacity 0.7s cubic-bezier(.22,1,.36,1) ${delay}ms, transform 0.7s cubic-bezier(.22,1,.36,1) ${delay}ms`,
-    }}>
-      {children}
-    </div>
-  );
-}
-
-// ── Main ──────────────────────────────────────────────────────────────────────
+// ── Page ─────────────────────────────────────────────────────────────────────
 export default function AboutUsPage() {
   const [scrollY, setScrollY] = useState(0);
-  const [journeyVisible, setJourneyVisible] = useState(false);
-  const journeyRef = useRef<HTMLDivElement>(null);
-  const [activeJourney, setActiveJourney] = useState(-1);
+  const metrics = useInView<HTMLDivElement>(0.3);
+  const journey = useInView<HTMLDivElement>(0.2);
 
-  // Magnetic buttons
-  useEffect(() => {
-    const magneticEls = document.querySelectorAll(".magnetic");
-    const onMove = (e: Event) => {
-      const me = e as MouseEvent;
-      const btn = me.currentTarget as HTMLElement;
-      const rect = btn.getBoundingClientRect();
-      const dx = me.clientX - (rect.left + rect.width / 2);
-      const dy = me.clientY - (rect.top + rect.height / 2);
-      btn.style.transform = `translate(${dx * 0.35}px,${dy * 0.35}px) scale(1.06)`;
-    };
-    const onLeave = (e: Event) => {
-      (e.currentTarget as HTMLElement).style.transform = "translate(0,0) scale(1)";
-    };
-    magneticEls.forEach(el => { el.addEventListener("mousemove", onMove); el.addEventListener("mouseleave", onLeave); });
-    return () => magneticEls.forEach(el => { el.removeEventListener("mousemove", onMove); el.removeEventListener("mouseleave", onLeave); });
-  }, []);
+  // team slider
+  const teamRef = useRef<HTMLDivElement>(null);
+  const [teamProgress, setTeamProgress] = useState({ left: 0, width: 1 });
 
-  // Scroll
+  // testimonials
+  const pages = Math.ceil(TESTIMONIALS.length / 3);
+  const [tPage, setTPage] = useState(0);
+
   useEffect(() => {
     const onScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Journey timeline entrance
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setJourneyVisible(true); }, { threshold: 0.1 });
-    if (journeyRef.current) obs.observe(journeyRef.current);
-    return () => obs.disconnect();
+    const el = teamRef.current;
+    if (!el) return;
+    const update = () => {
+      const w = el.clientWidth / el.scrollWidth;
+      const l = el.scrollLeft / el.scrollWidth;
+      setTeamProgress({ left: l, width: w });
+    };
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      el.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
   }, []);
 
   useEffect(() => {
-    if (!journeyVisible) return;
-    JOURNEY.forEach((_, i) => setTimeout(() => setActiveJourney(i), i * 350 + 200));
-  }, [journeyVisible]);
+    const t = setInterval(() => setTPage((p) => (p + 1) % pages), 6000);
+    return () => clearInterval(t);
+  }, [pages]);
 
-  const scrollProgress = typeof window !== "undefined"
-    ? Math.min(scrollY / Math.max(document.body.scrollHeight - window.innerHeight, 1), 1) : 0;
+  // magnetic buttons
+  useEffect(() => {
+    const els = document.querySelectorAll<HTMLElement>(".magnetic");
+    const move = (e: MouseEvent) => {
+      const b = e.currentTarget as HTMLElement;
+      const r = b.getBoundingClientRect();
+      b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.25}px, ${(e.clientY - r.top - r.height / 2) * 0.25}px)`;
+    };
+    const leave = (e: MouseEvent) => ((e.currentTarget as HTMLElement).style.transform = "translate(0,0)");
+    els.forEach((el) => {
+      el.addEventListener("mousemove", move);
+      el.addEventListener("mouseleave", leave);
+    });
+    return () =>
+      els.forEach((el) => {
+        el.removeEventListener("mousemove", move);
+        el.removeEventListener("mouseleave", leave);
+      });
+  }, []);
 
-  const parallaxY = scrollY * 0.28;
+  const scrollProgress =
+    typeof window !== "undefined" ? Math.min(scrollY / Math.max(document.body.scrollHeight - window.innerHeight, 1), 1) : 0;
+
+  const card = "bg-white rounded-[20px] shadow-[0_8px_30px_rgba(88,96,160,0.07)]";
 
   return (
-    <>
+    <div
+      className={`${poppins.variable} ${inter.variable} min-h-screen`}
+      style={{
+        fontFamily: "var(--font-body), system-ui, sans-serif",
+        color: C.body,
+        backgroundColor: "#F3F4FC",
+        backgroundImage: "url('/background.png')",
+        backgroundSize: "100% 100%",
+        backgroundRepeat: "no-repeat",
+      }}
+      onClick={(e) => {
+        const r = document.createElement("div");
+        r.className = "ab-ripple";
+        r.style.left = `${e.clientX}px`;
+        r.style.top = `${e.clientY}px`;
+        document.body.appendChild(r);
+        setTimeout(() => r.remove(), 700);
+      }}
+    >
       <style>{`
-
-        #ab-scroll-bar{position:fixed;top:0;left:0;height:3px;z-index:9999;background:linear-gradient(90deg,#6777AD,#a78bfa,#60a5fa);transition:width .05s linear;box-shadow:0 0 10px rgba(103,119,173,0.7);}
-        .ab-ripple{position:fixed;border-radius:50%;pointer-events:none;z-index:9996;background:transparent;border:2px solid rgba(103,119,173,0.6);animation:ab-rout .6s ease-out forwards;}
+        .font-heading{font-family:var(--font-heading),system-ui,sans-serif;}
+        #ab-scroll-bar{position:fixed;top:0;left:0;height:3px;z-index:9999;background:linear-gradient(90deg,#3B82F6,#8B7CF6,#60a5fa);transition:width .05s linear;}
+        .ab-ripple{position:fixed;border-radius:50%;pointer-events:none;z-index:9996;border:2px solid rgba(59,130,246,.5);animation:ab-rout .6s ease-out forwards;}
         @keyframes ab-rout{0%{width:8px;height:8px;opacity:1;margin:-4px;}100%{width:60px;height:60px;opacity:0;margin:-30px;}}
-
-        /* Header */
-        @keyframes navSlide{from{transform:translateY(-100%);opacity:0;}to{transform:translateY(0);opacity:1;}}
-        .ab-header{animation:navSlide .6s cubic-bezier(.22,1,.36,1) both;}
-        .ab-nav-link{color:#404359;font-family:'DM Sans',sans-serif;text-decoration:none;position:relative;font-size:15px;font-weight:500;}
-        .ab-nav-link::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:#3b82f6;transition:width .3s ease;}
-        .ab-nav-link:hover{color:#2563eb;}.ab-nav-link:hover::after{width:100%;}
-        .ab-nav-link.active{color:#2563EB!important;font-weight:700;}.ab-nav-link.active::after{width:100%;background:#2563EB;}
-        .ab-cta-btn{background-image:url('/btn_bg.png');background-size:cover;background-position:center;background-repeat:no-repeat;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;letter-spacing:.3px;cursor:pointer;white-space:nowrap;}
-
-        /* Hero */
-        @keyframes heroUp{from{opacity:0;transform:translateY(32px);}to{opacity:1;transform:translateY(0);}}
-        .hero-h1{animation:heroUp .9s cubic-bezier(.22,1,.36,1) .1s both;}
-        .hero-p{animation:heroUp .9s cubic-bezier(.22,1,.36,1) .28s both;}
-        .hero-btns{animation:heroUp .9s cubic-bezier(.22,1,.36,1) .44s both;}
-        .hero-stat{animation:heroUp .9s cubic-bezier(.22,1,.36,1) .2s both;}
-
-        /* Particles */
-        @keyframes float-p{0%,100%{transform:translateY(0) translateX(0) scale(1);opacity:.6;}33%{transform:translateY(-20px) translateX(10px) scale(1.1);opacity:.9;}66%{transform:translateY(-10px) translateX(-8px) scale(.95);opacity:.7;}}
-        .particle{position:absolute;border-radius:50%;pointer-events:none;animation:float-p linear infinite;}
-
-        /* Mesh blobs */
-        @keyframes mesh-pulse{0%,100%{opacity:.4;transform:scale(1);}50%{opacity:.65;transform:scale(1.05);}}
-        .mesh-blob{animation:mesh-pulse ease-in-out infinite;position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none;}
-
-        /* Metric cards */
-        @keyframes metricPop{0%{opacity:0;transform:scale(.7) translateY(20px);}60%{transform:scale(1.06) translateY(-4px);}100%{opacity:1;transform:scale(1) translateY(0);}}
-        .metric-card{animation:metricPop .6s cubic-bezier(.22,1,.36,1) both;}
-
-        /* Timeline */
-        .timeline-fill{transition:height 1.4s cubic-bezier(.22,1,.36,1);}
-        .tl-item{opacity:0;transform:translateX(-24px);transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1);}
-        .tl-item.active{opacity:1;transform:translateX(0);}
-        .tl-dot{width:18px;height:18px;border-radius:50%;background:#C5D8F0;border:3px solid #fff;box-shadow:0 0 0 2px #4A90D9;flex-shrink:0;transition:background .4s,box-shadow .4s,transform .4s;}
-        .tl-dot.active{background:#4A90D9!important;box-shadow:0 0 0 6px rgba(74,144,217,.22)!important;transform:scale(1.3);}
-
-        /* Year glow */
-        @keyframes yearGlow{0%,100%{text-shadow:0 0 0 transparent;}50%{text-shadow:0 0 14px rgba(37,99,235,.55);}}
-        .year-active{animation:yearGlow 2s ease-in-out infinite;}
-
-        /* Value cards */
-        .value-card{transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease,background .3s;}
-        .value-card:hover{transform:translateY(-8px) scale(1.03)!important;box-shadow:0 20px 40px rgba(103,119,173,.22)!important;background:#EEF4FF!important;}
-
-        /* Shimmer */
-        .shimmer-btn{position:relative;overflow:hidden;}
-        .shimmer-btn::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);animation:shimmer 2.8s ease-in-out infinite;}
-        @keyframes shimmer{0%{left:-100%}60%,100%{left:160%}}
-
-        /* Magnetic */
-        .magnetic{transition:transform .45s cubic-bezier(.22,1,.36,1);display:inline-block;}
-
-        /* Pulse dot */
-        @keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(37,99,235,.5);}50%{box-shadow:0 0 0 6px rgba(37,99,235,0);}}
+        @keyframes heroUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:none;}}
+        .hero-a{animation:heroUp .8s cubic-bezier(.22,1,.36,1) .05s both;}
+        .hero-b{animation:heroUp .8s cubic-bezier(.22,1,.36,1) .2s both;}
+        .hero-c{animation:heroUp .8s cubic-bezier(.22,1,.36,1) .35s both;}
+        .hero-d{animation:heroUp .8s cubic-bezier(.22,1,.36,1) .5s both;}
+        @keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,.5);}50%{box-shadow:0 0 0 5px rgba(59,130,246,0);}}
         .pulse-dot{animation:pulse-dot 1.8s ease-in-out infinite;}
-
-        /* Image hover zoom */
-        .img-zoom{transition:transform .6s ease;}
-        .img-zoom:hover{transform:scale(1.05);}
-
-        /* Hover lift buttons */
-        .lift-btn{transition:transform .2s,box-shadow .2s;}
-        .lift-btn:hover{transform:translateY(-3px) scale(1.04);}
-
-        /* CTA gradient card */
-        @keyframes glassIn{from{opacity:0;transform:translateY(40px) scale(.96);}to{opacity:1;transform:translateY(0) scale(1);}}
-        .glass-in{animation:glassIn .8s cubic-bezier(.22,1,.36,1) both;}
-
-        /* Heading reveal line */
-        .h-line{display:inline-block;position:relative;}
-        .h-line::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:#6777AD;transition:width .7s cubic-bezier(.22,1,.36,1) .3s;}
-        .h-line-vis::after{width:100%;}
+        .magnetic{transition:transform .4s cubic-bezier(.22,1,.36,1);}
+        .lift{transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s ease,background .3s;}
+        .lift:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(88,96,160,.14);}
+        .img-zoom{transition:transform .8s cubic-bezier(.22,1,.36,1);}
+        .img-zoom:hover{transform:scale(1.04);}
+        .tl-line{transition:height 1.4s cubic-bezier(.22,1,.36,1);}
+        .tl-item{opacity:0;transform:translateX(-20px);transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1);}
+        .tl-item.on{opacity:1;transform:none;}
+        .team-row{scrollbar-width:none;}
+        .team-row::-webkit-scrollbar{display:none;}
+        .team-photo{transition:transform .5s cubic-bezier(.22,1,.36,1),box-shadow .5s;}
+        .team-card:hover .team-photo{transform:translateY(-6px);box-shadow:0 18px 40px rgba(88,96,160,.22);}
+        @keyframes tIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+        .t-in{animation:tIn .5s cubic-bezier(.22,1,.36,1) both;}
       `}</style>
 
-      {/* Scroll progress */}
       <div id="ab-scroll-bar" style={{ width: `${scrollProgress * 100}%` }} />
 
-      <div
-        style={{
-          fontFamily: "'Segoe UI',system-ui,sans-serif",
-          minHeight: "100vh",
-          color: "#1e293b",
-          backgroundImage: "url('/background.png')",
-          backgroundSize: "100% 100%",
-          backgroundPosition: "top center",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "scroll",
-        }}
-        onClick={e => {
-          const r = document.createElement("div");
-          r.className = "ab-ripple";
-          r.style.left = `${e.clientX}px`; r.style.top = `${e.clientY}px`;
-          document.body.appendChild(r);
-          setTimeout(() => r.remove(), 700);
-        }}
-      >
-
-        {/* ── HERO ──────────────────────────────────────────────────────────── */}
-        <section style={{ position: "relative", minHeight: 360, paddingTop: 60, paddingBottom: 40, overflow: "hidden" }}>
-          {/* Background image — full clarity, no parallax shift */}
-          <div style={{
-            position: "absolute", inset: 0,
+      {/* ── HERO + METRICS ─────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden">
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
             backgroundImage: "url('/about_header_bg.jpg')",
             backgroundSize: "cover",
-            backgroundPosition: "center center",
-            backgroundRepeat: "no-repeat",
-            imageRendering: "auto",
-            zIndex: 0,
-          }} />
-          {/* Minimal overlay — only a thin fade on far-left so text stays readable */}
-          <div style={{
-            position: "absolute", inset: 0,
-            background: "linear-gradient(90deg, rgba(240,245,255,0.45) 0%, rgba(235,242,255,0.18) 35%, rgba(220,232,255,0.0) 65%)",
-            zIndex: 1,
-          }} />
+            backgroundPosition: "center top",
+          }}
+        />
+        <div aria-hidden className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-[#F3F4FC]" />
 
-          {/* Animated mesh blobs */}
-          <div className="mesh-blob" style={{ width: 320, height: 320, background: "rgba(103,119,173,0.11)", top: -90, right: "8%", animationDuration: "7s" }} />
-          <div className="mesh-blob" style={{ width: 200, height: 200, background: "rgba(96,165,250,0.09)", top: 50, right: "26%", animationDuration: "9s", animationDelay: "2s" }} />
-          <div className="mesh-blob" style={{ width: 150, height: 150, background: "rgba(167,139,250,0.08)", bottom: 20, left: "10%", animationDuration: "11s", animationDelay: "1s" }} />
-
-          {/* Floating particles */}
-          {[...Array(14)].map((_, i) => (
-            <div key={i} className="particle" style={{
-              width: `${4 + (i % 4) * 2}px`, height: `${4 + (i % 4) * 2}px`,
-              background: `rgba(103,119,173,${0.12 + (i % 5) * 0.07})`,
-              top: `${8 + (i * 7) % 82}%`, left: `${4 + (i * 11) % 92}%`,
-              animationDuration: `${5 + (i % 4) * 2}s`, animationDelay: `${i * 0.35}s`,
-            }} />
-          ))}
-
-          <div style={{ position: "relative", zIndex: 2, maxWidth: 1200, margin: "0 auto", padding: "0 40px", display: "grid", gridTemplateColumns: "1fr auto", alignItems: "center", gap: 32 }}>
-            <div style={{ maxWidth: 520 }}>
-              <h1 className="hero-h1" style={{ fontSize: "clamp(28px,4vw,46px)", fontWeight: 800, lineHeight: 1.15, color: "#1e293b", margin: "0 0 8px" }}>
-                More Than a Team.<br />
-                We&apos;re Your <span style={{ color: "#2563EB" }}>Growth Partner.</span>
-              </h1>
-              <p className="hero-p" style={{ fontSize: 14, color: "#475569", lineHeight: 1.7, margin: "0 0 24px", maxWidth: 400 }}>
-                We blend strategy, creativity and technology to build digital ecosystems that drive measurable growth for global brands.
-              </p>
-              <div className="hero-btns" style={{ display: "flex", gap: 12 }}>
-                <a href="/case-studies" className="magnetic shimmer-btn lift-btn" style={{ background: "#2563EB", color: "#fff", border: "none", borderRadius: 8, padding: "11px 24px", fontSize: 13, fontWeight: 600, cursor: "pointer", boxShadow: "0 4px 14px rgba(37,99,235,0.3)" }}>
-                  View Case Studies
-                </a>
-                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="magnetic lift-btn" style={{ background: "transparent", color: "#2563EB", border: "2px solid #2563EB", borderRadius: 8, padding: "11px 24px", fontSize: 13, fontWeight: 600, cursor: "pointer", transition: "background .2s,color .2s,transform .2s,box-shadow .2s" }}
-                  onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.background = "#2563EB"; el.style.color = "#fff"; }}
-                  onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.background = "transparent"; el.style.color = "#2563EB"; }}>
-                  Connect With Us
-                </a>
-              </div>
+        <div className="relative max-w-[1180px] mx-auto px-6 md:px-10 pt-14 md:pt-16 grid md:grid-cols-[1fr_auto] gap-8 items-start">
+          <div className="max-w-[560px]">
+            <h1 className="hero-a font-heading font-semibold leading-[1.3] text-[32px] md:text-[44px]" style={{ color: C.heading }}>
+              More Than a Team.
+              <br />
+              We&apos;re Your <span style={{ color: C.blue }}>Growth Partner.</span>
+            </h1>
+            <p className="hero-b mt-6 text-[15px] md:text-base leading-relaxed max-w-[440px]" style={{ color: "#2E3045" }}>
+              We blend strategy creativity and technology to build digital ecosystems that drive measurable growth for global brands
+            </p>
+            <div className="hero-c mt-8 flex flex-wrap gap-4">
+              <a
+                href="/case-studies"
+                className="magnetic inline-flex items-center rounded-md px-6 py-3 text-[15px] font-medium text-white shadow-[0_8px_20px_rgba(59,130,246,0.35)] hover:brightness-110"
+                style={{ background: C.blue }}
+              >
+                View Case Studies
+              </a>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="magnetic inline-flex items-center rounded-md px-6 py-3 text-[15px] font-medium bg-white shadow-[0_6px_18px_rgba(88,96,160,0.12)] hover:text-blue-600"
+                style={{ color: C.heading }}
+              >
+                Book a Strategy Call
+              </a>
             </div>
-            <div className="hero-stat" style={{ display: "flex", flexDirection: "column", gap: 20, minWidth: 140 }}>
-              {HERO_STATS.map((s, i) => (
-                <div key={s.value} style={{ textAlign: "right", animationDelay: `${i * 0.15}s` }}>
-                  <div style={{ fontSize: 32, fontWeight: 800, lineHeight: 1, background: "linear-gradient(135deg,#1e293b,#4A90D9)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>{s.value}</div>
-                  <div style={{ fontSize: 12, color: "#64748b", lineHeight: 1.4, marginTop: 2 }}>{s.label}</div>
+          </div>
+
+          <div className="hero-d flex md:flex-col gap-10 md:gap-12 md:pt-2 md:pr-0">
+            {HERO_STATS.map((s) => (
+              <div key={s.value}>
+                <p className="font-heading text-[26px] font-semibold leading-none text-[#1F2033]">{s.value}</p>
+                <p className="mt-1 text-[15px] leading-tight text-[#1F2033]">
+                  {s.label[0]}
+                  <br />
+                  {s.label[1]}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Metrics card */}
+        <div className="relative max-w-[1180px] mx-auto px-6 md:px-10 pt-14 md:pt-24 pb-12">
+          <div ref={metrics.ref} className={`${card} mx-auto max-w-[900px] px-6 md:px-10 pt-10 pb-8 bg-white/90 backdrop-blur`}>
+            <div className="grid grid-cols-2 md:grid-cols-4">
+              {METRICS.map((m, i) => (
+                <div
+                  key={m.label}
+                  className={`text-center py-4 md:py-2 ${i < METRICS.length - 1 ? "md:border-r border-slate-200" : ""}`}
+                  style={{
+                    opacity: metrics.inView ? 1 : 0,
+                    transform: metrics.inView ? "none" : "translateY(16px)",
+                    transition: `all .6s cubic-bezier(.22,1,.36,1) ${i * 110}ms`,
+                  }}
+                >
+                  <p className="font-heading text-[30px] md:text-[34px] font-semibold leading-none" style={{ color: "#23243A" }}>
+                    <Counter s={m} start={metrics.inView} />
+                  </p>
+                  <p className="mt-4 mb-3 text-[14px]" style={{ color: C.muted }}>{m.label}</p>
+                  <Stars rating={m.rating} />
                 </div>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* ── METRICS CARD ─────────────────────────────────────────────────── */}
-        <section style={{ padding: "0 40px 40px", maxWidth: 1200, margin: "0 auto" }}>
-          <TiltCard style={{ background: "#fff", borderRadius: 20, padding: "40px 48px", boxShadow: "0 4px 24px rgba(0,0,0,0.06)" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 24, marginBottom: 32 }}>
-              {METRICS.map((m, i) => <MetricCard key={m.label} m={m} delay={i * 120} />)}
-            </div>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <button className="magnetic shimmer-btn lift-btn" style={{ background: "linear-gradient(135deg,#4A90D9,#2563EB)", color: "#fff", border: "none", borderRadius: 10, padding: "14px 36px", fontSize: 14, fontWeight: 600, cursor: "pointer", boxShadow: "0 6px 18px rgba(74,144,217,0.35)" }}>
+            <div className="flex justify-center mt-9">
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="magnetic inline-flex rounded-md px-6 py-3 text-[15px] font-medium text-white shadow-[0_8px_20px_rgba(59,130,246,0.35)] hover:brightness-110"
+                style={{ background: C.blue }}
+              >
                 Get Your Custom Strategy
-              </button>
+              </a>
             </div>
-          </TiltCard>
-        </section>
-
-        {/* ── MISSION ──────────────────────────────────────────────────────── */}
-        <section style={{ padding: "0 40px 40px", maxWidth: 1200, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
-            <Reveal dir="left">
-              <TiltCard style={{ background: "#fff", borderRadius: 20, padding: "48px", boxShadow: "0 4px 24px rgba(0,0,0,0.06)", height: "100%" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 16 }}>
-                  <div className="pulse-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#2563EB" }} />
-                  <span style={{ fontSize: 11, fontWeight: 700, color: "#2563EB", letterSpacing: 1.5, textTransform: "uppercase" as const }}>OUR MISSION</span>
-                </div>
-                <h2 style={{ fontSize: "clamp(22px,3vw,34px)", fontWeight: 800, lineHeight: 1.2, color: "#1e293b", margin: "0 0 16px" }}>
-                  We Build Digital Solutions<br />That Create Real Impact
-                </h2>
-                <p style={{ fontSize: 13, color: "#64748b", lineHeight: 1.75, marginBottom: 28 }}>
-                  Our mission is simple – empower businesses with data-driven strategies, innovative designs and flawless execution.
-                </p>
-                <div style={{ display: "flex", gap: 16 }}>
-                  {MISSION_PILLARS.map((p, i) => (
-                    <div key={i} className="value-card" style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "10px 10px", borderRadius: 10, background: "#f8fafc", border: "1px solid #e2e8f0", flex: 1 }}>
-                      {p.icon}
-                      <div>
-                        <div style={{ fontSize: 12, fontWeight: 700, color: "#1e293b" }}>{p.title}</div>
-                        <div style={{ fontSize: 11, color: "#64748b", lineHeight: 1.5 }}>{p.description}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </TiltCard>
-            </Reveal>
-
-            <Reveal dir="right" delay={120}>
-              <div style={{ borderRadius: 20, overflow: "hidden", height: "100%", minHeight: 300, background: "#e2e8f0", position: "relative" }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/mask_group.png" alt="Our office workspace" className="img-zoom"
-                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-                {/* Floating badge */}
-                <div style={{ position: "absolute", bottom: 20, left: 20, background: "rgba(255,255,255,0.92)", backdropFilter: "blur(8px)", borderRadius: 14, padding: "12px 18px", boxShadow: "0 4px 20px rgba(0,0,0,0.12)", animation: "heroUp .9s cubic-bezier(.22,1,.36,1) .6s both" }}>
-                  <div style={{ fontSize: 22, fontWeight: 800, color: "#2563EB", lineHeight: 1 }}>10+</div>
-                  <div style={{ fontSize: 11, color: "#64748b", marginTop: 2 }}>Years of Excellence</div>
-                </div>
-                <div style={{ position: "absolute", top: 20, right: 20, background: "rgba(255,255,255,0.92)", backdropFilter: "blur(8px)", borderRadius: 14, padding: "12px 18px", boxShadow: "0 4px 20px rgba(0,0,0,0.12)", animation: "heroUp .9s cubic-bezier(.22,1,.36,1) .75s both" }}>
-                  <div style={{ fontSize: 22, fontWeight: 800, color: "#10b981", lineHeight: 1 }}>100+</div>
-                  <div style={{ fontSize: 11, color: "#64748b", marginTop: 2 }}>Clients Worldwide</div>
-                </div>
-              </div>
-            </Reveal>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ── JOURNEY + VALUES ─────────────────────────────────────────────── */}
-        <section style={{ padding: "0 40px 60px", maxWidth: 1200, margin: "0 auto" }}>
-          <TiltCard style={{ background: "#fff", borderRadius: 20, padding: "48px", boxShadow: "0 4px 24px rgba(0,0,0,0.06)" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60 }}>
-
-              {/* Journey */}
-              <div ref={journeyRef}>
-                <Reveal>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 28 }}>
-                    <div className="pulse-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#2563EB" }} />
-                    <span style={{ fontSize: 11, fontWeight: 700, color: "#2563EB", letterSpacing: 1.5, textTransform: "uppercase" as const }}>OUR JOURNEY</span>
+      {/* ── MISSION ───────────────────────────────────────────────────────── */}
+      <section className="max-w-[1180px] mx-auto px-6 md:px-10 pb-12">
+        <Reveal>
+          <div className={`${card} p-6 md:p-6 grid md:grid-cols-2 gap-8 items-center`}>
+            <div className="md:pl-4">
+              <Eyebrow>Our Mission</Eyebrow>
+              <h2 className="font-heading mt-4 text-[28px] md:text-[34px] font-semibold leading-[1.35]" style={{ color: C.heading }}>
+                We Build Digital Solutions
+                <br />
+                That Create Real Impact
+              </h2>
+              <p className="mt-4 text-[15px] leading-relaxed max-w-[440px]" style={{ color: C.body }}>
+                Our mission is simple - empower businesses with data - driven strategies, innovative designs and Flawless execution.
+              </p>
+              <div className="mt-8 grid sm:grid-cols-3 gap-4">
+                {PILLARS.map((p) => (
+                  <div key={p.title} className="flex items-start gap-2.5">
+                    <p.icon size={26} strokeWidth={1.4} className="shrink-0 mt-0.5" style={{ color: C.blue }} />
+                    <div>
+                      <p className="text-[14px] font-semibold" style={{ color: C.heading }}>{p.title}</p>
+                      <p className="text-[12px] leading-snug" style={{ color: C.blueDark }}>{p.text}</p>
+                    </div>
                   </div>
-                </Reveal>
-                <div style={{ position: "relative" }}>
-                  {/* Animated filling line */}
-                  <div style={{ position: "absolute", left: 8, top: 18, bottom: 18, width: 2, background: "#E2EAF4", overflow: "hidden" }}>
-                    <div className="timeline-fill" style={{
-                      width: "100%", background: "linear-gradient(180deg,#4A90D9,#a78bfa,#60a5fa)",
-                      height: journeyVisible ? "100%" : "0%",
-                    }} />
-                  </div>
-
-                  <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
-                    {JOURNEY.map((item, i) => (
-                      <div key={item.year} className={`tl-item${activeJourney >= i ? " active" : ""}`}
-                        style={{ display: "flex", gap: 20, alignItems: "flex-start", transitionDelay: `${i * 0.1}s` }}>
-                        <div style={{ minWidth: 18, marginTop: 2 }}>
-                          <div className={`tl-dot${activeJourney >= i ? " active" : ""}`} />
-                        </div>
-                        <div>
-                          <div className={activeJourney >= i ? "year-active" : ""} style={{ fontSize: 13, fontWeight: 700, color: "#2563EB", marginBottom: 2 }}>{item.year}</div>
-                          <div style={{ fontSize: 14, fontWeight: 700, color: "#1e293b", marginBottom: 4 }}>{item.title}</div>
-                          <p style={{ fontSize: 12, color: "#64748b", lineHeight: 1.7, margin: 0 }}>{item.description}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                ))}
               </div>
-
-              {/* Values */}
-              <div>
-                <Reveal delay={100}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 28 }}>
-                    <div className="pulse-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#2563EB" }} />
-                    <span style={{ fontSize: 11, fontWeight: 700, color: "#2563EB", letterSpacing: 1.5, textTransform: "uppercase" as const }}>OUR VALUES</span>
-                  </div>
-                </Reveal>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-                  {VALUES.map((v, i) => (
-                    <Reveal key={i} delay={i * 100}>
-                      <div className="value-card" style={{ padding: "20px 16px", borderRadius: 14, background: "#f8fafc", border: "1px solid #e2e8f0", boxShadow: "0 2px 8px rgba(0,0,0,0.04)", height: "100%" }}>
-                        <div style={{ marginBottom: 10 }}>{v.icon}</div>
-                        <div style={{ fontSize: 14, fontWeight: 700, color: "#1e293b", marginBottom: 6 }}>{v.title}</div>
-                        <p style={{ fontSize: 12, color: "#64748b", lineHeight: 1.7, margin: 0 }}>{v.description}</p>
-                      </div>
-                    </Reveal>
-                  ))}
-                </div>
-              </div>
-
             </div>
-          </TiltCard>
-        </section>
+            <div className="rounded-2xl overflow-hidden aspect-[16/9] md:aspect-auto md:h-[300px] bg-slate-200">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/mask_group.png" alt="Our office workspace" className="img-zoom w-full h-full object-cover" />
+            </div>
+          </div>
+        </Reveal>
+      </section>
 
-        {/* ── CTA BANNER ───────────────────────────────────────────────────── */}
-        <section style={{ padding: "0 40px 70px", maxWidth: 1200, margin: "0 auto" }}>
-          <Reveal dir="scale">
-            <div className="glass-in" style={{
-              position: "relative", overflow: "hidden",
-              background: "linear-gradient(135deg,#1e293b 0%,#2563EB 55%,#4A90D9 100%)",
-              borderRadius: 24, padding: "64px 48px", textAlign: "center",
-            }}>
-              {/* Animated blobs */}
-              <div className="mesh-blob" style={{ width: 300, height: 300, background: "rgba(255,255,255,0.07)", top: -90, right: -60, animationDuration: "8s" }} />
-              <div className="mesh-blob" style={{ width: 200, height: 200, background: "rgba(255,255,255,0.05)", bottom: -60, left: -40, animationDuration: "10s", animationDelay: "3s" }} />
-              <div className="mesh-blob" style={{ width: 120, height: 120, background: "rgba(167,139,250,0.1)", top: "30%", left: "20%", animationDuration: "6s", animationDelay: "1s" }} />
-              {/* Mini particles */}
-              {[...Array(10)].map((_, i) => (
-                <div key={i} className="particle" style={{ width: `${3 + i % 3}px`, height: `${3 + i % 3}px`, background: "rgba(255,255,255,0.35)", top: `${15 + (i * 9) % 70}%`, left: `${6 + (i * 13) % 86}%`, animationDuration: `${4 + i % 3}s`, animationDelay: `${i * 0.4}s` }} />
+      {/* ── JOURNEY + VALUES ─────────────────────────────────────────────── */}
+      <section className="max-w-[1180px] mx-auto px-6 md:px-10 pb-20 grid lg:grid-cols-2 gap-8 items-stretch">
+        <Reveal className="h-full">
+          <div ref={journey.ref} className={`${card} p-6 md:p-8 h-full`}>
+            <Eyebrow>Our Journey</Eyebrow>
+            <div className="relative mt-7">
+              {/* line */}
+              <div className="absolute left-[17px] top-3 bottom-10 w-[3px] rounded bg-blue-100 overflow-hidden">
+                <div className="tl-line w-full rounded" style={{ height: journey.inView ? "100%" : "0%", background: C.blue }} />
+              </div>
+              <div className="space-y-6">
+                {JOURNEY.map((j, i) => (
+                  <div
+                    key={j.year}
+                    className={`tl-item ${journey.inView ? "on" : ""} grid grid-cols-[36px_56px_1fr] gap-3 items-start`}
+                    style={{ transitionDelay: `${300 + i * 250}ms` }}
+                  >
+                    <span
+                      className="relative z-10 w-9 h-9 rounded-full flex items-center justify-center text-white ring-4 ring-blue-100"
+                      style={{ background: C.blue }}
+                    >
+                      <j.icon size={16} />
+                    </span>
+                    <p className="font-heading pt-1.5 text-[15px] font-semibold" style={{ color: "#1F2033" }}>{j.year}</p>
+                    <div>
+                      <p className="text-[15px] font-semibold" style={{ color: "#1F2033" }}>{j.title}</p>
+                      <p className="mt-1.5 text-[12.5px] leading-relaxed text-[#2E3045]">{j.text}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal delay={120} className="h-full">
+          <div className={`${card} p-6 md:p-8 h-full`}>
+            <Eyebrow>Our Values</Eyebrow>
+            <div className="mt-7 grid sm:grid-cols-2 gap-5">
+              {VALUES.map((v) => (
+                <div key={v.title} className="lift rounded-xl p-5 flex gap-3 bg-[#F1F5FF]">
+                  <v.icon size={26} strokeWidth={1.4} className="shrink-0" style={{ color: C.blue }} />
+                  <div>
+                    <p className="text-[15px] font-semibold" style={{ color: C.heading }}>{v.title}</p>
+                    <p className="mt-1 text-[12.5px] leading-snug" style={{ color: C.muted }}>{VALUE_TEXT}</p>
+                  </div>
+                </div>
               ))}
-              <div style={{ position: "relative", zIndex: 1 }}>
-                <h2 style={{ fontSize: "clamp(24px,3.5vw,42px)", fontWeight: 800, color: "#fff", margin: "0 0 12px", lineHeight: 1.2 }}>
-                  Ready to Scale Your<br />Digital Growth?
-                </h2>
-                <p style={{ color: "rgba(255,255,255,0.72)", fontSize: 14, maxWidth: 420, margin: "0 auto 36px", lineHeight: 1.7 }}>
-                  Get a custom strategy tailored for your business goals.
-                </p>
-                <div style={{ display: "flex", gap: 16, justifyContent: "center" }}>
-                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="magnetic shimmer-btn lift-btn" style={{ background: "#fff", color: "#2563EB", border: "none", borderRadius: 10, padding: "14px 32px", fontSize: 14, fontWeight: 700, cursor: "pointer", boxShadow: "0 6px 20px rgba(0,0,0,0.2)" }}>
-                    Connect With Us
-                  </a>
-                  <a href="/case-studies" className="magnetic lift-btn" style={{ background: "transparent", color: "#fff", border: "2px solid rgba(255,255,255,0.55)", borderRadius: 10, padding: "14px 32px", fontSize: 14, fontWeight: 600, cursor: "pointer", transition: "border-color .2s,transform .2s,box-shadow .2s" }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#fff"; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.55)"; }}>
-                    View Case Studies →
-                  </a>
-                </div>
-              </div>
             </div>
-          </Reveal>
-        </section>
+          </div>
+        </Reveal>
+      </section>
 
-      </div>
-    </>
+      {/* ── TEAM ──────────────────────────────────────────────────────────── */}
+      <section className="max-w-[1180px] mx-auto px-6 md:px-10 pb-20">
+        <Reveal className="text-center">
+          <Eyebrow center>Meet the Team</Eyebrow>
+          <h2 className="font-heading mt-3 text-[28px] md:text-[34px] font-semibold" style={{ color: C.heading }}>
+            The People Behind <span style={{ color: C.blue }}>Your Growth</span>
+          </h2>
+        </Reveal>
+
+        <div ref={teamRef} className="team-row mt-10 flex gap-6 overflow-x-auto snap-x snap-mandatory">
+          {TEAM.map((m, i) => (
+            <Reveal key={m.name} delay={i * 90} className="team-card snap-start shrink-0 w-[70%] sm:w-[42%] md:w-[30%] lg:w-[calc((100%-96px)/5)] text-center">
+              <div className="team-photo mx-auto w-full max-w-[200px] aspect-square rounded-full overflow-hidden bg-slate-100">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={m.photo} alt={m.name} className="w-full h-full object-cover" />
+              </div>
+              <p className="font-heading mt-5 text-[17px] font-semibold" style={{ color: C.heading }}>{m.name}</p>
+              <p className="mt-1 text-[14px]" style={{ color: C.blue }}>{m.role}</p>
+              <p className="mt-3 text-[14px] leading-relaxed" style={{ color: C.muted }}>{m.bio}</p>
+              <div className="mt-4 flex justify-center gap-4">
+                <SocialIcon d={ICONS.facebook} label={`${m.name} on Facebook`} />
+                <SocialIcon d={ICONS.github} label={`${m.name} on GitHub`} />
+                <SocialIcon d={ICONS.linkedin} label={`${m.name} on LinkedIn`} />
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* slider indicator */}
+        <div className="relative mx-auto mt-10 h-[3px] w-[120px] rounded bg-slate-200">
+          <div
+            className="absolute top-0 h-full rounded transition-all duration-300"
+            style={{ background: C.blue, left: `${teamProgress.left * 100}%`, width: `${Math.max(teamProgress.width, 0.2) * 100}%` }}
+          />
+        </div>
+      </section>
+
+      {/* ── TESTIMONIALS ─────────────────────────────────────────────────── */}
+      <section className="max-w-[1180px] mx-auto px-6 md:px-10 pb-24">
+        <Reveal className="text-center">
+          <h2 className="font-heading text-[28px] md:text-[34px] font-semibold" style={{ color: C.heading }}>
+            Trusted by <span style={{ color: C.blue }}>Clients</span>
+          </h2>
+        </Reveal>
+
+        <div key={tPage} className="mt-12 grid md:grid-cols-3 gap-8 max-w-[900px] mx-auto">
+          {TESTIMONIALS.slice(tPage * 3, tPage * 3 + 3).map((t, i) => (
+            <div key={t.name} className={`t-in lift ${card} p-6 pb-8`} style={{ animationDelay: `${i * 90}ms` }}>
+              <div className="flex">
+                <Stars rating={5} color={C.red} off="#F5C2C3" size={14} />
+              </div>
+              <p className="mt-6 text-[14px] leading-relaxed" style={{ color: C.muted }}>{t.text}</p>
+              <p className="mt-8 text-[13px] font-semibold text-[#1F2033]">{t.name}</p>
+              <p className="text-[10px] text-slate-400">{t.city}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-10 flex justify-center gap-3">
+          {Array.from({ length: pages }).map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              aria-label={`Show testimonials page ${i + 1}`}
+              onClick={() => setTPage(i)}
+              className="h-[3px] w-14 rounded transition-colors"
+              style={{ background: i === tPage ? C.blue : "#D9DEEA" }}
+            />
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }

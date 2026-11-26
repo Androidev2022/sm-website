@@ -37,18 +37,17 @@ type StoryKey = keyof CaseStudy["story"];
 const storySteps: {
   key: StoryKey;
   label: string;
-  link: string;
   icon: LucideIcon;
   accent: string; // text colour
   bar: string; // bottom bar colour
   iconBg: string;
 }[] = [
-  { key: "challenge", label: "The Challenge", link: "View Challenge", icon: Target, accent: "text-rose-500", bar: "bg-rose-500", iconBg: "bg-rose-50" },
-  { key: "approach", label: "Our Approach", link: "View Approach", icon: Compass, accent: "text-blue-600", bar: "bg-blue-600", iconBg: "bg-blue-50" },
-  { key: "solution", label: "The Solution", link: "View Solution", icon: Lightbulb, accent: "text-emerald-600", bar: "bg-emerald-500", iconBg: "bg-emerald-50" },
-  { key: "technology", label: "Technology", link: "View Technology", icon: Cpu, accent: "text-violet-600", bar: "bg-violet-500", iconBg: "bg-violet-50" },
-  { key: "results", label: "Results", link: "View Results", icon: TrendingUp, accent: "text-amber-500", bar: "bg-amber-400", iconBg: "bg-amber-50" },
-];
+    { key: "challenge", label: "The Challenge", icon: Target, accent: "text-rose-500", bar: "bg-rose-500", iconBg: "bg-rose-50" },
+    { key: "approach", label: "Our Approach", icon: Compass, accent: "text-blue-600", bar: "bg-blue-600", iconBg: "bg-blue-50" },
+    { key: "solution", label: "The Solution", icon: Lightbulb, accent: "text-emerald-600", bar: "bg-emerald-500", iconBg: "bg-emerald-50" },
+    { key: "technology", label: "Technology", icon: Cpu, accent: "text-violet-600", bar: "bg-violet-500", iconBg: "bg-violet-50" },
+    { key: "results", label: "Results", icon: TrendingUp, accent: "text-amber-500", bar: "bg-amber-400", iconBg: "bg-amber-50" },
+  ];
 
 const techColors = ["#61DAFB", "#111827", "#3178C6", "#539E43", "#00758F", "#FF9900", "#F38020", "#DC382D", "#E37400", "#362D59"];
 
@@ -62,8 +61,6 @@ export default async function CaseStudyPage({ params }: Props) {
     { icon: House, label: "Industry", value: cs.industry },
     { icon: CalendarClock, label: "Engagement", value: cs.duration, sub: cs.engagementType },
   ];
-
-  const storyHref = cs.fullStoryHref ?? "#story";
 
   return (
     <div className="bg-[#F7F9FC]">
@@ -159,7 +156,7 @@ export default async function CaseStudyPage({ params }: Props) {
           {storySteps.map((s, i) => (
             <article
               key={s.key}
-              className="relative bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-600/5"
+              className="relative bg-white rounded-2xl border border-slate-100 shadow-sm p-5 pb-6 flex flex-col overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-600/5"
             >
               <div className={`flex items-center gap-2 text-[11px] font-bold tracking-wide uppercase ${s.accent}`}>
                 <span className={`w-7 h-7 rounded-lg flex items-center justify-center ${s.iconBg}`}>
@@ -168,12 +165,6 @@ export default async function CaseStudyPage({ params }: Props) {
                 {String(i + 1).padStart(2, "0")}. {s.label}
               </div>
               <p className="mt-3 text-[13px] text-slate-600 leading-relaxed flex-1">{cs.story[s.key]}</p>
-              <Link
-                href={storyHref}
-                className={`mt-4 inline-flex items-center gap-1 text-[13px] font-semibold ${s.accent} hover:gap-2 transition-all`}
-              >
-                {s.link} <ArrowRight size={14} />
-              </Link>
               <span className={`absolute left-0 bottom-0 h-1 w-full ${s.bar}`} />
             </article>
           ))}
@@ -197,12 +188,6 @@ export default async function CaseStudyPage({ params }: Props) {
               </li>
             ))}
           </ul>
-          <Link
-            href={storyHref}
-            className="inline-flex items-center gap-1 text-[13px] font-semibold text-blue-600 hover:gap-2 transition-all flex-shrink-0"
-          >
-            View All Technologies <ArrowRight size={14} />
-          </Link>
         </div>
 
         <div className="mt-8 flex justify-center">

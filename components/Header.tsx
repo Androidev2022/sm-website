@@ -14,7 +14,7 @@ export const navLinks: NavLink[] = [
   { label: "Services", href: "/services" },
   { label: "Case Studies", href: "/case-studies", match: ["/casedetails"] },
   { label: "Portfolio", href: "/portfolio" },
-  { label: "Clintele", href: "/our-clients" },
+  { label: "Clientele", href: "/our-clients" },
   { label: "Contact Us", href: "/contact" },
 ];
 
