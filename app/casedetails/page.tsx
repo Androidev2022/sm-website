@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import type { JSX } from "react";
+import { WHATSAPP_URL } from "@/lib/contact";
 
 const stats = [
     { value: "+156%", label: "Traffic Growth", sub: "Organic Traffic" },
@@ -1220,10 +1221,10 @@ export default function Page() {
                             <p className="mt-3 text-sm leading-relaxed text-white/60 sm:text-[15px]">
                                 Let&apos;s build a digital experience that drives growth.
                             </p>
-                            <button className="mt-6 flex items-center gap-2 rounded-full bg-[#E11D48] px-6 py-3 text-sm font-semibold text-white shadow-md transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#c81b40] active:translate-y-0">
+                            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#E11D48] px-6 py-3 text-sm font-semibold text-white shadow-md transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#c81b40] active:translate-y-0">
                                 Connect With Us
                                 <span aria-hidden="true">→</span>
-                            </button>
+                            </a>
                         </div>
 
                         <div className="relative hidden h-40 w-40 shrink-0 sm:block sm:h-48 sm:w-48">
@@ -1255,9 +1256,9 @@ export default function Page() {
                             </p>
                         </div>
                     </div>
-                    <button className="shrink-0 whitespace-nowrap rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#4C5FEA] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-gray-50 active:translate-y-0">
+                    <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="shrink-0 whitespace-nowrap rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#4C5FEA] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-gray-50 active:translate-y-0">
                         Connect With Us →
-                    </button>
+                    </a>
                 </Reveal>
             </section> */}
 

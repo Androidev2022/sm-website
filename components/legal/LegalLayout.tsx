@@ -41,6 +41,25 @@ export function CheckList({ items }: { items: ReactNode[] }) {
   );
 }
 
+export function H3({ children }: { children: ReactNode }) {
+  return <h3 className="pt-2 text-base font-bold text-slate-900">{children}</h3>;
+}
+
+export function NumberList({ items }: { items: ReactNode[] }) {
+  return (
+    <ol className="space-y-3">
+      {items.map((it, i) => (
+        <li key={i} className="flex gap-3 text-sm text-slate-600 leading-relaxed">
+          <span className="mt-0.5 w-6 h-6 flex-shrink-0 rounded-full bg-blue-50 text-blue-600 text-xs font-bold flex items-center justify-center">
+            {i + 1}
+          </span>
+          <span>{it}</span>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 // ─── Hero illustration: document + shield ───────────────────────────────────
 function HeroArt() {
   return (

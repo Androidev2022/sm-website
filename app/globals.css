@@ -65,3 +65,8 @@ body {
 .contact-float-d2 { animation-delay: .9s; }
 .contact-float-d3 { animation-delay: 1.8s; }
 @media (prefers-reduced-motion: reduce) { .contact-float { animation: none; } }
+
+/* ─── Services page ──────────────────────────────────────────────────────── */
+@keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.globe-spin { animation: spin-slow 60s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .globe-spin { animation: none; } }

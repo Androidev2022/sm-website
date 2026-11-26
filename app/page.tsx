@@ -20,6 +20,7 @@ import {
   HeartPulse,
   Star,
 } from "lucide-react";
+import { WHATSAPP_URL } from "@/lib/contact";
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
@@ -332,9 +333,9 @@ export default function Home() {
                 <button className="magnetic bg-blue-600 hover:bg-blue-700 text-white px-7 py-3.5 rounded-lg font-semibold flex items-center gap-2 transition-colors">
                   Explore Our Work <ArrowRight size={16} />
                 </button>
-                <button className="magnetic border border-slate-300 hover:border-blue-400 text-slate-700 px-7 py-3.5 rounded-lg font-semibold flex items-center gap-2 transition-colors">
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="magnetic border border-slate-300 hover:border-blue-400 text-slate-700 px-7 py-3.5 rounded-lg font-semibold flex items-center gap-2 transition-colors">
                   Connect With Us <ArrowRight size={16} />
-                </button>
+                </a>
               </div>
               <div className="hero-tags mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-slate-900 text-sm font-bold">
                 {["Strategy", "Experience", "Engineering", "Growth"].map((t, i) => (

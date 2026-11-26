@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { WHATSAPP_URL } from "@/lib/contact";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -21,14 +22,13 @@ import {
 export const metadata: Metadata = {
   title: "Contact Us | SM Solutions",
   description:
-    "Discuss your digital product, website, platform or growth challenge with SM Solutions. Book a strategy call, email or call our team.",
+    "Discuss your digital product, website, platform or growth challenge with SM Solutions. Connect with us on WhatsApp, email or call our team.",
 };
 
 // ─── Contact details (edit here) ─────────────────────────────────────────────
 const EMAIL = "contact@smsolutions.in";
 const PHONE_DISPLAY = "+91 86301 80711";
 const PHONE_TEL = "+918630180711";
-const STRATEGY_CALL_HREF = `mailto:${EMAIL}?subject=${encodeURIComponent("Strategy Call Request")}`;
 
 const channels: {
   icon: LucideIcon;
@@ -42,10 +42,10 @@ const channels: {
 }[] = [
   {
     icon: CalendarDays,
-    title: "Book a Strategy Call",
-    desc: "A focused conversation to discuss your goals, explore ideas and outline possible next steps.",
-    cta: "Book a Strategy Call",
-    href: STRATEGY_CALL_HREF,
+    title: "Connect With Us",
+    desc: "Message us on WhatsApp to discuss your goals, explore ideas and outline possible next steps.",
+    cta: "Connect With Us",
+    href: WHATSAPP_URL,
     tint: "bg-blue-50 text-blue-600",
     accent: "text-blue-600",
     bar: "bg-blue-500",
@@ -80,7 +80,7 @@ const startingPoints: { icon: LucideIcon; title: string; desc: string }[] = [
 ];
 
 const nextSteps: { icon: LucideIcon; title: string; desc: string }[] = [
-  { icon: MessageCircle, title: "You reach out", desc: "Book a call, email us or give us a call." },
+  { icon: MessageCircle, title: "You reach out", desc: "Message us on WhatsApp, email us or give us a call." },
   { icon: Search, title: "We understand the requirement", desc: "A quick discussion to understand your goals, context and priorities." },
   { icon: Target, title: "We discuss the right next step", desc: "A practical way forward tailored to your needs and timeline." },
 ];
@@ -201,10 +201,12 @@ export default function ContactPage() {
               </p>
               <div className="mt-7 flex flex-col sm:flex-row gap-3">
                 <a
-                  href={STRATEGY_CALL_HREF}
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold text-sm transition-colors"
                 >
-                  Book a Strategy Call <ArrowRight size={16} />
+                  Connect With Us <ArrowRight size={16} />
                 </a>
                 <a
                   href={`mailto:${EMAIL}`}
@@ -231,6 +233,7 @@ export default function ContactPage() {
             <a
               key={ch.title}
               href={ch.href}
+              {...(ch.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="group relative bg-white rounded-2xl border border-slate-100 shadow-sm p-6 flex flex-col overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-600/5"
             >
               <span className={`w-11 h-11 rounded-xl flex items-center justify-center ${ch.tint}`}>

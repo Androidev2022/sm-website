@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, ChevronRight, DollarSign, Briefcase, Globe2, Star, Rocket, TrendingUp } from "lucide-react";
 import CaseList from "./CaseList";
 import Testimonials from "./Testimonials";
+import { WHATSAPP_URL } from "@/lib/contact";
 
 export const metadata: Metadata = {
   title: "Case Studies | SM Solutions",
@@ -177,9 +178,9 @@ export default function CaseStudiesPage() {
           <p className="mt-2 text-sm text-slate-500 max-w-md mx-auto">
             Let&apos;s talk about your goals and how we can deliver similar growth for your business.
           </p>
-          <button className="mt-6 inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold text-sm transition-colors">
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold text-sm transition-colors">
             Connect With Us <ArrowRight size={16} />
-          </button>
+          </a>
         </div>
       </section>
 

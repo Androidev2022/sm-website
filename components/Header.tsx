@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowRight, ChevronDown } from "lucide-react";
+import { WHATSAPP_URL } from "@/lib/contact";
 
 type NavLink = { label: string; href: string; hasDropdown?: boolean; match?: string[] };
 
@@ -54,9 +55,9 @@ export default function Header() {
           })}
         </nav>
 
-        <button className="magnetic bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-colors flex items-center gap-2">
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="magnetic bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-colors flex items-center gap-2">
           Connect With Us <ArrowRight size={15} />
-        </button>
+        </a>
       </div>
     </header>
   );

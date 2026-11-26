@@ -6,6 +6,7 @@ import {
   TwitterIcon,
   YoutubeIcon,
 } from "./SocialIcons";
+import { WHATSAPP_URL } from "@/lib/contact";
 
 const footerCols = [
   { title: "Services", items: ["Digital Strategy", "Web Development", "Mobile App Development", "Cloud & DevOps", "UI/UX Design", "Digital Marketing"] },
@@ -44,9 +45,9 @@ export default function Footer() {
               <p className="text-blue-100 text-sm mt-1">Let&apos;s discuss how we can help you achieve measurable growth.</p>
             </div>
           </div>
-          <button className="magnetic w-full sm:w-auto justify-center bg-white text-blue-700 hover:bg-blue-50 px-6 py-3 rounded-lg font-semibold text-sm flex items-center gap-2 transition-colors flex-shrink-0">
-            Book a Strategy Call <ArrowRight size={16} />
-          </button>
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="magnetic w-full sm:w-auto justify-center bg-white text-blue-700 hover:bg-blue-50 px-6 py-3 rounded-lg font-semibold text-sm flex items-center gap-2 transition-colors flex-shrink-0">
+            Connect With Us <ArrowRight size={16} />
+          </a>
         </div>
 
         {/* Dark footer panel */}
@@ -107,9 +108,9 @@ export default function Footer() {
                     </li>
                   ))}
                 </ul>
-                <button className="magnetic mt-5 w-full sm:w-auto justify-center bg-blue-600 hover:bg-blue-700 text-white text-[13px] px-4 py-2.5 rounded-md font-semibold whitespace-nowrap transition-colors">
-                  Book a Strategy Call
-                </button>
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="magnetic mt-5 w-full sm:w-auto justify-center bg-blue-600 hover:bg-blue-700 text-white text-[13px] px-4 py-2.5 rounded-md font-semibold whitespace-nowrap transition-colors">
+                  Connect With Us
+                </a>
               </div>
             </div>
 

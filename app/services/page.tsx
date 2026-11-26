@@ -1,439 +1,381 @@
-"use client";
-// app/services/page.tsx
-import { useEffect, useState } from "react";
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 import {
-    ArrowRight,
-    Check,
-    Target,
-    PenTool,
-    Monitor,
-    Smartphone,
-    Cloud,
-    Database,
-    Megaphone,
-    Cpu,
-    Code2,
-    BarChart3,
-    Layers,
-    Users,
-    Settings,
-    type LucideIcon,
+  ArrowRight,
+  BarChart3,
+  Brain,
+  Check,
+  ChevronRight,
+  Cloud,
+  Code2,
+  Compass,
+  Cpu,
+  Database,
+  Hammer,
+  Layers,
+  LayoutTemplate,
+  Megaphone,
+  Monitor,
+  PenTool,
+  RefreshCw,
+  Server,
+  Settings,
+  Smartphone,
+  Target,
+  TrendingUp,
+  type LucideIcon,
 } from "lucide-react";
 
+export const metadata: Metadata = {
+  title: "Services | SM Solutions",
+  description:
+    "Strategy, experience, engineering and growth — integrated to design, build and scale digital ecosystems that perform.",
+};
+
+// ─── Colour accents (one per card, cycled) ───────────────────────────────────
+type Accent = { tile: string; text: string; check: string; bar: string };
+const A: Record<string, Accent> = {
+  blue: { tile: "bg-blue-50 text-blue-600", text: "text-blue-600", check: "text-blue-600", bar: "bg-blue-500" },
+  violet: { tile: "bg-violet-50 text-violet-600", text: "text-violet-600", check: "text-violet-600", bar: "bg-violet-500" },
+  emerald: { tile: "bg-emerald-50 text-emerald-600", text: "text-emerald-600", check: "text-emerald-600", bar: "bg-emerald-500" },
+  orange: { tile: "bg-orange-50 text-orange-500", text: "text-orange-500", check: "text-orange-500", bar: "bg-orange-400" },
+  sky: { tile: "bg-sky-50 text-sky-600", text: "text-sky-600", check: "text-sky-600", bar: "bg-sky-500" },
+  indigo: { tile: "bg-indigo-50 text-indigo-600", text: "text-indigo-600", check: "text-indigo-600", bar: "bg-indigo-500" },
+  rose: { tile: "bg-rose-50 text-rose-500", text: "text-rose-500", check: "text-rose-500", bar: "bg-rose-500" },
+  purple: { tile: "bg-purple-50 text-purple-600", text: "text-purple-600", check: "text-purple-600", bar: "bg-purple-500" },
+};
+
 // ─── Content ─────────────────────────────────────────────────────────────────
-type Service = { no: string; title: string; desc: string; points: string[]; icon: LucideIcon };
-
-const services: Service[] = [
-    {
-        no: "01",
-        title: "Digital Strategy & Consulting",
-        desc: "Define the right digital roadmap to unlock business growth.",
-        points: ["Business & user research", "Digital roadmap & use cases", "Product & platform strategy", "Technology & execution planning"],
-        icon: Target,
-    },
-    {
-        no: "02",
-        title: "Experience Design & UI/UX",
-        desc: "Create intuitive, engaging and accessible user experiences.",
-        points: ["User research & journey mapping", "UX strategy & information architecture", "UI design & design systems", "Usability & accessibility design"],
-        icon: PenTool,
-    },
-    {
-        no: "03",
-        title: "Web & Commerce Engineering",
-        desc: "Build high-performance, scalable web and commerce solutions.",
-        points: ["Custom web application development", "E-commerce & D2C platforms", "CMS-based solutions", "Integrations & performance optimization"],
-        icon: Monitor,
-    },
-    {
-        no: "04",
-        title: "Mobile App Development",
-        desc: "Design and build secure, high-quality mobile applications for growth.",
-        points: ["iOS and Android development", "Cross-platform (React Native / Flutter)", "App modernization & enhancements", "Deployment & app store release"],
-        icon: Smartphone,
-    },
-    {
-        no: "05",
-        title: "Cloud, DevOps & Infrastructure",
-        desc: "Build a reliable, secure and scalable technology foundation.",
-        points: ["Cloud architecture & migration", "DevOps, CI/CD & automation", "Infrastructure management", "Security, monitoring & cost optimization"],
-        icon: Cloud,
-    },
-    {
-        no: "06",
-        title: "Data, Analytics & AI",
-        desc: "Turn data into insights and business impact with modern AI.",
-        points: ["Data strategy & architecture", "Analytics & business intelligence", "AI/ML solutions & integration", "Reporting, dashboards & insights"],
-        icon: Database,
-    },
-    {
-        no: "07",
-        title: "Digital Marketing & Growth",
-        desc: "Build visibility, engagement and measurable business growth.",
-        points: ["Growth strategy & campaign planning", "SEO, content & performance marketing", "Social media & engagement", "Marketing analytics & optimization"],
-        icon: Megaphone,
-    },
-    {
-        no: "08",
-        title: "Emerging Technology Solutions",
-        desc: "Explore and apply new technologies to solve real business challenges.",
-        points: ["IoT & connected solutions", "AI-powered applications", "Automation & intelligent workflows", "PoC, prototyping & pilot deployments"],
-        icon: Cpu,
-    },
+const services: { title: string; desc: string; points: string[]; icon: LucideIcon; accent: Accent }[] = [
+  {
+    title: "Digital Strategy & Consulting",
+    desc: "Define the right digital roadmap to unlock business growth.",
+    points: ["Business & user research", "Digital roadmap & use cases", "Product & platform strategy", "Technology & execution planning"],
+    icon: Target,
+    accent: A.blue,
+  },
+  {
+    title: "Experience Design & UI/UX",
+    desc: "Create intuitive, engaging and accessible user experiences.",
+    points: ["User research & journey mapping", "UX strategy & information architecture", "UI design & design systems", "Usability & accessibility design"],
+    icon: PenTool,
+    accent: A.violet,
+  },
+  {
+    title: "Web & Commerce Engineering",
+    desc: "Build high-performance, scalable web and commerce solutions.",
+    points: ["Custom web application development", "E-commerce & D2C platforms", "CMS-based solutions", "Integrations & performance optimization"],
+    icon: Monitor,
+    accent: A.emerald,
+  },
+  {
+    title: "Mobile App Development",
+    desc: "Design and build secure, high-quality mobile applications for growth.",
+    points: ["iOS and Android development", "Cross-platform (React Native / Flutter)", "App modernization & enhancements", "Deployment & app store release"],
+    icon: Smartphone,
+    accent: A.orange,
+  },
+  {
+    title: "Cloud, DevOps & Infrastructure",
+    desc: "Build a reliable, secure and scalable technology foundation.",
+    points: ["Cloud architecture & migration", "DevOps, CI/CD & automation", "Infrastructure management", "Security, monitoring & cost optimization"],
+    icon: Cloud,
+    accent: A.sky,
+  },
+  {
+    title: "Data, Analytics & AI",
+    desc: "Turn data into insights and business impact with modern AI.",
+    points: ["Data strategy & architecture", "Analytics & business intelligence", "AI/ML solutions & integration", "Reporting, dashboards & insights"],
+    icon: Database,
+    accent: A.indigo,
+  },
+  {
+    title: "Digital Marketing & Growth",
+    desc: "Build visibility, engagement and measurable business growth.",
+    points: ["Growth strategy & campaign planning", "SEO, content & performance marketing", "Social media & engagement", "Marketing analytics & optimization"],
+    icon: Megaphone,
+    accent: A.rose,
+  },
+  {
+    title: "Emerging Technology Solutions",
+    desc: "Explore and apply new technologies to solve real business challenges.",
+    points: ["IoT & connected solutions", "AI-powered applications", "Automation & intelligent workflows", "PoC, prototyping & pilot deployments"],
+    icon: Cpu,
+    accent: A.purple,
+  },
 ];
 
-const journey: { label: string; icon: LucideIcon }[] = [
-    { label: "Strategy", icon: Target },
-    { label: "Design", icon: PenTool },
-    { label: "Engineering", icon: Code2 },
-    { label: "Infrastructure", icon: Cloud },
-    { label: "Growth", icon: BarChart3 },
+const journey: { label: string; icon: LucideIcon; accent: Accent }[] = [
+  { label: "Strategy", icon: Target, accent: A.blue },
+  { label: "Design", icon: PenTool, accent: A.violet },
+  { label: "Engineering", icon: Code2, accent: A.emerald },
+  { label: "Infrastructure", icon: Cloud, accent: A.sky },
+  { label: "Growth", icon: TrendingUp, accent: A.orange },
 ];
 
-const techStack: { title: string; icon: LucideIcon; items: string[] }[] = [
-    { title: "Frontend", icon: Monitor, items: ["Next.js", "React", "Angular", "TypeScript"] },
-    { title: "Backend", icon: Layers, items: ["Laravel", "Node.js", "Python", "PHP"] },
-    { title: "Mobile", icon: Smartphone, items: ["React Native", "Flutter", "Swift (iOS)", "Kotlin (Android)"] },
-    { title: "Cloud & DevOps", icon: Cloud, items: ["AWS", "Microsoft Azure", "Docker", "Kubernetes"] },
-    { title: "Data & Database", icon: Database, items: ["PostgreSQL", "MySQL", "MongoDB", "Redis"] },
-    { title: "AI & Emerging Tech", icon: Cpu, items: ["OpenAI", "TensorFlow", "PyTorch", "IoT (Connected Devices)"] },
-    { title: "CMS & Platforms", icon: Layers, items: ["WordPress", "Shopify", "Adobe Experience Manager", "Headless CMS"] },
+const techStack: { title: string; icon: LucideIcon; accent: Accent; items: string[] }[] = [
+  { title: "Frontend", icon: Monitor, accent: A.blue, items: ["Next.js", "React", "Angular", "TypeScript"] },
+  { title: "Backend", icon: Server, accent: A.emerald, items: ["Laravel", "Node.js", "Python", "PHP"] },
+  { title: "Mobile", icon: Smartphone, accent: A.orange, items: ["React Native", "Flutter", "Swift (iOS)", "Kotlin (Android)"] },
+  { title: "Cloud & DevOps", icon: Cloud, accent: A.sky, items: ["AWS", "Microsoft Azure", "Docker", "Kubernetes"] },
+  { title: "Data & Database", icon: Database, accent: A.indigo, items: ["PostgreSQL", "MySQL", "MongoDB", "Redis"] },
+  { title: "AI & Emerging Tech", icon: Brain, accent: A.purple, items: ["OpenAI", "TensorFlow", "PyTorch", "IoT (Connected Devices)"] },
+  { title: "CMS & Platforms", icon: LayoutTemplate, accent: A.rose, items: ["WordPress", "Shopify", "Adobe Experience Manager", "Headless CMS"] },
 ];
 
-const engagements: { title: string; desc: string; icon: LucideIcon }[] = [
-    { title: "Advisory", desc: "Get expert guidance, validation and a clear plan before you build.", icon: Users },
-    { title: "Build", desc: "Design and develop digital products and platforms from the ground up.", icon: Code2 },
-    { title: "Transform", desc: "Modernize, scale and enhance your existing digital ecosystem.", icon: Layers },
-    { title: "Operate", desc: "Keep your platforms secure, reliable and performing at their best.", icon: Settings },
+const engagements: { title: string; desc: string; icon: LucideIcon; accent: Accent }[] = [
+  { title: "Advisory", desc: "Get expert guidance, validation and a clear plan before you build.", icon: Compass, accent: A.blue },
+  { title: "Build", desc: "Design and develop digital products and platforms from the ground up.", icon: Hammer, accent: A.violet },
+  { title: "Transform", desc: "Modernize, scale and enhance your existing digital ecosystem.", icon: RefreshCw, accent: A.emerald },
+  { title: "Operate", desc: "Keep your platforms secure, reliable and performing at their best.", icon: Settings, accent: A.orange },
 ];
 
-const brands = [
-    { name: "Tefal", logo: "/logos/tefal.png" },
-    { name: "Del Monte", logo: "/logos/delmonte.png" },
-    { name: "Maharaja Whiteline", logo: "/logos/maharaja.png" },
-    { name: "LMHI", logo: "/logos/lmhi.webp" },
-    { name: "Berger", logo: "/logos/berger.png" },
+// Add `logo` once the file exists in /public; brands without one render as text.
+const brands: { name: string; logo?: string }[] = [
+  { name: "Tefal", logo: "/logos/tefal.png" },
+  { name: "Del Monte", logo: "/logos/delmonte.png" },
+  { name: "Maharaja Whiteline", logo: "/logos/maharaja.png" },
+  { name: "LMHI", logo: "/logos/lmhi.webp" },
+  { name: "Berger" },
 ];
+
+const heroTags: { label: string; icon: LucideIcon; pos: string; delay: string }[] = [
+  { label: "Strategy", icon: Layers, pos: "left-[2%] top-[14%]", delay: "" },
+  { label: "Experience", icon: Monitor, pos: "right-[0%] top-[18%]", delay: "contact-float-d2" },
+  { label: "Engineering", icon: Code2, pos: "left-[6%] bottom-[22%]", delay: "contact-float-d3" },
+  { label: "Growth", icon: BarChart3, pos: "right-[6%] bottom-[16%]", delay: "contact-float-d2" },
+];
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+function Eyebrow({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-block text-[11px] font-semibold tracking-wide uppercase bg-blue-50 text-blue-600 border border-blue-100 px-3 py-1 rounded-full">
+      {children}
+    </span>
+  );
+}
+
+function SectionHead({ eyebrow, title, sub }: { eyebrow?: string; title?: React.ReactNode; sub?: string }) {
+  return (
+    <div className="text-center mb-8 md:mb-10">
+      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+      {title && <h2 className="mt-3 text-2xl md:text-4xl font-bold text-slate-900 tracking-tight">{title}</h2>}
+      {sub && <p className="mt-2 text-sm text-slate-500">{sub}</p>}
+    </div>
+  );
+}
 
 export default function ServicesPage() {
-    const [scrollY, setScrollY] = useState(0);
+  return (
+    <div className="bg-[#F7F9FC]">
+      {/* HERO */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_75%_35%,rgba(37,99,235,0.14),transparent_55%)] pointer-events-none" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-10 md:pb-14">
+          <nav className="flex items-center gap-1.5 text-xs text-slate-500" aria-label="Breadcrumb">
+            <Link href="/" className="hover:text-blue-600">Home</Link>
+            <ChevronRight size={12} />
+            <span className="text-slate-800 font-medium">Services</span>
+          </nav>
 
-    // ─── Magnetic buttons ─────────────────────────────────────────────────────
-    useEffect(() => {
-        const magneticEls = document.querySelectorAll(".magnetic");
-        const handleMouseMove = (e: Event) => {
-            const mouseEvent = e as MouseEvent;
-            const btn = mouseEvent.currentTarget as HTMLElement;
-            const rect = btn.getBoundingClientRect();
-            const distX = mouseEvent.clientX - (rect.left + rect.width / 2);
-            const distY = mouseEvent.clientY - (rect.top + rect.height / 2);
-            const strength = 0.3;
-            btn.style.transform = `translate(${distX * strength}px, ${distY * strength}px) scale(1.04)`;
-            btn.style.transition = "transform 0.15s cubic-bezier(.22,1,.36,1)";
-        };
-        const handleMouseLeave = (e: Event) => {
-            const btn = e.currentTarget as HTMLElement;
-            btn.style.transform = "translate(0px, 0px) scale(1)";
-            btn.style.transition = "transform 0.45s cubic-bezier(.22,1,.36,1)";
-        };
-        magneticEls.forEach((el) => {
-            el.addEventListener("mousemove", handleMouseMove);
-            el.addEventListener("mouseleave", handleMouseLeave);
-        });
-        return () => {
-            magneticEls.forEach((el) => {
-                el.removeEventListener("mousemove", handleMouseMove);
-                el.removeEventListener("mouseleave", handleMouseLeave);
-            });
-        };
-    }, []);
-
-    // ─── Scroll progress ──────────────────────────────────────────────────────
-    useEffect(() => {
-        const onScroll = () => setScrollY(window.scrollY);
-        window.addEventListener("scroll", onScroll, { passive: true });
-        return () => window.removeEventListener("scroll", onScroll);
-    }, []);
-
-    // ─── Reveal on scroll ─────────────────────────────────────────────────────
-    useEffect(() => {
-        const els = document.querySelectorAll(".reveal");
-        const obs = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((e) => {
-                    if (e.isIntersecting) {
-                        e.target.classList.add("revealed");
-                        obs.unobserve(e.target);
-                    }
-                });
-            },
-            { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
-        );
-        els.forEach((el) => obs.observe(el));
-        return () => obs.disconnect();
-    }, []);
-
-    const scrollProgress =
-        typeof window !== "undefined"
-            ? Math.min(scrollY / Math.max(document.body.scrollHeight - window.innerHeight, 1), 1)
-            : 0;
-
-    return (
-        <>
-            <style>{`
-        body { background: #F7F9FC; }
-
-        #scroll-bar {
-          position: fixed; top: 0; left: 0; height: 3px; z-index: 9999;
-          background: linear-gradient(90deg, #2563EB, #6777AD, #60a5fa);
-          transition: width 0.05s linear;
-        }
-
-        .ripple {
-          position: fixed; border-radius: 50%; pointer-events: none; z-index: 9996;
-          border: 2px solid rgba(37,99,235,0.5); animation: ripple-out 0.6s ease-out forwards;
-        }
-        @keyframes ripple-out { 0% { width:8px;height:8px;opacity:1;margin:-4px;} 100% { width:60px;height:60px;opacity:0;margin:-30px;} }
-
-        .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
-        .reveal.delay-1 { transition-delay: .08s; } .reveal.delay-2 { transition-delay: .16s; }
-        .reveal.delay-3 { transition-delay: .24s; } .reveal.delay-4 { transition-delay: .32s; }
-        .reveal.delay-5 { transition-delay: .4s; } .reveal.delay-6 { transition-delay: .48s; }
-        .reveal.delay-7 { transition-delay: .56s; } .reveal.delay-8 { transition-delay: .64s; }
-        .reveal.revealed { opacity: 1; transform: translateY(0); }
-
-        @keyframes fadeSlideUp { from { opacity:0; transform: translateY(24px);} to { opacity:1; transform: translateY(0);} }
-        .hero-eyebrow { animation: fadeSlideUp .7s cubic-bezier(.22,1,.36,1) 0s both; }
-        .hero-title   { animation: fadeSlideUp .8s cubic-bezier(.22,1,.36,1) .1s both; }
-        .hero-sub     { animation: fadeSlideUp .8s cubic-bezier(.22,1,.36,1) .22s both; }
-        .hero-btns    { animation: fadeSlideUp .8s cubic-bezier(.22,1,.36,1) .34s both; }
-        .hero-visual  { animation: fadeSlideUp .9s cubic-bezier(.22,1,.36,1) .2s both; }
-
-        .magnetic { display: inline-flex; align-items: center; white-space: nowrap; transition: transform .45s cubic-bezier(.22,1,.36,1); }
-
-        .card-hover { transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease; }
-        .card-hover:hover { transform: translateY(-6px); box-shadow: 0 18px 36px rgba(37,99,235,0.14); }
-
-        @keyframes float-up-down { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-10px);} }
-        .float-card { animation: float-up-down 4s ease-in-out infinite; }
-        .float-card.d2 { animation-delay: .8s; }
-        .float-card.d3 { animation-delay: 1.6s; }
-        .float-card.d4 { animation-delay: 2.4s; }
-
-        @keyframes spin-slow { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }
-        .globe-spin { animation: spin-slow 60s linear infinite; }
-
-        header { backdrop-filter: blur(10px); }
-        .nav-link { position: relative; }
-        .nav-link::after {
-          content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: #2563EB;
-          transition: width .3s cubic-bezier(.22,1,.36,1);
-        }
-        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
-
-        @keyframes dash-flow { to { background-position: 16px 0; } }
-        .flow-line {
-          background-image: radial-gradient(circle, #3B82F6 1.2px, transparent 1.6px);
-          background-size: 8px 4px; background-repeat: repeat-x; background-position: 0 center;
-          animation: dash-flow 0.8s linear infinite;
-        }
-      `}</style>
-
-            <div id="scroll-bar" style={{ width: `${scrollProgress * 100}%` }} />
-
-            <div
-                className="min-h-screen bg-[#F7F9FC]"
-                onClick={(e) => {
-                    const ripple = document.createElement("div");
-                    ripple.className = "ripple";
-                    ripple.style.left = `${e.clientX}px`;
-                    ripple.style.top = `${e.clientY}px`;
-                    document.body.appendChild(ripple);
-                    setTimeout(() => ripple.remove(), 700);
-                }}
-            >
-
-                {/* HERO */}
-                <section className="w-full overflow-hidden">
-                    <div className="max-w-7xl mx-auto px-6 pt-16 pb-8 grid md:grid-cols-2 gap-10 items-center">
-                        <div>
-                            <p className="hero-eyebrow text-blue-600 font-semibold text-sm mb-4">Our Services</p>
-                            <h1 className="hero-title text-5xl md:text-[3.4rem] font-bold leading-[1.08] text-slate-900">
-                                Digital Capabilities Built Around
-                                <br />
-                                <span className="text-blue-600">Your Business.</span>
-                            </h1>
-                            <p className="hero-sub mt-6 text-slate-500 text-lg leading-relaxed max-w-lg">
-                                Strategy, experience, engineering and growth — integrated to design, build and scale digital ecosystems that perform.
-                            </p>
-                            <div className="hero-btns mt-8 flex flex-wrap gap-4">
-                                <button className="magnetic bg-blue-600 hover:bg-blue-700 text-white px-7 py-3.5 rounded-lg font-semibold flex items-center gap-2 transition-colors">
-                                    Discuss Your Project <ArrowRight size={16} />
-                                </button>
-                                <a
-                                    href="/case-studies"
-                                    className="magnetic border border-slate-300 hover:border-blue-400 text-slate-700 px-7 py-3.5 rounded-lg font-semibold flex items-center gap-2 transition-colors"
-                                >
-                                    View Our Work <ArrowRight size={16} />
-                                </a>
-                            </div>
-                        </div>
-
-                        <div className="hero-visual relative flex justify-center items-center min-h-[420px]">
-                            <img
-                                src="/earth.png"
-                                alt="Global reach"
-                                className="globe-spin absolute w-96 h-96 object-contain"
-                                style={{ filter: "drop-shadow(0 30px 50px rgba(37,99,235,0.35))" }}
-                            />
-                            {[
-                                { icon: Layers, label: "Strategy", pos: "top-8 left-6", d: "" },
-                                { icon: Monitor, label: "Experience", pos: "top-14 right-0", d: "d2" },
-                                { icon: Code2, label: "Engineering", pos: "bottom-28 left-0", d: "d3" },
-                                { icon: BarChart3, label: "Growth", pos: "bottom-20 right-6", d: "d4" },
-                            ].map((t) => (
-                                <div
-                                    key={t.label}
-                                    className={`float-card ${t.d} absolute ${t.pos} bg-white rounded-xl shadow-xl px-4 py-3 border border-slate-100 flex items-center gap-2.5`}
-                                >
-                                    <t.icon size={18} className="text-blue-600" />
-                                    <span className="text-sm font-semibold text-slate-800">{t.label}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* CORE SERVICES */}
-                <section className="max-w-7xl mx-auto px-6 py-10">
-                    <div className="reveal mb-10">
-                        <p className="text-blue-600 font-semibold text-xs tracking-wide mb-2">OUR CORE SERVICE AREAS</p>
-                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900">End-to-End Digital Capabilities.</h2>
-                        <p className="text-slate-500 mt-2 max-w-lg">Everything you need to plan, build, run and grow your digital business — under one roof.</p>
-                    </div>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                        {services.map((s, i) => (
-                            <div
-                                key={s.no}
-                                className={`reveal card-hover delay-${(i % 4) + 1} bg-white rounded-2xl border border-slate-100 shadow-sm p-6`}
-                            >
-                                <div className="flex items-center justify-between mb-4">
-                                    <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
-                                        <s.icon size={18} />
-                                    </div>
-                                    <span className="text-xs font-bold text-blue-600">{s.no}</span>
-                                </div>
-                                <h3 className="font-bold text-slate-900 text-base leading-snug">{s.title}</h3>
-                                <p className="text-xs text-slate-500 leading-relaxed mt-2">{s.desc}</p>
-                                <ul className="mt-4 space-y-2">
-                                    {s.points.map((p) => (
-                                        <li key={p} className="flex items-start gap-2 text-xs text-slate-600">
-                                            <Check size={14} className="mt-0.5 flex-shrink-0 text-blue-600" />
-                                            {p}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
-                {/* ONE PARTNER */}
-                <section className="max-w-7xl mx-auto px-6 py-6">
-                    <div className="reveal bg-white rounded-2xl border border-slate-100 shadow-sm px-6 py-12 text-center">
-                        <p className="text-blue-600 font-semibold text-xs tracking-wide mb-2">HOW WE CONNECT IT ALL</p>
-                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
-                            One Partner. <span className="text-blue-600">Multiple Capabilities.</span>
-                        </h2>
-                        <p className="text-slate-500 mt-2">A connected approach that takes you from strategy to sustained growth.</p>
-                        <div className="mt-10 flex flex-wrap items-start justify-center gap-y-8">
-                            {journey.map((j, i) => (
-                                <div key={j.label} className="flex items-start">
-                                    <div className="flex w-32 flex-col items-center gap-3">
-                                        <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 shadow-sm">
-                                            <j.icon size={26} />
-                                        </div>
-                                        <span className="font-bold text-slate-900 text-sm">{j.label}</span>
-                                    </div>
-                                    {i < journey.length - 1 && (
-                                        <div className="hidden md:flex items-center h-16 text-blue-500">
-                                            <span className="flow-line w-14 h-1" />
-                                            <ArrowRight size={14} className="-ml-1" />
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* TECH STACK */}
-                <section className="max-w-7xl mx-auto px-6 py-14">
-                    <div className="reveal mb-8">
-                        <p className="text-blue-600 font-semibold text-xs tracking-wide mb-2">OUR TECHNOLOGY EXPERTISE</p>
-                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Technology That Powers the Experience.</h2>
-                    </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-4">
-                        {techStack.map((col, i) => (
-                            <div key={col.title} className={`reveal delay-${i + 1} bg-white rounded-2xl border border-slate-100 shadow-sm p-5`}>
-                                <div className="flex items-center gap-2 mb-4">
-                                    <col.icon size={16} className="text-blue-600" />
-                                    <h3 className="font-bold text-slate-900 text-sm">{col.title}</h3>
-                                </div>
-                                <ul className="space-y-2.5 text-xs text-slate-500">
-                                    {col.items.map((item) => (
-                                        <li key={item} className="flex items-center gap-2">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0" /> {item}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
-                {/* ENGAGEMENT MODELS */}
-                <section className="max-w-7xl mx-auto px-6 py-2">
-                    <div className="reveal mb-10">
-                        <p className="text-blue-600 font-semibold text-xs tracking-wide mb-2">HOW WE WORK WITH YOU</p>
-                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Flexible Engagement Models.</h2>
-                        <p className="text-slate-500 mt-2 max-w-lg">Work with us in the way that best fits your goals, timeline and team structure.</p>
-                    </div>
-                    <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5">
-                        {engagements.map((e, i) => (
-                            <div key={e.title} className={`reveal card-hover delay-${i + 1} bg-white rounded-2xl border border-slate-100 shadow-sm p-5`}>
-                                <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 mb-4">
-                                    <e.icon size={18} />
-                                </div>
-                                <h3 className="font-semibold text-slate-900 text-sm mb-1.5">{e.title}</h3>
-                                <p className="text-xs text-slate-500 leading-relaxed">{e.desc}</p>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
-                {/* BRANDS (same style as home) */}
-                <section className="max-w-7xl mx-auto px-6 py-14">
-                    <div className="reveal bg-white rounded-2xl border border-slate-100 shadow-sm px-8 py-6 text-center">
-                        <p className="text-blue-600 font-semibold text-xs tracking-wide mb-5">TRUSTED BY AMBITIOUS BRANDS</p>
-                        <div className="flex flex-wrap justify-center items-center gap-x-14 gap-y-8">
-                            {brands.map((b) => (
-                                <img
-                                    key={b.name}
-                                    src={b.logo}
-                                    alt={b.name}
-                                    title={b.name}
-                                    className="h-16 md:h-20 w-auto max-w-[180px] object-contain"
-                                />
-                            ))}
-                        </div>
-                        <a href="/case-studies" className="mt-5 inline-flex items-center gap-1 text-blue-600 font-semibold text-sm hover:gap-2 transition-all">
-                            View All Case Studies <ArrowRight size={14} />
-                        </a>
-                    </div>
-                </section>
-
+          <div className="mt-8 grid lg:grid-cols-2 gap-10 items-center">
+            <div>
+              <Eyebrow>Our Services</Eyebrow>
+              <h1 className="mt-4 text-4xl sm:text-5xl md:text-[56px] font-extrabold tracking-tight leading-[1.08] text-slate-900">
+                Digital Capabilities Built Around <span className="text-blue-600">Your Business.</span>
+              </h1>
+              <p className="mt-5 text-[15px] text-slate-500 leading-relaxed max-w-md">
+                Strategy, experience, engineering and growth — integrated to design, build and scale digital
+                ecosystems that perform.
+              </p>
+              <div className="mt-7 flex flex-col sm:flex-row gap-3">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold text-sm transition-colors"
+                >
+                  Discuss Your Project <ArrowRight size={16} />
+                </Link>
+                <Link
+                  href="/case-studies"
+                  className="inline-flex items-center justify-center gap-2 border border-blue-200 bg-white hover:border-blue-400 text-blue-700 px-6 py-3 rounded-lg font-semibold text-sm transition-colors"
+                >
+                  View Our Work <ArrowRight size={16} />
+                </Link>
+              </div>
             </div>
-        </>
-    );
+
+            <div className="relative mx-auto w-full max-w-[480px] aspect-square" aria-hidden="true">
+              <div className="absolute inset-[12%] rounded-full bg-blue-400/30 blur-3xl" />
+              <Image
+                src="/earth.png"
+                alt=""
+                fill
+                priority
+                sizes="(min-width: 1024px) 480px, 90vw"
+                className="globe-spin object-contain p-[12%] drop-shadow-[0_30px_50px_rgba(37,99,235,0.35)]"
+              />
+              {heroTags.map((t) => (
+                <div
+                  key={t.label}
+                  className={`contact-float ${t.delay} absolute ${t.pos} flex items-center gap-2 rounded-xl bg-white/80 backdrop-blur border border-white shadow-[0_12px_30px_rgba(37,99,235,0.2)] px-3 py-2 sm:px-4 sm:py-2.5`}
+                >
+                  <t.icon size={16} className="text-blue-600" />
+                  <span className="text-xs sm:text-sm font-semibold text-slate-800">{t.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CORE SERVICES */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-12 md:pb-16">
+        <SectionHead eyebrow="Our Core Service Areas" />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {services.map((s, i) => (
+            <article
+              key={s.title}
+              className="relative bg-white rounded-2xl border border-slate-100 shadow-sm p-5 overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-600/5"
+            >
+              <div className="flex items-start gap-3">
+                <span className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 ${s.accent.tile}`}>
+                  <s.icon size={20} />
+                </span>
+                <div>
+                  <div className={`text-xs font-bold ${s.accent.text}`}>{String(i + 1).padStart(2, "0")}</div>
+                  <h3 className="font-bold text-slate-900 text-[15px] leading-snug">{s.title}</h3>
+                </div>
+              </div>
+              <p className="mt-3 text-[13px] text-slate-500 leading-relaxed">{s.desc}</p>
+              <ul className="mt-4 space-y-2">
+                {s.points.map((p) => (
+                  <li key={p} className="flex items-start gap-2 text-xs text-slate-600">
+                    <Check size={14} strokeWidth={2.5} className={`mt-0.5 flex-shrink-0 ${s.accent.check}`} />
+                    {p}
+                  </li>
+                ))}
+              </ul>
+              <span className={`absolute left-0 bottom-0 h-1 w-full ${s.accent.bar}`} />
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* ONE PARTNER */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-12 md:pb-16">
+        <SectionHead
+          title={
+            <>
+              One Partner. <span className="text-blue-600">Multiple Capabilities.</span>
+            </>
+          }
+          sub="A connected approach that takes you from strategy to sustained growth."
+        />
+        <ol className="flex flex-wrap justify-center items-start gap-y-8">
+          {journey.map((j, i) => (
+            <li key={j.label} className="flex items-start">
+              <div className="flex w-28 sm:w-32 flex-col items-center gap-3">
+                <span
+                  className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white border border-slate-100 shadow-[0_10px_24px_rgba(37,99,235,0.12)] flex items-center justify-center ${j.accent.text}`}
+                >
+                  <j.icon size={28} />
+                </span>
+                <span className="font-bold text-slate-900 text-sm">{j.label}</span>
+              </div>
+              {i < journey.length - 1 && (
+                <div className="hidden md:flex items-center h-20 text-blue-400">
+                  <span className="w-12 lg:w-16 border-t-2 border-dashed border-blue-300" />
+                  <ArrowRight size={16} className="-ml-1.5" />
+                </div>
+              )}
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* TECH STACK */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-12 md:pb-16">
+        <SectionHead eyebrow="Our Technology Expertise" />
+        <div className="rounded-2xl border border-slate-100 shadow-sm overflow-hidden bg-slate-100 grid gap-px grid-cols-2 sm:grid-cols-3 lg:grid-cols-7">
+          {techStack.map((col, i) => (
+            <div
+              key={col.title}
+              className={`bg-white p-5 ${i === techStack.length - 1 ? "col-span-2 sm:col-span-3 lg:col-span-1" : ""}`}
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <span className={`w-7 h-7 rounded-lg flex items-center justify-center ${col.accent.tile}`}>
+                  <col.icon size={14} />
+                </span>
+                <h3 className="font-bold text-slate-900 text-[13px]">{col.title}</h3>
+              </div>
+              <ul className="space-y-2 text-xs text-slate-500">
+                {col.items.map((item) => (
+                  <li key={item} className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-300 flex-shrink-0" /> {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ENGAGEMENT MODELS */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-12 md:pb-16">
+        <SectionHead
+          title="Flexible Engagement Models"
+          sub="Work with us in the way that best fits your goals, timeline and team structure."
+        />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {engagements.map((e) => (
+            <div
+              key={e.title}
+              className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex items-start gap-4 transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-600/5"
+            >
+              <span className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 ${e.accent.tile}`}>
+                <e.icon size={20} />
+              </span>
+              <div>
+                <h3 className="font-bold text-slate-900 text-[15px]">{e.title}</h3>
+                <p className="mt-1 text-xs text-slate-500 leading-relaxed">{e.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* BRANDS */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-14 md:pb-20">
+        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm px-6 py-7 text-center">
+          <Eyebrow>Trusted by Ambitious Brands</Eyebrow>
+          <div className="mt-6 flex flex-wrap justify-center sm:justify-between items-center gap-x-10 gap-y-6">
+            {brands.map((b) =>
+              b.logo ? (
+                <Image
+                  key={b.name}
+                  src={b.logo}
+                  alt={b.name}
+                  title={b.name}
+                  width={180}
+                  height={64}
+                  className="h-12 md:h-16 w-auto max-w-[160px] object-contain"
+                />
+              ) : (
+                <span key={b.name} className="text-2xl md:text-3xl font-black tracking-tight text-slate-700 uppercase">
+                  {b.name}
+                </span>
+              )
+            )}
+          </div>
+          <Link
+            href="/case-studies"
+            className="mt-6 inline-flex items-center gap-1 text-blue-600 font-semibold text-sm hover:gap-2 transition-all"
+          >
+            View All Case Studies <ArrowRight size={14} />
+          </Link>
+        </div>
+      </section>
+    </div>
+  );
 }
