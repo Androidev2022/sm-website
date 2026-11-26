@@ -45,7 +45,7 @@ export default function Footer() {
             </div>
           </div>
           <button className="magnetic w-full sm:w-auto justify-center bg-white text-blue-700 hover:bg-blue-50 px-6 py-3 rounded-lg font-semibold text-sm flex items-center gap-2 transition-colors flex-shrink-0">
-            Book a Strategy Call <ArrowRight size={16} />
+            Contact With Us <ArrowRight size={16} />
           </button>
         </div>
 
@@ -108,7 +108,7 @@ export default function Footer() {
                   ))}
                 </ul>
                 <button className="magnetic mt-5 w-full sm:w-auto justify-center bg-blue-600 hover:bg-blue-700 text-white text-[13px] px-4 py-2.5 rounded-md font-semibold whitespace-nowrap transition-colors">
-                  Book a Strategy Call
+                  Contact With Us
                 </button>
               </div>
             </div>

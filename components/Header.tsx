@@ -11,8 +11,9 @@ export const navLinks: NavLink[] = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Case Studies", href: "/case-studies", match: ["/casedetails"] },
-  { label: "Insights", href: "/our-clients" },
-  { label: "Contact", href: "/contact" },
+  { label: "Portfolio", href: "/portfolio" },
+  { label: "Clintele", href: "/our-clients" },
+  { label: "Contact Us", href: "/contact" },
 ];
 
 export default function Header() {
