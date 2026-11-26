@@ -118,8 +118,9 @@ export default function Footer() {
             <div className="flex flex-col md:flex-row justify-between items-center gap-3 pt-5 text-xs text-slate-500 text-center md:text-left">
               <p>© {new Date().getFullYear()} SM Solutions. All Rights Reserved.</p>
               <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-                <a href="#" className="hover:text-blue-400 transition-colors">Privacy Policy</a>
+                <a href="/privacy-policy" className="hover:text-blue-400 transition-colors">Privacy Policy</a>
                 <a href="/terms" className="hover:text-blue-400 transition-colors">Terms & Conditions</a>
+                <a href="/refund-policy" className="hover:text-blue-400 transition-colors">Refund Policy</a>
                 <a href="#" className="hover:text-blue-400 transition-colors">Sitemap</a>
               </div>
             </div>
