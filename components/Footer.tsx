@@ -1,3 +1,5 @@
+import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight, Rocket, Phone, Mail, MapPin } from "lucide-react";
 import {
   LinkedinIcon,
@@ -56,15 +58,13 @@ export default function Footer() {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-[minmax(0,1.5fr)_repeat(4,minmax(0,1fr))_minmax(0,1.4fr)] gap-x-6 gap-y-8 md:gap-y-10 pb-10 border-b border-white/10">
               {/* Brand */}
               <div className="col-span-2 sm:col-span-3 lg:col-span-1">
-                <div className="flex items-end gap-2 mb-4">
-                  <span className="text-white font-black text-[40px] leading-none tracking-tight">SM</span>
-                  <div className="leading-tight pb-0.5">
-                    <div className="font-bold text-lg text-white">Solutions</div>
-                    <div className="text-[8px] tracking-[0.14em] text-slate-400 font-medium uppercase">
-                      Engineering Growth. Designing Impact.
-                    </div>
-                  </div>
-                </div>
+                <Link
+                  href="/"
+                  aria-label="SM Solutions home"
+                  className="inline-flex mb-4 rounded-xl bg-white px-3 py-2"
+                >
+                  <Image src="/logo.png" alt="SM Solutions" width={135} height={84} className="h-14 w-auto" />
+                </Link>
                 <p className="text-[13px] text-slate-400 leading-relaxed max-w-sm lg:max-w-[240px]">
                   We build high-performance digital ecosystems that drive measurable growth for ambitious brands worldwide.
                 </p>

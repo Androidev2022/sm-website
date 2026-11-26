@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowRight, ChevronDown } from "lucide-react";
@@ -27,16 +28,8 @@ export default function Header() {
   return (
     <header className="site-header w-full bg-white/85 backdrop-blur-[10px] border-b border-slate-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-500 flex items-center justify-center text-white font-black text-lg">
-            S
-          </div>
-          <div className="leading-tight">
-            <div className="font-bold text-lg text-slate-900 tracking-tight">SM Solutions</div>
-            <div className="text-[9px] tracking-[0.12em] text-slate-400 font-medium uppercase">
-              Engineering Growth. Designing Impact.
-            </div>
-          </div>
+        <Link href="/" className="flex items-center flex-shrink-0" aria-label="SM Solutions home">
+          <Image src="/logo.png" alt="SM Solutions" width={135} height={84} priority className="h-14 w-auto" />
         </Link>
 
         <nav className="hidden md:flex gap-9 text-[15px] font-medium text-slate-600">
