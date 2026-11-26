@@ -61,7 +61,7 @@ export default function Footer() {
                 <Link
                   href="/"
                   aria-label="SM Solutions home"
-                  className="inline-flex mb-4 rounded-xl bg-white px-3 py-2"
+                  className="inline-flex mb-4"
                 >
                   <Image src="/logo.png" alt="SM Solutions" width={135} height={84} className="h-14 w-auto" />
                 </Link>
