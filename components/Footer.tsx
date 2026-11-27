@@ -21,6 +21,7 @@ const footerLinks: Record<string, string> = {
   "About Us": "/about",
   "Case Studies": "/case-studies",
   "Contact Us": "/contact",
+  FAQs: "/faq",
   Policies: "/terms",
 };
 

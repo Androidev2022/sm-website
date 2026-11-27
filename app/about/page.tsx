@@ -1,9 +1,11 @@
 "use client";
 // app/about/page.tsx  (header & footer come from app/layout.tsx)
 import React, { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { Poppins, Inter } from "next/font/google";
 import {
   BrainCircuit,
+  ChevronRight,
   Eye,
   Target,
   Rocket,
@@ -315,47 +317,55 @@ export default function AboutUsPage() {
         />
         <div aria-hidden className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-[#F3F4FC]" />
 
-        <div className="relative max-w-[1180px] mx-auto px-6 md:px-10 pt-14 md:pt-16 grid md:grid-cols-[1fr_auto] gap-8 items-start">
-          <div className="max-w-[560px]">
-            <h1 className="hero-a font-heading font-semibold leading-[1.3] text-[32px] md:text-[44px]" style={{ color: C.heading }}>
-              More Than a Team.
-              <br />
-              We&apos;re Your <span style={{ color: C.blue }}>Growth Partner.</span>
-            </h1>
-            <p className="hero-b mt-6 text-[15px] md:text-base leading-relaxed max-w-[440px]" style={{ color: "#2E3045" }}>
-              We blend strategy creativity and technology to build digital ecosystems that drive measurable growth for global brands
-            </p>
-            <div className="hero-c mt-8 flex flex-wrap gap-4">
-              <a
-                href="/case-studies"
-                className="magnetic inline-flex items-center rounded-md px-6 py-3 text-[15px] font-medium text-white shadow-[0_8px_20px_rgba(59,130,246,0.35)] hover:brightness-110"
-                style={{ background: C.blue }}
-              >
-                View Case Studies
-              </a>
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="magnetic inline-flex items-center rounded-md px-6 py-3 text-[15px] font-medium bg-white shadow-[0_6px_18px_rgba(88,96,160,0.12)] hover:text-blue-600"
-                style={{ color: C.heading }}
-              >
-                Book a Strategy Call
-              </a>
-            </div>
-          </div>
+        <div className="relative max-w-[1180px] mx-auto px-6 md:px-10 pt-6 md:pt-8">
+          <nav className="flex items-center gap-1.5 text-xs text-slate-500" aria-label="Breadcrumb">
+            <Link href="/" className="hover:text-blue-600 transition-colors">Home</Link>
+            <ChevronRight size={12} aria-hidden="true" />
+            <span className="font-medium text-slate-800" aria-current="page">About Us</span>
+          </nav>
 
-          <div className="hero-d flex md:flex-col gap-10 md:gap-12 md:pt-2 md:pr-0">
-            {HERO_STATS.map((s) => (
-              <div key={s.value}>
-                <p className="font-heading text-[26px] font-semibold leading-none text-[#1F2033]">{s.value}</p>
-                <p className="mt-1 text-[15px] leading-tight text-[#1F2033]">
-                  {s.label[0]}
-                  <br />
-                  {s.label[1]}
-                </p>
+          <div className="mt-8 grid md:grid-cols-[1fr_auto] gap-8 items-start">
+            <div className="max-w-[560px]">
+              <h1 className="hero-a font-heading font-semibold leading-[1.3] text-[32px] md:text-[44px]" style={{ color: C.heading }}>
+                More Than a Team.
+                <br />
+                We&apos;re Your <span style={{ color: C.blue }}>Growth Partner.</span>
+              </h1>
+              <p className="hero-b mt-6 text-[15px] md:text-base leading-relaxed max-w-[440px]" style={{ color: "#2E3045" }}>
+                We blend strategy creativity and technology to build digital ecosystems that drive measurable growth for global brands
+              </p>
+              <div className="hero-c mt-8 flex flex-wrap gap-4">
+                <a
+                  href="/case-studies"
+                  className="magnetic inline-flex items-center rounded-md px-6 py-3 text-[15px] font-medium text-white shadow-[0_8px_20px_rgba(59,130,246,0.35)] hover:brightness-110"
+                  style={{ background: C.blue }}
+                >
+                  View Case Studies
+                </a>
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="magnetic inline-flex items-center rounded-md px-6 py-3 text-[15px] font-medium bg-white shadow-[0_6px_18px_rgba(88,96,160,0.12)] hover:text-blue-600"
+                  style={{ color: C.heading }}
+                >
+                  Book a Strategy Call
+                </a>
               </div>
-            ))}
+            </div>
+
+            <div className="hero-d flex md:flex-col gap-10 md:gap-12 md:pt-2 md:pr-0">
+              {HERO_STATS.map((s) => (
+                <div key={s.value}>
+                  <p className="font-heading text-[26px] font-semibold leading-none text-[#1F2033]">{s.value}</p>
+                  <p className="mt-1 text-[15px] leading-tight text-[#1F2033]">
+                    {s.label[0]}
+                    <br />
+                    {s.label[1]}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
