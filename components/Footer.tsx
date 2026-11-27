@@ -13,7 +13,7 @@ import { WHATSAPP_URL } from "@/lib/contact";
 const footerCols = [
   { title: "Services", items: ["Digital Strategy", "Web Development", "Mobile App Development", "Cloud & DevOps", "UI/UX Design", "Digital Marketing"] },
   { title: "Industries", items: ["E-Commerce", "FMCG & Consumer", "Real Estate", "Manufacturing", "SaaS & Technology", "Healthcare"] },
-  { title: "Company", items: ["About Us", "Careers", "Partners", "Blog", "Policies", "Contact Us"] },
+  { title: "Company", items: ["About Us", "Careers", "Partners", "Blog", "Policies"] },
   { title: "Resources", items: ["Case Studies", "Insights", "Whitepapers", "FAQs"] },
 ];
 
