@@ -22,6 +22,36 @@ import {
 } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/contact";
 
+// Round face photo — falls back to coloured initials if the image is missing
+function Avatar({ src, name }: { src: string; name: string }) {
+  const [failed, setFailed] = useState(false);
+  const initials = name
+    .replace(/[^A-Za-z ]/g, "")
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0].toUpperCase())
+    .join("");
+
+  return (
+    <span className="relative flex-shrink-0 w-12 h-12 rounded-full p-[2px] bg-gradient-to-br from-blue-500 to-indigo-400 shadow-md shadow-blue-600/20">
+      {failed ? (
+        <span className="w-full h-full rounded-full bg-blue-50 border-2 border-white flex items-center justify-center text-sm font-bold text-blue-600">
+          {initials}
+        </span>
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={src}
+          alt={name}
+          onError={() => setFailed(true)}
+          className="w-full h-full rounded-full object-cover border-2 border-white"
+        />
+      )}
+    </span>
+  );
+}
+
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -101,6 +131,8 @@ export default function Home() {
       name: "Tefal India",
       desc: "Reimagining the digital commerce experience with seamless journeys and double-digit conversion growth.",
       gradient: "linear-gradient(135deg,#1f2937,#0f172a)",
+      image: "/case-studies/tefal.jpg",
+      href: "/case-studies",
     },
     {
       tag: "FMCG",
@@ -108,6 +140,8 @@ export default function Home() {
       name: "Del Monte Foods",
       desc: "Unified digital platform improving engagement and driving consistent business growth.",
       gradient: "linear-gradient(135deg,#166534,#14532d)",
+      image: "/case-studies/delmonte.jpg",
+      href: "/case-studies",
     },
     {
       tag: "REAL ESTATE",
@@ -115,6 +149,8 @@ export default function Home() {
       name: "Ayana Properties",
       desc: "High-performance website that generates quality leads and strengthens brand presence.",
       gradient: "linear-gradient(135deg,#1e3a8a,#0c4a6e)",
+      image: "/case-studies/ayana.jpg",
+      href: "/case-studies",
     },
   ];
 
@@ -171,7 +207,7 @@ export default function Home() {
       name: "Anita R.",
       role: "Marketing Head, Del Monte",
       company: "Del Monte",
-      avatar: "/avatars/anita.jpg",
+      avatar: "/pp.jpg", // files in /public are referenced from "/" (not "public/")
       logo: "/logos/delmonte.png",
       text: "A dependable partner that delivered a unified platform on time and kept improving engagement quarter after quarter.",
     },
@@ -438,7 +474,7 @@ export default function Home() {
         </section>
 
         {/* CASE STUDIES */}
-        <section className="max-w-7xl mx-auto px-0 py-0">
+        <section className="max-w-7xl mx-auto px-6 py-0">
           <div className="flex flex-wrap justify-between items-start gap-4 mb-10">
             <div className="reveal">
               <p className="text-blue-600 font-semibold text-xs tracking-wide mb-2">FEATURED SUCCESS STORIES</p>
@@ -452,16 +488,24 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-6">
             {caseStudies.map((c, i) => (
-              <div key={i} className={`reveal card-hover delay-${i + 1} bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden`}>
-                <div className="h-44 relative flex items-center justify-center" style={{ background: c.gradient }}>
-                  <span className="absolute top-4 left-4 text-[11px] font-bold text-white px-3 py-1 rounded-full" style={{ background: "rgba(255,255,255,0.18)", backdropFilter: "blur(6px)" }}>
+              <div key={i} className={`reveal card-hover delay-${i + 1} group bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden`}>
+                {/* Card image (gradient shows behind while it loads) */}
+                <div className="h-52 relative overflow-hidden" style={{ background: c.gradient }}>
+                  <img
+                    src={c.image}
+                    alt={`${c.name} project preview`}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/25 via-transparent to-transparent" />
+                  <span className="absolute top-4 left-4 text-[11px] font-bold text-white px-3 py-1 rounded-full bg-slate-900/60 backdrop-blur-sm">
                     {c.tag}
                   </span>
                 </div>
                 <div className="p-6">
                   <h3 className="font-bold text-slate-900 text-lg">{c.name}</h3>
                   <p className="text-sm text-slate-500 mt-2 leading-relaxed">{c.desc}</p>
-                  <a href="#" className="mt-4 inline-flex items-center gap-1 text-blue-600 font-semibold text-sm hover:gap-2 transition-all">
+                  <a href={c.href} className="mt-4 inline-flex items-center gap-1 text-blue-600 font-semibold text-sm hover:gap-2 transition-all">
                     View Case Study <ArrowRight size={13} />
                   </a>
                 </div>
@@ -590,11 +634,7 @@ export default function Home() {
                       </div>
                       <div className="flex items-center justify-between gap-3 mt-6 pt-4 border-t border-slate-100">
                         <div className="flex items-center gap-3 min-w-0">
-                          <img
-                            src={t.avatar}
-                            alt={t.name}
-                            className="w-10 h-10 rounded-full object-cover border-2 border-blue-100 flex-shrink-0"
-                          />
+                          <Avatar src={t.avatar} name={t.name} />
                           <div className="min-w-0">
                             <p className="font-semibold text-slate-900 text-sm truncate">{t.name}</p>
                             <p className="text-xs text-slate-500 truncate">{t.role}</p>
