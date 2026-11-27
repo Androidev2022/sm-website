@@ -1,15 +1,14 @@
-import type { Metadata } from "next";
 import Link from "next/link";
+import { createPageMetadata } from "@/lib/page-metadata";
 import { ArrowRight, ChevronRight, DollarSign, Briefcase, Globe2, Star, Rocket, TrendingUp } from "lucide-react";
 import CaseList from "./CaseList";
 import Testimonials from "./Testimonials";
 import { WHATSAPP_URL } from "@/lib/contact";
 
-export const metadata: Metadata = {
-  title: "Case Studies | SM Solutions",
-  description:
-    "Real results, real impact. Explore how SM Solutions drives measurable growth for e-commerce, SaaS, real estate and more.",
-};
+export const metadata = createPageMetadata(
+  "Case Studies",
+  "Real results, real impact. Explore how SM Solutions drives measurable growth for e-commerce, SaaS, real estate and more."
+);
 
 const heroStats = [
   { label: "Sessions", value: "25.9K", change: "+12.4%" },

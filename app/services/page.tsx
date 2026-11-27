@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { createPageMetadata } from "@/lib/page-metadata";
 import {
   ArrowRight,
   BarChart3,
@@ -27,11 +27,10 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Services | SM Solutions",
-  description:
-    "Strategy, experience, engineering and growth — integrated to design, build and scale digital ecosystems that perform.",
-};
+export const metadata = createPageMetadata(
+  "Services",
+  "Strategy, experience, engineering and growth — integrated to design, build and scale digital ecosystems that perform."
+);
 
 // ─── Colour accents (one per card, cycled) ───────────────────────────────────
 type Accent = { tile: string; text: string; check: string; bar: string };

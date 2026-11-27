@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
 import { WHATSAPP_URL } from "@/lib/contact";
+import { createPageMetadata } from "@/lib/page-metadata";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -19,11 +19,10 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Contact Us | SM Solutions",
-  description:
-    "Discuss your digital product, website, platform or growth challenge with SM Solutions. Connect with us on WhatsApp, email or call our team.",
-};
+export const metadata = createPageMetadata(
+  "Contact Us",
+  "Discuss your digital product, website, platform or growth challenge with SM Solutions. Connect with us on WhatsApp, email or call our team."
+);
 
 // ─── Contact details (edit here) ─────────────────────────────────────────────
 const EMAIL = "contact@smsolutions.in";

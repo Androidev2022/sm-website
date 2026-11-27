@@ -108,7 +108,7 @@ export default function Footer() {
                     </li>
                   ))}
                 </ul>
-                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="magnetic mt-5 w-full sm:w-auto justify-center bg-blue-600 hover:bg-blue-700 text-white text-[13px] px-4 py-2.5 rounded-md font-semibold whitespace-nowrap transition-colors">
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="magnetic mt-5 flex sm:inline-flex items-center w-full sm:w-auto justify-center bg-blue-600 hover:bg-blue-700 text-white text-[13px] px-4 py-2.5 rounded-md font-semibold whitespace-nowrap transition-colors">
                   Connect With Us
                 </a>
               </div>

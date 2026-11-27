@@ -1,11 +1,10 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/page-metadata";
 import LegalLayout, { CheckList, H3, NumberList, P, type LegalSection } from "@/components/legal/LegalLayout";
 
-export const metadata: Metadata = {
-  title: "Terms of Service | SM Solutions",
-  description:
-    "Project, digital marketing, annual maintenance and process terms for SM Solutions engagements.",
-};
+export const metadata = createPageMetadata(
+  "Terms of Service",
+  "Project, digital marketing, annual maintenance and process terms for SM Solutions engagements."
+);
 
 const SUPPORT_EMAIL = "support@smsolutions.in";
 

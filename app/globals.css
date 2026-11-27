@@ -21,11 +21,74 @@
 
 html {
   scroll-behavior: smooth;
+  width: 100%;
+  overflow-x: clip;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+  width: 100%;
+  min-width: 320px;
+  overflow-x: clip;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+img, video, canvas, svg {
+  max-width: 100%;
+}
+
+h1, h2, h3, p {
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 639px) {
+  .hero-title {
+    font-size: 2.25rem !important;
+    line-height: 1.12 !important;
+  }
+
+  .hero-title br {
+    display: none;
+  }
+
+  .hero-sub {
+    font-size: 1rem !important;
+  }
+
+  .hero-btns {
+    align-items: stretch;
+  }
+
+  .hero-btns > * {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-visual:not(:has(.globe-spin)) {
+    min-height: 0;
+  }
+
+  .hero-visual:has(.globe-spin) {
+    min-height: 300px !important;
+  }
+
+  .hero-visual .globe-spin {
+    width: 17rem !important;
+    height: 17rem !important;
+  }
+
+  .hero-visual .float-card:not(img) {
+    max-width: calc(50% - 12px);
+  }
+
+  .team-row {
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+  }
 }
 
 .section-card {
@@ -57,7 +120,7 @@ body {
   transition: width .3s cubic-bezier(.22,1,.36,1);
 }
 .nav-link:hover::after, .nav-link.active::after { width: 100%; }
-.magnetic { display: inline-flex; align-items: center; white-space: nowrap; transition: transform .45s cubic-bezier(.22,1,.36,1); }
+.magnetic { white-space: nowrap; transition: transform .45s cubic-bezier(.22,1,.36,1); }
 
 /* ─── Contact page ───────────────────────────────────────────────────────── */
 @keyframes contact-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }

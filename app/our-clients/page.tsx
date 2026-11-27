@@ -188,7 +188,7 @@ export default function ClientsPage() {
         .hero-btns    { animation: fadeSlideUp .8s cubic-bezier(.22,1,.36,1) .34s both; }
         .hero-visual  { animation: fadeSlideUp .9s cubic-bezier(.22,1,.36,1) .2s both; }
 
-        .magnetic { display: inline-flex; align-items: center; white-space: nowrap; transition: transform .45s cubic-bezier(.22,1,.36,1); }
+        .magnetic { white-space: nowrap; transition: transform .45s cubic-bezier(.22,1,.36,1); }
 
         .logo-card { transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, border-color .35s ease; }
         .logo-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(37,99,235,0.12); border-color: #bfdbfe; }
@@ -232,7 +232,7 @@ export default function ClientsPage() {
                                 Our Clients
                             </span>
                             <h1 className="hero-title text-4xl md:text-[3.2rem] font-extrabold tracking-tight leading-[1.1] text-slate-900">
-                                Built on <span className="text-blue-600">Partnerships.</span>
+                                Built on <span className="text-blue-600">Partnerships.</span>{" "}
                                 <br />
                                 Proven Across Industries.
                             </h1>

@@ -166,7 +166,7 @@ export default function PortfolioPage() {
         .hero-btns    { animation: fadeSlideUp .8s cubic-bezier(.22,1,.36,1) .34s both; }
         .hero-visual  { animation: fadeSlideUp .9s cubic-bezier(.22,1,.36,1) .2s both; }
 
-        .magnetic { display: inline-flex; align-items: center; white-space: nowrap; transition: transform .45s cubic-bezier(.22,1,.36,1); }
+        .magnetic { white-space: nowrap; transition: transform .45s cubic-bezier(.22,1,.36,1); }
 
         .card-hover { transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease; }
         .card-hover:hover { transform: translateY(-6px); box-shadow: 0 18px 36px rgba(37,99,235,0.14); }
@@ -209,13 +209,13 @@ export default function PortfolioPage() {
                         </nav>
                     </div>
 
-                    <div className="max-w-7xl mx-auto px-6 pt-10 pb-10 grid md:grid-cols-2 gap-10 items-center">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-8 md:pt-10 pb-10 grid md:grid-cols-2 gap-10 items-center">
                         <div>
                             <span className="hero-eyebrow inline-block bg-blue-100 text-blue-700 font-bold text-[11px] tracking-wider uppercase px-3 py-1 rounded-full mb-5">
                                 Our Portfolio
                             </span>
                             <h1 className="hero-title text-5xl md:text-[3.5rem] font-extrabold tracking-tight leading-[1.08] text-slate-900">
-                                A Closer Look at
+                                A Closer Look at{" "}
                                 <br />
                                 <span className="text-blue-600">What We Create.</span>
                             </h1>

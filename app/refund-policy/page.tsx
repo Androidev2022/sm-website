@@ -1,11 +1,10 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/page-metadata";
 import LegalLayout, { CheckList, P, type LegalSection } from "@/components/legal/LegalLayout";
 
-export const metadata: Metadata = {
-  title: "Cancellation & Refund Policy | SM Solutions",
-  description:
-    "Payment, cancellation, refund and late-fee terms for SM Solutions projects and services.",
-};
+export const metadata = createPageMetadata(
+  "Cancellation & Refund Policy",
+  "Payment, cancellation, refund and late-fee terms for SM Solutions projects and services."
+);
 
 const Term = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <>

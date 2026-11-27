@@ -1,11 +1,10 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/page-metadata";
 import LegalLayout, { CheckList, P, type LegalSection } from "@/components/legal/LegalLayout";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy | SM Solutions",
-  description:
-    "How SM Solutions collects, uses and protects the personal information you share with us.",
-};
+export const metadata = createPageMetadata(
+  "Privacy Policy",
+  "How SM Solutions collects, uses and protects the personal information you share with us."
+);
 
 const sections: LegalSection[] = [
   {

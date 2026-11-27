@@ -15,9 +15,38 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tefal India Digital Experience Optimization | SM Solutions",
+  title: {
+    default: "SM Solutions | Digital Strategy, Design & Technology",
+    template: "%s | SM Solutions",
+  },
   description:
-    "How SM Solutions enhanced the digital commerce experience for Tefal India by improving user journeys, product discoverability, and driving double-digit conversion growth.",
+    "SM Solutions helps ambitious businesses grow with digital strategy, user experience, web and app development, and performance marketing.",
+  keywords: [
+    "SM Solutions",
+    "digital strategy",
+    "web development",
+    "mobile app development",
+    "UI/UX design",
+    "digital marketing",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    type: "website",
+    siteName: "SM Solutions",
+    locale: "en_IN",
+    title: "SM Solutions | Digital Strategy, Design & Technology",
+    description:
+      "Digital strategy, user experience, engineering and growth solutions for ambitious businesses.",
+  },
+  twitter: {
+    card: "summary",
+    title: "SM Solutions | Digital Strategy, Design & Technology",
+    description:
+      "Digital strategy, user experience, engineering and growth solutions for ambitious businesses.",
+  },
 };
 
 export default function RootLayout({

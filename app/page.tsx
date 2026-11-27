@@ -311,7 +311,7 @@ export default function Home() {
         .hero-engine  { animation: fadeSlideUp .8s cubic-bezier(.22,1,.36,1) .54s both; }
         .hero-visual  { animation: fadeSlideUp .9s cubic-bezier(.22,1,.36,1) .2s both; }
 
-        .magnetic { display: inline-flex; align-items: center; white-space: nowrap; transition: transform .45s cubic-bezier(.22,1,.36,1); }
+        .magnetic { white-space: nowrap; transition: transform .45s cubic-bezier(.22,1,.36,1); }
 
         .card-hover { transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease; }
         .card-hover:hover { transform: translateY(-6px); box-shadow: 0 18px 36px rgba(37,99,235,0.14); }
@@ -354,13 +354,13 @@ export default function Home() {
 
         {/* HERO */}
         <section className="w-full overflow-hidden">
-          <div className="max-w-7xl mx-auto px-6 pt-16 pb-8 grid md:grid-cols-2 gap-10 items-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-10 md:pt-16 pb-8 grid md:grid-cols-2 gap-10 items-center">
             <div>
               <p className="hero-eyebrow text-blue-600 font-semibold text-sm mb-4">Digital Growth Partner</p>
               <h1 className="hero-title text-5xl md:text-[3.4rem] font-bold leading-[1.08] text-slate-900">
-                We Engineer Digital Systems That
+                We Engineer Digital Systems That{" "}
                 <br />
-                <span className="text-blue-600">Drive Business Growth.</span>
+                {" "}<span className="text-blue-600">Drive Business Growth.</span>
               </h1>
               <p className="hero-sub mt-6 text-slate-500 text-lg leading-relaxed max-w-lg">
                 Strategy, experience, technology and growth — integrated to build digital ecosystems that perform, scale and create measurable business impact.
@@ -521,9 +521,9 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Digital Systems. Built for Growth.</h2>
             <p className="text-slate-500 mt-2 max-w-lg">End-to-end capabilities to build, optimize and grow your digital ecosystem.</p>
           </div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
             {services.map((s, i) => (
-              <div key={i} className={`reveal card-hover delay-${(i % 6) + 1} bg-white rounded-2xl border border-slate-100 shadow-sm p-5`}>
+              <div key={i} className={`reveal card-hover delay-${(i % 6) + 1} bg-white rounded-2xl border border-slate-100 shadow-sm p-4 sm:p-5`}>
                 <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 mb-4">
                   <s.icon size={18} />
                 </div>
@@ -535,11 +535,11 @@ export default function Home() {
         </section>
 
         {/* TECH STACK */}
-        <section className="max-w-7xl mx-auto px-0 py-0">
+        <section className="max-w-7xl mx-auto px-6 pb-14">
           <p className="reveal text-blue-600 font-semibold text-xs tracking-wide mb-8">TECHNOLOGY THAT POWERS THE EXPERIENCE</p>
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
             {techStack.map((col, i) => (
-              <div key={col.title} className={`reveal delay-${i + 1} bg-white rounded-2xl border border-slate-100 shadow-sm p-6`}>
+              <div key={col.title} className={`reveal delay-${i + 1} bg-white rounded-2xl border border-slate-100 shadow-sm p-4 sm:p-6`}>
                 <h3 className="font-bold text-slate-900 mb-4">{col.title}</h3>
                 <ul className="space-y-2.5 text-sm text-slate-500">
                   {col.items.map((item) => (
@@ -560,7 +560,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900">A Proven Process. Predictable Results.</h2>
             <p className="text-slate-500 mt-2 max-w-lg">A systematic approach to deliver digital solutions that create measurable business impact.</p>
           </div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6 relative">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8 sm:gap-6 relative">
             {processSteps.map((s, i) => (
               <div key={s.num} className={`reveal delay-${i + 1} relative`}>
                 <div className="flex items-center gap-2 mb-4">
@@ -591,9 +591,9 @@ export default function Home() {
                 />
               </div>
             </div>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
               {industries.map((ind, i) => (
-                <div key={ind.title} className={`reveal card-hover delay-${(i % 6) + 1} bg-white rounded-2xl border border-slate-100 shadow-sm p-5`}>
+                <div key={ind.title} className={`reveal card-hover delay-${(i % 6) + 1} bg-white rounded-2xl border border-slate-100 shadow-sm p-4 sm:p-5`}>
                   <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 mb-3">
                     <ind.icon size={17} />
                   </div>

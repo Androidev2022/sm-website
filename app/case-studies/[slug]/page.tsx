@@ -18,6 +18,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { caseStudies, getCaseStudy, type CaseStudy } from "../data";
+import { createPageMetadata } from "@/lib/page-metadata";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -28,8 +29,8 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const cs = getCaseStudy(slug);
-  if (!cs) return { title: "Case Study | SM Solutions" };
-  return { title: `${cs.heroTitle} | SM Solutions`, description: cs.heroDescription };
+  if (!cs) return createPageMetadata("Case Study", "Explore a digital growth case study from SM Solutions.");
+  return createPageMetadata(cs.heroTitle, cs.heroDescription);
 }
 
 type StoryKey = keyof CaseStudy["story"];

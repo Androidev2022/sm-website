@@ -444,7 +444,7 @@ export default function AboutUsPage() {
                 {JOURNEY.map((j, i) => (
                   <div
                     key={j.year}
-                    className={`tl-item ${journey.inView ? "on" : ""} grid grid-cols-[36px_56px_1fr] gap-3 items-start`}
+                    className={`tl-item ${journey.inView ? "on" : ""} grid grid-cols-[36px_1fr] sm:grid-cols-[36px_56px_1fr] gap-x-3 gap-y-1 sm:gap-3 items-start`}
                     style={{ transitionDelay: `${300 + i * 250}ms` }}
                   >
                     <span
@@ -454,7 +454,7 @@ export default function AboutUsPage() {
                       <j.icon size={16} />
                     </span>
                     <p className="font-heading pt-1.5 text-[15px] font-semibold" style={{ color: "#1F2033" }}>{j.year}</p>
-                    <div>
+                    <div className="col-start-2 sm:col-start-auto">
                       <p className="text-[15px] font-semibold" style={{ color: "#1F2033" }}>{j.title}</p>
                       <p className="mt-1.5 text-[12.5px] leading-relaxed text-[#2E3045]">{j.text}</p>
                     </div>

@@ -563,7 +563,7 @@ export default function Page() {
             `}</style>
 
             {/* HERO */}
-            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-10">
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-5 sm:px-6 lg:px-1 pt-10">
                 <div className="grid gap-10 md:grid-cols-2 md:items-center">
                     <div className="hero-in">
                         <p className="text-xs font-bold tracking-widest text-[#E11D48]">E-COMMERCE CASE STUDY</p>
@@ -594,11 +594,11 @@ export default function Page() {
                             </div>
                         </div>
 
-                        <div className="mt-8 flex items-center gap-4">
-                            <button className="rounded-full bg-[#E11D48] px-6 py-3 text-sm font-semibold text-white shadow-md transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#c81b40] active:translate-y-0">
+                        <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
+                            <button className="whitespace-nowrap rounded-full bg-[#E11D48] px-5 sm:px-6 py-3 text-sm font-semibold text-white shadow-md transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#c81b40] active:translate-y-0">
                                 View Live Site ↗
                             </button>
-                            <button className="rounded-full border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-[#33353F] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-gray-50 active:translate-y-0">
+                            <button className="whitespace-nowrap rounded-full border border-gray-300 bg-white px-5 sm:px-6 py-3 text-sm font-semibold text-[#33353F] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-gray-50 active:translate-y-0">
                                 Read Methodology ⧉
                             </button>
                         </div>
@@ -621,7 +621,7 @@ export default function Page() {
             </section>
 
             {/* STATS */}
-            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-5 sm:px-6 lg:px-1 pt-14">
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
                     {stats.map((s, i) => (
                         <Reveal key={s.label} delay={i * 70} className="section-card p-5">
@@ -639,7 +639,7 @@ export default function Page() {
             </section>
 
             {/* 01 EXECUTIVE SUMMARY */}
-            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-5 sm:px-6 lg:px-1 pt-14">
                 <div className="grid gap-6 lg:grid-cols-[0.8fr_1.4fr] lg:items-start">
                     <Reveal>
                         <SectionEyebrow n="01">PROJECT OVERVIEW</SectionEyebrow>
@@ -670,7 +670,7 @@ export default function Page() {
             </section>
 
             {/* 02 ABOUT TEFAL / PRODUCT ECOSYSTEM */}
-            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-5 sm:px-6 lg:px-1 pt-14">
                 <Reveal>
                     <SectionEyebrow n="02">ABOUT TEFAL</SectionEyebrow>
                     <h2 className="text-2xl font-extrabold text-[#16151A]">The Brand &amp; Product Ecosystem</h2>
@@ -711,7 +711,7 @@ export default function Page() {
             </section>
 
             {/* 03 CHALLENGE / 04 RESEARCH */}
-            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-5 sm:px-6 lg:px-1 pt-14">
                 <div className="grid gap-6 lg:grid-cols-2">
                     <div>
                         <Reveal>
@@ -783,7 +783,7 @@ export default function Page() {
             </section>
 
             {/* STRATEGY & ROADMAP (dark banner) */}
-            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-5 sm:px-6 lg:px-1 pt-14">
                 <Reveal className="rounded-2xl bg-[#0A0E1A] px-8 py-10 sm:px-12">
                     <p className="mb-3 text-[11px] font-bold tracking-widest text-[#E11D48]">
                         OUR STRATEGY &amp; ROADMAP
@@ -809,7 +809,7 @@ export default function Page() {
             </section>
 
             {/* 06 SOLUTION SHOWCASE */}
-            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-5 sm:px-6 lg:px-1 pt-14">
                 <Reveal>
                     <SectionEyebrow n="06">SOLUTION SHOWCASE</SectionEyebrow>
                     <h2 className="text-2xl font-extrabold text-[#16151A]">The Redesigned Experience</h2>
@@ -912,7 +912,7 @@ export default function Page() {
             </section>
 
             {/* 07 BEFORE VS AFTER */}
-            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-5 sm:px-6 lg:px-1 pt-14">
                 <Reveal>
                     <SectionEyebrow n="07">BEFORE VS AFTER</SectionEyebrow>
                     <h2 className="text-2xl font-extrabold text-[#16151A]">Visual Improvement Analysis</h2>
@@ -993,7 +993,7 @@ export default function Page() {
             </section>
 
             {/* 08 RESULTS DASHBOARD */}
-            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-5 sm:px-6 lg:px-1 pt-14">
                 <Reveal className="section-card p-8">
                     <SectionEyebrow n="08">RESULTS DASHBOARD</SectionEyebrow>
                     <div className="grid gap-8 lg:grid-cols-[0.9fr_1.4fr]">
@@ -1074,7 +1074,7 @@ export default function Page() {
             </section>
 
             {/* DESIGN SYSTEM */}
-            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-5 sm:px-6 lg:px-1 pt-14">
                 <Reveal>
                     <p className="mb-3 text-[11px] font-bold tracking-widest text-[#E11D48]">DESIGN SYSTEM</p>
                     <h2 className="text-2xl font-extrabold text-[#16151A]">Components &amp; Guidelines</h2>
@@ -1156,7 +1156,7 @@ export default function Page() {
             </section>
 
             {/* TESTIMONIAL + RATING */}
-            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-14">
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-5 sm:px-6 lg:px-1 pt-14">
                 <div className="grid items-stretch gap-6 lg:grid-cols-[1.6fr_1fr]">
                     <Reveal className="relative flex h-full flex-col justify-between overflow-hidden rounded-2xl bg-[#0A0E1A] px-8 py-8 sm:px-10">
                         <p className="text-3xl font-serif leading-none text-[#E11D48]">&ldquo;</p>
@@ -1187,7 +1187,7 @@ export default function Page() {
             </section>
 
             {/* TESTIMONIAL CARD (secondary) + CTA */}
-            <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-8">
+            <section className="relative z-[1] mx-auto max-w-[1800px] px-5 sm:px-6 lg:px-1 pt-8">
                 <div className="grid items-stretch gap-6 lg:grid-cols-[1fr_1.6fr]">
                     <Reveal className="section-card flex h-full flex-col justify-between bg-white p-7">
                         <div>
@@ -1241,7 +1241,7 @@ export default function Page() {
             </section>
 
             {/* SUCCESS STORY BANNER */}
-            {/* <section className="relative z-[1] mx-auto max-w-[1800px] px-1 pt-6">
+            {/* <section className="relative z-[1] mx-auto max-w-[1800px] px-5 sm:px-6 lg:px-1 pt-6">
                 <Reveal className="flex flex-col items-start justify-between gap-6 rounded-2xl bg-[#4C5FEA] px-8 py-8 sm:flex-row sm:items-center">
                     <div className="flex items-center gap-4">
                         <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white">
